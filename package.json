@@ -18,8 +18,12 @@
   "dependencies": {
     "@apollo/server": "^4.11.3",
     "@as-integrations/aws-lambda": "^3.1.0",
+    "@graphql-tools/graphql-file-loader": "^8.0.19",
+    "@graphql-tools/load": "^8.0.19",
+    "@graphql-tools/schema": "^10.0.23",
     "@prisma/client": "^6.5.0",
     "graphql": "^16.10.0",
+    "graphql-scalars": "^1.24.1",
     "pg": "^8.14.0"
   },
   "devDependencies": {
