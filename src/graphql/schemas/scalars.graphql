@@ -1,0 +1,4 @@
+scalar DateTime
+scalar EmailAddress
+scalar NonEmptyString
+scalar UUID
