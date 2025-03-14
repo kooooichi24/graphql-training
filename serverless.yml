@@ -1,6 +1,6 @@
 service: graphql-training
 
-frameworkVersion: '3'
+frameworkVersion: '4'
 
 provider:
   name: aws
@@ -11,7 +11,7 @@ provider:
 
 functions:
   graphql:
-    handler: dist/lambda.graphqlHandler
+    handler: src/lambda.graphqlHandler
     events:
       - httpApi:
           path: /graphql
@@ -21,9 +21,4 @@ functions:
           method: get
 
 plugins:
-  - serverless-plugin-typescript
   - serverless-offline
-
-custom:
-  serverlessPluginTypescript:
-    tsConfigFileLocation: './tsconfig.json'

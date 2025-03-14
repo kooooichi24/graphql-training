@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
 import { resolvers } from './resolvers.js';
-import { createContext } from './context.js';
+import { Context, createContext } from './context.js';
 
 // GraphQLスキーマを直接文字列として定義
 const typeDefs = `
@@ -40,8 +40,8 @@ type Mutation {
 }
 `;
 
-// Create the Apollo Server
-const server = new ApolloServer({
+// Create the Apollo Server with explicit type parameter
+const server = new ApolloServer<Context>({
   typeDefs,
   resolvers,
 });
