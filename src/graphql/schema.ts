@@ -3,7 +3,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolvers } from '../resolvers.js';
+import { resolvers } from './resolvers.js';
 import {
   DateTimeResolver,
   EmailAddressResolver,
