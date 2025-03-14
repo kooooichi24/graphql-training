@@ -1,0 +1,17 @@
+type Team {
+  id: UUID!
+  name: NonEmptyString!
+  description: String
+  members: [User!]!
+}
+
+type Query {
+  teams: [Team!]!
+  team(id: UUID!): Team
+}
+
+type Mutation {
+  createTeam(name: NonEmptyString!, description: String): Team!
+  updateTeam(id: UUID!, name: NonEmptyString, description: String): Team
+  deleteTeam(id: UUID!): Team
+}

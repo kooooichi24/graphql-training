@@ -1,0 +1,20 @@
+type User {
+  id: UUID!
+  name: NonEmptyString!
+  email: EmailAddress!
+  team: Team
+}
+
+type Query {
+  users: [User!]!
+  user(id: UUID!): User
+}
+
+type Mutation {
+  createUser(name: NonEmptyString!, email: EmailAddress!, teamId: UUID): User!
+  updateUser(id: UUID!, name: NonEmptyString, email: EmailAddress, teamId: UUID): User
+  deleteUser(id: UUID!): User
+
+  addUserToTeam(userId: UUID!, teamId: UUID!): User!
+  removeUserFromTeam(userId: UUID!, teamId: UUID!): User!
+}
