@@ -1,4 +1,4 @@
-import { Context } from './context.js';
+import type { Context } from './context.js';
 
 export const resolvers = {
   Query: {
@@ -25,7 +25,11 @@ export const resolvers = {
 
   Mutation: {
     // User mutations
-    createUser: (_parent: unknown, args: { name: string; email: string; teamId?: string }, context: Context) => {
+    createUser: (
+      _parent: unknown,
+      args: { name: string; email: string; teamId?: string },
+      context: Context,
+    ) => {
       return context.prisma.user.create({
         data: {
           name: args.name,
@@ -42,8 +46,16 @@ export const resolvers = {
         },
       });
     },
-    updateUser: (_parent: unknown, args: { id: string; name?: string; email?: string; teamId?: string }, context: Context) => {
-      const data: any = {};
+    updateUser: (
+      _parent: unknown,
+      args: { id: string; name?: string; email?: string; teamId?: string },
+      context: Context,
+    ) => {
+      const data: {
+        name?: string;
+        email?: string;
+        team?: { connect?: { id: string } };
+      } = {};
       if (args.name) data.name = args.name;
       if (args.email) data.email = args.email;
 
@@ -59,7 +71,11 @@ export const resolvers = {
     },
 
     // Team mutations
-    createTeam: (_parent: unknown, args: { name: string; description?: string }, context: Context) => {
+    createTeam: (
+      _parent: unknown,
+      args: { name: string; description?: string },
+      context: Context,
+    ) => {
       return context.prisma.team.create({
         data: {
           name: args.name,
@@ -67,8 +83,12 @@ export const resolvers = {
         },
       });
     },
-    updateTeam: (_parent: unknown, args: { id: string; name?: string; description?: string }, context: Context) => {
-      const data: any = {};
+    updateTeam: (
+      _parent: unknown,
+      args: { id: string; name?: string; description?: string },
+      context: Context,
+    ) => {
+      const data: { name?: string; description?: string } = {};
       if (args.name) data.name = args.name;
       if (args.description !== undefined) data.description = args.description;
 
@@ -84,7 +104,11 @@ export const resolvers = {
     },
 
     // Team membership mutations
-    addUserToTeam: async (_parent: unknown, args: { userId: string; teamId: string }, context: Context) => {
+    addUserToTeam: async (
+      _parent: unknown,
+      args: { userId: string; teamId: string },
+      context: Context,
+    ) => {
       await context.prisma.teamUser.create({
         data: {
           userId: args.userId,
@@ -96,7 +120,11 @@ export const resolvers = {
         where: { id: args.userId },
       });
     },
-    removeUserFromTeam: async (_parent: unknown, args: { userId: string; teamId: string }, context: Context) => {
+    removeUserFromTeam: async (
+      _parent: unknown,
+      args: { userId: string; teamId: string },
+      context: Context,
+    ) => {
       await context.prisma.teamUser.delete({
         where: {
           userId_teamId: {

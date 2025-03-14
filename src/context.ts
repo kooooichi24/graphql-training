@@ -19,7 +19,7 @@ export type Context = {
 // Apollo Serverのコンテキスト作成関数
 export async function createContext(): Promise<Context> {
   const prisma = getPrismaClient();
-  
+
   return {
     prisma,
   };

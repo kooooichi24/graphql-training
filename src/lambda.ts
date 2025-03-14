@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
-import { startServerAndCreateLambdaHandler, handlers } from '@as-integrations/aws-lambda';
+import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
+import { type Context, createContext } from './context.js';
 import { resolvers } from './resolvers.js';
-import { Context, createContext } from './context.js';
 
 // GraphQLスキーマを直接文字列として定義
 const typeDefs = `
@@ -52,5 +52,5 @@ export const graphqlHandler = startServerAndCreateLambdaHandler(
   handlers.createAPIGatewayProxyEventV2RequestHandler(),
   {
     context: createContext,
-  }
+  },
 );

@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { resolvers } from './resolvers.js';
 import { createContext } from './context.js';
+import { resolvers } from './resolvers.js';
 
 // GraphQLスキーマを直接文字列として定義
 const typeDefs = `
