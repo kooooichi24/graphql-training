@@ -7,9 +7,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // GraphQLスキーマファイルを読み込む
-const resolversArray = loadFilesSync(join(__dirname, '**/*.resolvers.graphql'));
+const resolverFiles = loadFilesSync(join(__dirname, '**/*.resolvers.graphql'));
 
 // リゾルバーを結合
-const resolvers = mergeResolvers(resolversArray);
+const resolvers = mergeResolvers(resolverFiles);
 
 export { resolvers };
