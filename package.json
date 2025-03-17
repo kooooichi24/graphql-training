@@ -12,14 +12,7 @@
     "format": "biome format . --write",
     "check": "biome check --apply ."
   },
-  "keywords": [
-    "graphql",
-    "apollo",
-    "lambda",
-    "typescript",
-    "postgresql",
-    "prisma"
-  ],
+  "keywords": ["graphql", "apollo", "lambda", "typescript", "postgresql", "prisma"],
   "author": "",
   "license": "MIT",
   "dependencies": {
