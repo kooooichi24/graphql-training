@@ -10,7 +10,8 @@
     "deploy": "serverless deploy",
     "lint": "biome lint .",
     "format": "biome format . --write",
-    "check": "biome check --apply ."
+    "check": "biome check --apply .",
+    "gpl:codegen": "graphql-codegen"
   },
   "keywords": ["graphql", "apollo", "lambda", "typescript", "postgresql", "prisma"],
   "author": "",
