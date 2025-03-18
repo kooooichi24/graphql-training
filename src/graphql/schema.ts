@@ -1,20 +1,15 @@
+import { join } from 'node:path';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { resolvers } from './resolvers.js';
+import { resolvers } from './resolvers';
 
-// ESモジュールで__dirnameを使用するための設定
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// GraphQLスキーマファイルを読み込む
-const typeDefs = loadSchemaSync(join(__dirname, '**/*.graphql'), {
+// TODO: Rethink better path definition to load schema files
+const typeDefs = loadSchemaSync(join(process.cwd(), 'src/graphql/**/*.graphql'), {
   loaders: [new GraphQLFileLoader()],
 });
 
-// スキーマとリゾルバーを結合して実行可能なスキーマを作成
+// Merge schema and resolver to create an executable schema
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,

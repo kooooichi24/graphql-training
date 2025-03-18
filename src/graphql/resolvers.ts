@@ -1,15 +1,9 @@
-import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeResolvers } from '@graphql-tools/merge';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { userResolvers } from './user/user.resolvers';
+import { teamResolvers } from './team/team.resolvers';
+import { scalarResolvers } from './scalars/scalars.resolvers';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// GraphQLスキーマファイルを読み込む
-const resolverFiles = loadFilesSync(join(__dirname, '**/*.resolvers.ts'));
-
-// リゾルバーを結合
-const resolvers = mergeResolvers(resolverFiles);
+// TODO: Rethink better merge solution without manually adding resolvers
+const resolvers = mergeResolvers([userResolvers, teamResolvers, scalarResolvers]);
 
 export { resolvers };
