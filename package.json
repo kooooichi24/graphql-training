@@ -11,6 +11,7 @@
     "lint": "biome lint .",
     "format": "biome format . --write",
     "check": "biome check --apply .",
+    "prisma:generate": "prisma generate",
     "gpl:codegen": "graphql-codegen"
   },
   "keywords": ["graphql", "apollo", "lambda", "typescript", "postgresql", "prisma"],
