@@ -2,7 +2,6 @@
   "name": "graphql-training",
   "version": "1.0.0",
   "description": "Training materials for GraphQL with Apollo Server, Lambda, TypeScript, PostgreSQL, and Prisma",
-  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "serverless offline",
