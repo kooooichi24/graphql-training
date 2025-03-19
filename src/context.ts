@@ -6,7 +6,9 @@ let prisma: PrismaClient;
 
 function getPrismaClient(): PrismaClient {
   if (!prisma) {
-    prisma = new PrismaClient();
+    prisma = new PrismaClient({
+      log: ['query', 'info', 'warn', 'error'],
+    });
   }
   return prisma;
 }
