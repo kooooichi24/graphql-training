@@ -1,15 +1,16 @@
 import type { Context } from '../../context.js';
 import type { Prisma } from '@prisma/client';
+import type { Maybe, Team, User } from '../../graphql-types.js';
 
 export const userResolvers = {
   Query: {
     // ユーザー一覧を取得
-    users: (_parent: unknown, _args: unknown, context: Context) => {
+    users: (_parent: unknown, _args: unknown, context: Context): Promise<User[]> => {
       return context.prisma.user.findMany();
     },
 
     // 特定のユーザーを取得
-    user: (_parent: unknown, args: { id: string }, context: Context) => {
+    user: (_parent: unknown, args: { id: string }, context: Context): Promise<Maybe<User>> => {
       return context.prisma.user.findUnique({
         where: { id: args.id },
       });
@@ -117,20 +118,46 @@ export const userResolvers = {
   // User型のフィールドリゾルバー
   User: {
     // チーム情報を取得
-    team: (parent: { id: string }, _args: unknown, context: Context) => {
-      return context.prisma.user
+    team: async (
+      parent: { id: string },
+      _args: unknown,
+      context: Context,
+    ): Promise<Maybe<Team>> => {
+      const userTeams = await context.prisma.user
         .findUnique({
           where: { id: parent.id },
         })
-        .teams()
-        .then((teams) => {
-          if (teams && teams.length > 0) {
-            return context.prisma.team.findUnique({
-              where: { id: teams[0].teamId },
-            });
-          }
-          return null;
-        });
+        .teams();
+
+      if (!userTeams || userTeams.length === 0) {
+        return null;
+      }
+
+      const teamId = userTeams[0].teamId;
+      const team = await context.prisma.team.findUnique({
+        where: { id: teamId },
+      });
+
+      if (!team) {
+        return null;
+      }
+
+      // チームに所属するユーザー情報を取得
+      const teamUsers = await context.prisma.user.findMany({
+        where: {
+          teams: {
+            some: {
+              teamId,
+            },
+          },
+        },
+      });
+
+      // GraphQLの型に適合するように変換
+      return {
+        ...team,
+        members: teamUsers,
+      };
     },
   },
 };
