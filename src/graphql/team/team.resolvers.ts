@@ -1,89 +1,88 @@
-import type { Context } from '../../context.js';
 import type { Prisma } from '@prisma/client';
+import type { Resolvers } from '../../graphql-types.js';
 
-export const teamResolvers = {
+export const teamResolvers: Resolvers = {
   Query: {
     // チーム一覧を取得
-    teams: (_parent: unknown, _args: unknown, context: Context) => {
-      return context.prisma.team.findMany();
+    teams: async (_, __, { prisma }) => {
+      const teams = await prisma.team.findMany();
+      return teams.map((team) => ({
+        ...team,
+        members: [],
+      }));
     },
 
     // 特定のチームを取得
-    team: (_parent: unknown, args: { id: string }, context: Context) => {
-      return context.prisma.team.findUnique({
-        where: { id: args.id },
+    team: async (_, { id }, { prisma }) => {
+      const team = await prisma.team.findUnique({
+        where: { id },
       });
+
+      if (!team) return null;
+
+      return {
+        ...team,
+        members: [],
+      };
     },
   },
 
   Mutation: {
     // チームを作成
-    createTeam: (
-      _parent: unknown,
-      args: { name: string; description?: string },
-      context: Context,
-    ) => {
-      return context.prisma.team.create({
+    createTeam: async (_, { name, description }, { prisma }) => {
+      const team = await prisma.team.create({
         data: {
-          name: args.name,
-          description: args.description,
+          name,
+          description,
         },
       });
+
+      return {
+        ...team,
+        members: [],
+      };
     },
 
     // チームを更新
-    updateTeam: (
-      _parent: unknown,
-      args: { id: string; name?: string; description?: string },
-      context: Context,
-    ) => {
+    updateTeam: async (_, { id, name, description }, { prisma }) => {
       const data: Prisma.TeamUpdateInput = {};
 
-      if (args.name !== undefined) {
-        data.name = args.name;
+      if (name) {
+        data.name = name;
       }
 
-      if (args.description !== undefined) {
-        data.description = args.description;
+      if (description) {
+        data.description = description;
       }
 
-      return context.prisma.team.update({
-        where: { id: args.id },
+      const team = await prisma.team.update({
+        where: { id },
         data,
       });
+
+      return {
+        ...team,
+        members: [],
+      };
     },
 
     // チームを削除
-    deleteTeam: (_parent: unknown, args: { id: string }, context: Context) => {
-      return context.prisma.team.delete({
-        where: { id: args.id },
+    deleteTeam: async (_, { id }, { prisma }) => {
+      const team = await prisma.team.delete({
+        where: { id },
       });
+
+      return {
+        ...team,
+        members: [],
+      };
     },
   },
 
   // Team型のフィールドリゾルバー
   Team: {
-    // チームのメンバーを取得
-    members: (parent: { id: string }, _args: unknown, context: Context) => {
-      return context.prisma.team
-        .findUnique({
-          where: { id: parent.id },
-        })
-        .members()
-        .then((teamUsers) => {
-          if (!teamUsers || teamUsers.length === 0) {
-            return [];
-          }
-
-          const userIds = teamUsers.map((tu) => tu.userId);
-          return context.prisma.user.findMany({
-            where: {
-              id: {
-                in: userIds,
-              },
-            },
-          });
-        });
+    members: async ({ id: teamId }, _, { loaders }) => {
+      return await loaders.teamMembersLoader.load(teamId);
     },
   },
 };

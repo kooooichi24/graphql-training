@@ -1,40 +1,35 @@
-import type { Context } from '../../context.js';
 import type { Prisma } from '@prisma/client';
-import type { Maybe, Team, User } from '../../graphql-types.js';
+import type { Resolvers } from '../../graphql-types.js';
 
-export const userResolvers = {
+export const userResolvers: Resolvers = {
   Query: {
     // ユーザー一覧を取得
-    users: (_parent: unknown, _args: unknown, context: Context): Promise<User[]> => {
-      return context.prisma.user.findMany();
+    users: (_, __, { prisma }) => {
+      return prisma.user.findMany();
     },
 
     // 特定のユーザーを取得
-    user: (_parent: unknown, args: { id: string }, context: Context): Promise<Maybe<User>> => {
-      return context.prisma.user.findUnique({
-        where: { id: args.id },
+    user: (_, { id }, { prisma }) => {
+      return prisma.user.findUnique({
+        where: { id },
       });
     },
   },
 
   Mutation: {
     // ユーザーを作成
-    createUser: (
-      _parent: unknown,
-      args: { name: string; email: string; teamId?: string },
-      context: Context,
-    ) => {
-      return context.prisma.user.create({
+    createUser: (_, { name, email, teamId }, { prisma }) => {
+      return prisma.user.create({
         data: {
-          name: args.name,
-          email: args.email,
-          ...(args.teamId
+          name,
+          email,
+          ...(teamId
             ? {
                 teams: {
                   create: {
                     team: {
                       connect: {
-                        id: args.teamId,
+                        id: teamId,
                       },
                     },
                   },
@@ -46,48 +41,40 @@ export const userResolvers = {
     },
 
     // ユーザーを更新
-    updateUser: (
-      _parent: unknown,
-      args: { id: string; name?: string; email?: string; teamId?: string },
-      context: Context,
-    ) => {
+    updateUser: (_, { id, name, email }, { prisma }) => {
       const data: Prisma.UserUpdateInput = {};
 
-      if (args.name !== undefined) {
-        data.name = args.name;
+      if (name !== undefined && name !== null) {
+        data.name = name;
       }
 
-      if (args.email !== undefined) {
-        data.email = args.email;
+      if (email !== undefined && email !== null) {
+        data.email = email;
       }
 
-      return context.prisma.user.update({
-        where: { id: args.id },
+      return prisma.user.update({
+        where: { id },
         data,
       });
     },
 
     // ユーザーを削除
-    deleteUser: (_parent: unknown, args: { id: string }, context: Context) => {
-      return context.prisma.user.delete({
-        where: { id: args.id },
+    deleteUser: (_, { id }, { prisma }) => {
+      return prisma.user.delete({
+        where: { id },
       });
     },
 
     // ユーザーをチームに追加
-    addUserToTeam: (
-      _parent: unknown,
-      args: { userId: string; teamId: string },
-      context: Context,
-    ) => {
-      return context.prisma.user.update({
-        where: { id: args.userId },
+    addUserToTeam: (_, { userId, teamId }, { prisma }) => {
+      return prisma.user.update({
+        where: { id: userId },
         data: {
           teams: {
             create: {
               team: {
                 connect: {
-                  id: args.teamId,
+                  id: teamId,
                 },
               },
             },
@@ -97,17 +84,13 @@ export const userResolvers = {
     },
 
     // ユーザーをチームから削除
-    removeUserFromTeam: (
-      _parent: unknown,
-      args: { userId: string; teamId: string },
-      context: Context,
-    ) => {
-      return context.prisma.user.update({
-        where: { id: args.userId },
+    removeUserFromTeam: (_, { userId, teamId }, { prisma }) => {
+      return prisma.user.update({
+        where: { id: userId },
         data: {
           teams: {
             deleteMany: {
-              teamId: args.teamId,
+              teamId: teamId,
             },
           },
         },
@@ -118,45 +101,38 @@ export const userResolvers = {
   // User型のフィールドリゾルバー
   User: {
     // チーム情報を取得
-    team: async (
-      parent: { id: string },
-      _args: unknown,
-      context: Context,
-    ): Promise<Maybe<Team>> => {
-      const userTeams = await context.prisma.user
-        .findUnique({
-          where: { id: parent.id },
-        })
-        .teams();
+    team: async ({ id: userId }, _, { prisma: __, loaders }) => {
+      /**
+       * Without dataloader
+       */
+      // const teams: Team[] = await prisma.$queryRaw`
+      //   SELECT t.*
+      //   FROM teams t
+      //   JOIN team_members tm ON t.id = tm.team_id
+      //   WHERE tm.user_id = ${userId}::uuid
+      // `;
+      // if (teams.length === 0) return null;
 
-      if (!userTeams || userTeams.length === 0) {
-        return null;
-      }
+      // const team = teams[0];
+      // // const members: User[] = await prisma.$queryRaw`
+      // //   SELECT u.* FROM users u
+      // //   JOIN team_members tm ON u.id = tm.user_id
+      // //   WHERE tm.team_id = ${team.id}::uuid
+      // // `;
+      // return {
+      //   ...team,
+      //   members: [],
+      // };
 
-      const teamId = userTeams[0].teamId;
-      const team = await context.prisma.team.findUnique({
-        where: { id: teamId },
-      });
+      /**
+       * With dataloader
+       */
+      const teams = await loaders.userTeamsLoader.load(userId);
+      if (!teams || teams.length === 0) return null;
 
-      if (!team) {
-        return null;
-      }
-
-      // チームに所属するユーザー情報を取得
-      const teamUsers = await context.prisma.user.findMany({
-        where: {
-          teams: {
-            some: {
-              teamId,
-            },
-          },
-        },
-      });
-
-      // GraphQLの型に適合するように変換
       return {
-        ...team,
-        members: teamUsers,
+        ...teams[0],
+        members: [],
       };
     },
   },
