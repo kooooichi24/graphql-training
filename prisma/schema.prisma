@@ -13,32 +13,37 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid()) @db.Uuid
+  id        String       @id @default(uuid()) @db.Uuid
   name      String
-  email     String     @unique
-  teams     TeamUser[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  email     String       @unique
+  teams     TeamMember[]
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  @@map("users")
 }
 
 model Team {
-  id          String     @id @default(uuid()) @db.Uuid
+  id          String       @id @default(uuid()) @db.Uuid
   name        String
   description String?
-  members     TeamUser[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  members     TeamMember[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("teams")
 }
 
 // Join table for the many-to-many relationship between User and Team
-model TeamUser {
+model TeamMember {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
   team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId    String   @db.Uuid
-  createdAt DateTime @default(now())
+  teamId    String   @map("team_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@id([userId, teamId])
   @@index([userId])
   @@index([teamId])
+  @@map("team_members")
 }
