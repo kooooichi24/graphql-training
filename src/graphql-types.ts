@@ -114,7 +114,7 @@ export type User = {
   email: Scalars['EmailAddress']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['NonEmptyString']['output'];
-  team?: Maybe<Team>;
+  teams: Array<Team>;
 };
 
 
@@ -260,7 +260,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   email?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-  team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
+  teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

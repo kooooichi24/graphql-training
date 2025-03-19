@@ -2,7 +2,7 @@ type User {
   id: UUID!
   name: NonEmptyString!
   email: EmailAddress!
-  team: Team
+  teams: [Team!]!
 }
 
 type Query {
