@@ -10,6 +10,8 @@
     "lint": "biome lint .",
     "format": "biome format . --write",
     "check": "biome check --apply .",
+    "docker:up": "docker compose up -d",
+    "prisma:migrate": "prisma migrate dev --name",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
     "gpl:codegen": "graphql-codegen"
