@@ -4,22 +4,32 @@ import type { Resolvers } from '../../graphql-types.js';
 export const userResolvers: Resolvers = {
   Query: {
     // ユーザー一覧を取得
-    users: (_, __, { prisma }) => {
-      return prisma.user.findMany();
+    users: async (_, __, { prisma }) => {
+      const users = await prisma.user.findMany();
+      return users.map((user) => ({
+        ...user,
+        teams: [],
+      }));
     },
 
     // 特定のユーザーを取得
-    user: (_, { id }, { prisma }) => {
-      return prisma.user.findUnique({
+    user: async (_, { id }, { prisma }) => {
+      const user = await prisma.user.findUnique({
         where: { id },
       });
+      if (!user) return null;
+
+      return {
+        ...user,
+        teams: [],
+      };
     },
   },
 
   Mutation: {
     // ユーザーを作成
-    createUser: (_, { name, email, teamId }, { prisma }) => {
-      return prisma.user.create({
+    createUser: async (_, { name, email, teamId }, { prisma }) => {
+      const user = await prisma.user.create({
         data: {
           name,
           email,
@@ -38,10 +48,11 @@ export const userResolvers: Resolvers = {
             : {}),
         },
       });
+      return { ...user, teams: [] };
     },
 
     // ユーザーを更新
-    updateUser: (_, { id, name, email }, { prisma }) => {
+    updateUser: async (_, { id, name, email }, { prisma }) => {
       const data: Prisma.UserUpdateInput = {};
 
       if (name !== undefined && name !== null) {
@@ -52,22 +63,24 @@ export const userResolvers: Resolvers = {
         data.email = email;
       }
 
-      return prisma.user.update({
+      const user = await prisma.user.update({
         where: { id },
         data,
       });
+      return { ...user, teams: [] };
     },
 
     // ユーザーを削除
-    deleteUser: (_, { id }, { prisma }) => {
-      return prisma.user.delete({
+    deleteUser: async (_, { id }, { prisma }) => {
+      const user = await prisma.user.delete({
         where: { id },
       });
+      return { ...user, teams: [] };
     },
 
     // ユーザーをチームに追加
-    addUserToTeam: (_, { userId, teamId }, { prisma }) => {
-      return prisma.user.update({
+    addUserToTeam: async (_, { userId, teamId }, { prisma }) => {
+      const user = await prisma.user.update({
         where: { id: userId },
         data: {
           teams: {
@@ -81,11 +94,12 @@ export const userResolvers: Resolvers = {
           },
         },
       });
+      return { ...user, teams: [] };
     },
 
     // ユーザーをチームから削除
-    removeUserFromTeam: (_, { userId, teamId }, { prisma }) => {
-      return prisma.user.update({
+    removeUserFromTeam: async (_, { userId, teamId }, { prisma }) => {
+      const user = await prisma.user.update({
         where: { id: userId },
         data: {
           teams: {
@@ -95,13 +109,14 @@ export const userResolvers: Resolvers = {
           },
         },
       });
+      return { ...user, teams: [] };
     },
   },
 
   // User型のフィールドリゾルバー
   User: {
     // チーム情報を取得
-    team: async ({ id: userId }, _, { prisma: __, loaders }) => {
+    teams: async ({ id: userId }, _, { prisma: __, loaders }) => {
       /**
        * Without dataloader
        */
@@ -128,12 +143,12 @@ export const userResolvers: Resolvers = {
        * With dataloader
        */
       const teams = await loaders.userTeamsLoader.load(userId);
-      if (!teams || teams.length === 0) return null;
+      if (!teams || teams.length === 0) return [];
 
-      return {
-        ...teams[0],
+      return teams.map((team) => ({
+        ...team,
         members: [],
-      };
+      }));
     },
   },
 };

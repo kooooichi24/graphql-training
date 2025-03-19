@@ -82,7 +82,11 @@ export const teamResolvers: Resolvers = {
   // Team型のフィールドリゾルバー
   Team: {
     members: async ({ id: teamId }, _, { loaders }) => {
-      return await loaders.teamMembersLoader.load(teamId);
+      const members = await loaders.teamMembersLoader.load(teamId);
+      return members.map((member) => ({
+        ...member,
+        teams: [],
+      }));
     },
   },
 };
