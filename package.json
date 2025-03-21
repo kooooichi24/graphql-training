@@ -8,6 +8,7 @@
     "test": "jest",
     "deploy": "serverless deploy",
     "lint": "biome lint .",
+    "fix": "biome check --apply .",
     "format": "biome format . --write",
     "check": "biome check --apply .",
     "docker:up": "docker compose up -d",
