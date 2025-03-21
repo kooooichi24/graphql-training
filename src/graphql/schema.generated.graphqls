@@ -1,0 +1,39 @@
+scalar DateTime
+
+scalar EmailAddress
+
+type Mutation {
+  addUserToTeam(teamId: UUID!, userId: UUID!): User!
+  createTeam(description: String, name: NonEmptyString!): Team!
+  createUser(email: EmailAddress!, name: NonEmptyString!, teamId: UUID): User!
+  deleteTeam(id: UUID!): Team
+  deleteUser(id: UUID!): User
+  removeUserFromTeam(teamId: UUID!, userId: UUID!): User!
+  updateTeam(description: String, id: UUID!, name: NonEmptyString): Team
+  updateUser(email: EmailAddress, id: UUID!, name: NonEmptyString, teamId: UUID): User
+}
+
+scalar NonEmptyString
+
+type Query {
+  team(id: UUID!): Team
+  teams: [Team!]!
+  user(id: UUID!): User
+  users: [User!]!
+}
+
+type Team {
+  description: String
+  id: UUID!
+  members: [User!]!
+  name: NonEmptyString!
+}
+
+scalar UUID
+
+type User {
+  email: EmailAddress!
+  id: UUID!
+  name: NonEmptyString!
+  teams: [Team!]!
+}

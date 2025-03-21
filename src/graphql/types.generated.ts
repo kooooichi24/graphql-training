@@ -1,7 +1,9 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Context } from './context';
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
+import { TeamMapper } from './team/schema.mappers';
+import { UserMapper } from './user/schema.mappers';
+import { Context } from '../context';
+export type Maybe<T> = T | null | undefined;
+export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -15,7 +17,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  DateTime: { input: Date; output: Date; }
+  DateTime: { input: Date | string; output: Date | string; }
   EmailAddress: { input: string; output: string; }
   NonEmptyString: { input: string; output: string; }
   UUID: { input: string; output: string; }
@@ -34,49 +36,49 @@ export type Mutation = {
 };
 
 
-export type MutationAddUserToTeamArgs = {
+export type MutationaddUserToTeamArgs = {
   teamId: Scalars['UUID']['input'];
   userId: Scalars['UUID']['input'];
 };
 
 
-export type MutationCreateTeamArgs = {
+export type MutationcreateTeamArgs = {
   description?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['NonEmptyString']['input'];
 };
 
 
-export type MutationCreateUserArgs = {
+export type MutationcreateUserArgs = {
   email: Scalars['EmailAddress']['input'];
   name: Scalars['NonEmptyString']['input'];
   teamId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
-export type MutationDeleteTeamArgs = {
+export type MutationdeleteTeamArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
-export type MutationDeleteUserArgs = {
+export type MutationdeleteUserArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
-export type MutationRemoveUserFromTeamArgs = {
+export type MutationremoveUserFromTeamArgs = {
   teamId: Scalars['UUID']['input'];
   userId: Scalars['UUID']['input'];
 };
 
 
-export type MutationUpdateTeamArgs = {
+export type MutationupdateTeamArgs = {
   description?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['UUID']['input'];
   name?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 
-export type MutationUpdateUserArgs = {
+export type MutationupdateUserArgs = {
   email?: InputMaybe<Scalars['EmailAddress']['input']>;
   id: Scalars['UUID']['input'];
   name?: InputMaybe<Scalars['NonEmptyString']['input']>;
@@ -92,12 +94,12 @@ export type Query = {
 };
 
 
-export type QueryTeamArgs = {
+export type QueryteamArgs = {
   id: Scalars['UUID']['input'];
 };
 
 
-export type QueryUserArgs = {
+export type QueryuserArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -188,30 +190,30 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Team: ResolverTypeWrapper<Team>;
+  Team: ResolverTypeWrapper<TeamMapper>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
-  User: ResolverTypeWrapper<User>;
+  User: ResolverTypeWrapper<UserMapper>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Boolean: Scalars['Boolean']['output'];
   DateTime: Scalars['DateTime']['output'];
   EmailAddress: Scalars['EmailAddress']['output'];
   Mutation: {};
+  String: Scalars['String']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
   Query: {};
-  String: Scalars['String']['output'];
-  Team: Team;
+  Team: TeamMapper;
   UUID: Scalars['UUID']['output'];
-  User: User;
+  User: UserMapper;
+  Boolean: Scalars['Boolean']['output'];
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -223,14 +225,14 @@ export interface EmailAddressScalarConfig extends GraphQLScalarTypeConfig<Resolv
 }
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addUserToTeam?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationAddUserToTeamArgs, 'teamId' | 'userId'>>;
-  createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationCreateTeamArgs, 'name'>>;
-  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'name'>>;
-  deleteTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationDeleteTeamArgs, 'id'>>;
-  deleteUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
-  removeUserFromTeam?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationRemoveUserFromTeamArgs, 'teamId' | 'userId'>>;
-  updateTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationUpdateTeamArgs, 'id'>>;
-  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id'>>;
+  addUserToTeam?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationaddUserToTeamArgs, 'teamId' | 'userId'>>;
+  createTeam?: Resolver<ResolversTypes['Team'], ParentType, ContextType, RequireFields<MutationcreateTeamArgs, 'name'>>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationcreateUserArgs, 'email' | 'name'>>;
+  deleteTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationdeleteTeamArgs, 'id'>>;
+  deleteUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationdeleteUserArgs, 'id'>>;
+  removeUserFromTeam?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationremoveUserFromTeamArgs, 'teamId' | 'userId'>>;
+  updateTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationupdateTeamArgs, 'id'>>;
+  updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationupdateUserArgs, 'id'>>;
 };
 
 export interface NonEmptyStringScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NonEmptyString'], any> {
@@ -238,9 +240,9 @@ export interface NonEmptyStringScalarConfig extends GraphQLScalarTypeConfig<Reso
 }
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<QueryTeamArgs, 'id'>>;
+  team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<QueryteamArgs, 'id'>>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'id'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
@@ -252,7 +254,7 @@ export type TeamResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UuidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UUID'], any> {
+export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UUID'], any> {
   name: 'UUID';
 }
 
