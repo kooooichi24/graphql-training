@@ -10,6 +10,9 @@ const config: CodegenConfig = {
       },
     }),
   },
+  hooks: {
+    afterAllFileWrite: ['npm run format', 'npm run fix'],
+  },
 };
 
 export default config;
