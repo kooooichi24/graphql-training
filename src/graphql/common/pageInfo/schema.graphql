@@ -1,0 +1,32 @@
+"""
+An object representing pagination information.
+Used in cursor-based pagination based on the GraphQL Relay specification.
+This object provides information for efficiently navigating through result sets.
+
+@see [GraphQL Cursor Connections Specification](https://relay.dev/graphql/connections.htm)
+"""
+type PageInfo {
+  """
+  `hasNextPage` is used to indicate whether more edges exist following the set defined by the clients arguments.
+  If the client is paginating with `first`/`after`, then the server must return **true** if further edges exist, otherwise **false**.
+  If the client is paginating with `last`/`before`, then the client may return **true** if edges further from `before` exist, if it can do so efficiently, otherwise may return **false**.
+  """
+  hasNextPage: Boolean!
+
+  """
+  `hasPreviousPage` is used to indicate whether more edges exist prior to the set defined by the clients arguments.
+  If the client is paginating with `last`/`before`, then the server must return **true** if prior edges exist, otherwise **false**.
+  If the client is paginating with first/after, then the client may return **true** if edges prior to `after` exist, if it can do so efficiently, otherwise may return **false**.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  The cursor of the first edge in the set.
+  """
+  startCursor: String
+
+  """
+  The cursor of the last edge in the set.
+  """
+  endCursor: String
+}
