@@ -2,6 +2,76 @@ import type { DocumentNode } from 'graphql';
 export const typeDefs = {
   kind: 'Document',
   definitions: [
+    {
+      kind: 'ObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value:
+          'An object representing pagination information.\nUsed in cursor-based pagination based on the GraphQL Relay specification.\nThis object provides information for efficiently navigating through result sets.\n\n@see [GraphQL Cursor Connections Specification](https://relay.dev/graphql/connections.htm)',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'PageInfo' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value:
+              '`hasNextPage` is used to indicate whether more edges exist following the set defined by the clients arguments.\nIf the client is paginating with `first`/`after`, then the server must return **true** if further edges exist, otherwise **false**.\nIf the client is paginating with `last`/`before`, then the client may return **true** if edges further from `before` exist, if it can do so efficiently, otherwise may return **false**.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'hasNextPage' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value:
+              '`hasPreviousPage` is used to indicate whether more edges exist prior to the set defined by the clients arguments.\nIf the client is paginating with `last`/`before`, then the server must return **true** if prior edges exist, otherwise **false**.\nIf the client is paginating with first/after, then the client may return **true** if edges prior to `after` exist, if it can do so efficiently, otherwise may return **false**.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'hasPreviousPage' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The cursor of the first edge in the set.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'startCursor' },
+          arguments: [],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The cursor of the last edge in the set.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'endCursor' },
+          arguments: [],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          directives: [],
+        },
+      ],
+    },
     { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'DateTime' }, directives: [] },
     { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'EmailAddress' }, directives: [] },
     {

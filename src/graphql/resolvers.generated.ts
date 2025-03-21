@@ -4,6 +4,7 @@ import {
   NonEmptyStringResolver,
   UUIDResolver,
 } from 'graphql-scalars';
+import { PageInfo } from './common/pageInfo/resolvers/PageInfo';
 import { createTeam as Mutation_createTeam } from './team/resolvers/Mutation/createTeam';
 import { deleteTeam as Mutation_deleteTeam } from './team/resolvers/Mutation/deleteTeam';
 import { updateTeam as Mutation_updateTeam } from './team/resolvers/Mutation/updateTeam';
@@ -33,6 +34,7 @@ export const resolvers: Resolvers = {
     updateUser: Mutation_updateUser,
   },
 
+  PageInfo: PageInfo,
   Team: Team,
   User: User,
   DateTime: DateTimeResolver,

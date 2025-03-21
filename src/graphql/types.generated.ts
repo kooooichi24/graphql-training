@@ -81,6 +81,33 @@ export type MutationupdateUserArgs = {
   teamId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/**
+ * An object representing pagination information.
+ * Used in cursor-based pagination based on the GraphQL Relay specification.
+ * This object provides information for efficiently navigating through result sets.
+ *
+ * @see [GraphQL Cursor Connections Specification](https://relay.dev/graphql/connections.htm)
+ */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** The cursor of the last edge in the set. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * `hasNextPage` is used to indicate whether more edges exist following the set defined by the clients arguments.
+   * If the client is paginating with `first`/`after`, then the server must return **true** if further edges exist, otherwise **false**.
+   * If the client is paginating with `last`/`before`, then the client may return **true** if edges further from `before` exist, if it can do so efficiently, otherwise may return **false**.
+   */
+  hasNextPage: Scalars['Boolean']['output'];
+  /**
+   * `hasPreviousPage` is used to indicate whether more edges exist prior to the set defined by the clients arguments.
+   * If the client is paginating with `last`/`before`, then the server must return **true** if prior edges exist, otherwise **false**.
+   * If the client is paginating with first/after, then the client may return **true** if edges prior to `after` exist, if it can do so efficiently, otherwise may return **false**.
+   */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** The cursor of the first edge in the set. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   team?: Maybe<Team>;
@@ -202,11 +229,12 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
   Team: ResolverTypeWrapper<TeamMapper>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   User: ResolverTypeWrapper<UserMapper>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -216,11 +244,12 @@ export type ResolversParentTypes = {
   Mutation: {};
   String: Scalars['String']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
+  PageInfo: PageInfo;
+  Boolean: Scalars['Boolean']['output'];
   Query: {};
   Team: TeamMapper;
   UUID: Scalars['UUID']['output'];
   User: UserMapper;
-  Boolean: Scalars['Boolean']['output'];
 };
 
 export interface DateTimeScalarConfig
@@ -292,6 +321,17 @@ export interface NonEmptyStringScalarConfig
   name: 'NonEmptyString';
 }
 
+export type PageInfoResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo'],
+> = {
+  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
@@ -343,6 +383,7 @@ export type Resolvers<ContextType = Context> = {
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   NonEmptyString?: GraphQLScalarType;
+  PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
   UUID?: GraphQLScalarType;
