@@ -7,7 +7,8 @@
     "enabled": true,
     "rules": {
       "recommended": true
-    }
+    },
+    "ignore": ["src/graphql/types.generated.ts"]
   },
   "formatter": {
     "enabled": true,
