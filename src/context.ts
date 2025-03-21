@@ -1,5 +1,5 @@
+import { PrismaClient, type Team, type User } from '@prisma/client';
 import DataLoader from 'dataloader';
-import { PrismaClient, type User, type Team } from '@prisma/client';
 
 // Prismaクライアントのシングルトンインスタンスを作成
 // これにより、複数のリクエストで同じインスタンスを再利用できます
