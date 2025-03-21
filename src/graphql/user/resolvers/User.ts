@@ -10,7 +10,6 @@ import type { UserResolvers } from './../../types.generated';
  * If you want to skip this file generation, remove the mapper or update the pattern in the `resolverGeneration.object` config.
  */
 export const User: UserResolvers = {
-  /* Implement User resolver logic here */
   teams: async (parent, _arg, ctx) => {
     const teams = await ctx.loaders.userTeamsLoader.load(parent.id);
     if (!teams || teams.length === 0) return [];
