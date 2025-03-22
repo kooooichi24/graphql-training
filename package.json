@@ -15,7 +15,7 @@
     "prisma:migrate": "prisma migrate dev --name",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
-    "gpl:codegen": "graphql-codegen"
+    "gql:codegen": "graphql-codegen"
   },
   "keywords": ["graphql", "apollo", "lambda", "typescript", "postgresql", "prisma"],
   "author": "",
