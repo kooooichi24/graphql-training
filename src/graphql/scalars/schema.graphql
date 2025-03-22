@@ -1,4 +1,5 @@
 scalar DateTime
 scalar EmailAddress
 scalar NonEmptyString
+scalar NonNegativeInt
 scalar UUID
