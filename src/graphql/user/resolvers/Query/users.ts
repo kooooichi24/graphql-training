@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createPaginationCursor, MAX_PAGINATION_FIRST, toConnection } from '../../../utils';
+import { MAX_PAGINATION_FIRST, createPaginationCursor, toConnection } from '../../../utils';
 import type { UserMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
