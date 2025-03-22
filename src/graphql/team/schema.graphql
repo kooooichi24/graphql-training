@@ -5,8 +5,18 @@ type Team {
   members: [User!]!
 }
 
+type TeamEdge {
+  node: Team!
+  cursor: String!
+}
+
+type TeamConnection {
+  edges: [TeamEdge!]!
+  pageInfo: PageInfo!
+}
+
 type Query {
-  teams: [Team!]!
+  teams(first: NonNegativeInt!, after: String): TeamConnection!
   team(id: UUID!): Team
 }
 

@@ -48,7 +48,7 @@ type PageInfo {
 
 type Query {
   team(id: UUID!): Team
-  teams: [Team!]!
+  teams(after: String, first: NonNegativeInt!): TeamConnection!
   user(id: UUID!): User
   users(after: String, first: NonNegativeInt!): UserConnection!
 }
@@ -58,6 +58,16 @@ type Team {
   id: UUID!
   members: [User!]!
   name: NonEmptyString!
+}
+
+type TeamConnection {
+  edges: [TeamEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TeamEdge {
+  cursor: String!
+  node: Team!
 }
 
 scalar UUID

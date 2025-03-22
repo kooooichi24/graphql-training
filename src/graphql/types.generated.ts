@@ -113,13 +113,18 @@ export type PageInfo = {
 export type Query = {
   __typename?: 'Query';
   team?: Maybe<Team>;
-  teams: Array<Team>;
+  teams: TeamConnection;
   user?: Maybe<User>;
   users: UserConnection;
 };
 
 export type QueryteamArgs = {
   id: Scalars['UUID']['input'];
+};
+
+export type QueryteamsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['NonNegativeInt']['input'];
 };
 
 export type QueryuserArgs = {
@@ -137,6 +142,18 @@ export type Team = {
   id: Scalars['UUID']['output'];
   members: Array<User>;
   name: Scalars['NonEmptyString']['output'];
+};
+
+export type TeamConnection = {
+  __typename?: 'TeamConnection';
+  edges: Array<TeamEdge>;
+  pageInfo: PageInfo;
+};
+
+export type TeamEdge = {
+  __typename?: 'TeamEdge';
+  cursor: Scalars['String']['output'];
+  node: Team;
 };
 
 export type User = {
@@ -253,6 +270,10 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
   Team: ResolverTypeWrapper<TeamMapper>;
+  TeamConnection: ResolverTypeWrapper<
+    Omit<TeamConnection, 'edges'> & { edges: Array<ResolversTypes['TeamEdge']> }
+  >;
+  TeamEdge: ResolverTypeWrapper<Omit<TeamEdge, 'node'> & { node: ResolversTypes['Team'] }>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   User: ResolverTypeWrapper<UserMapper>;
   UserConnection: ResolverTypeWrapper<
@@ -273,6 +294,10 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Query: {};
   Team: TeamMapper;
+  TeamConnection: Omit<TeamConnection, 'edges'> & {
+    edges: Array<ResolversParentTypes['TeamEdge']>;
+  };
+  TeamEdge: Omit<TeamEdge, 'node'> & { node: ResolversParentTypes['Team'] };
   UUID: Scalars['UUID']['output'];
   User: UserMapper;
   UserConnection: Omit<UserConnection, 'edges'> & {
@@ -376,7 +401,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryteamArgs, 'id'>
   >;
-  teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
+  teams?: Resolver<
+    ResolversTypes['TeamConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryteamsArgs, 'first'>
+  >;
   user?: Resolver<
     Maybe<ResolversTypes['User']>,
     ParentType,
@@ -399,6 +429,25 @@ export type TeamResolvers<
   id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   members?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TeamConnectionResolvers<
+  ContextType = Context,
+  ParentType extends
+    ResolversParentTypes['TeamConnection'] = ResolversParentTypes['TeamConnection'],
+> = {
+  edges?: Resolver<Array<ResolversTypes['TeamEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TeamEdgeResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['TeamEdge'] = ResolversParentTypes['TeamEdge'],
+> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -445,6 +494,8 @@ export type Resolvers<ContextType = Context> = {
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
+  TeamConnection?: TeamConnectionResolvers<ContextType>;
+  TeamEdge?: TeamEdgeResolvers<ContextType>;
   UUID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;

@@ -137,12 +137,42 @@ export const typeDefs = {
       ],
     },
     {
-      name: { kind: 'Name', value: 'Query' },
       kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'TeamEdge' },
+      interfaces: [],
+      directives: [],
       fields: [
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'teams' },
+          name: { kind: 'Name', value: 'node' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'cursor' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'TeamConnection' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'edges' },
           arguments: [],
           type: {
             kind: 'NonNullType',
@@ -150,9 +180,51 @@ export const typeDefs = {
               kind: 'ListType',
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamEdge' } },
               },
             },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'pageInfo' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      name: { kind: 'Name', value: 'Query' },
+      kind: 'ObjectTypeDefinition',
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'teams' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'first' },
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamConnection' } },
           },
           directives: [],
         },
