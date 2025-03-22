@@ -2,6 +2,7 @@ import {
   DateTimeResolver,
   EmailAddressResolver,
   NonEmptyStringResolver,
+  NonNegativeIntResolver,
   UUIDResolver,
 } from 'graphql-scalars';
 import { PageInfo } from './common/pageInfo/resolvers/PageInfo';
@@ -21,6 +22,8 @@ import { updateUser as Mutation_updateUser } from './user/resolvers/Mutation/upd
 import { user as Query_user } from './user/resolvers/Query/user';
 import { users as Query_users } from './user/resolvers/Query/users';
 import { User } from './user/resolvers/User';
+import { UserConnection } from './user/resolvers/UserConnection';
+import { UserEdge } from './user/resolvers/UserEdge';
 export const resolvers: Resolvers = {
   Query: { team: Query_team, teams: Query_teams, user: Query_user, users: Query_users },
   Mutation: {
@@ -37,8 +40,11 @@ export const resolvers: Resolvers = {
   PageInfo: PageInfo,
   Team: Team,
   User: User,
+  UserConnection: UserConnection,
+  UserEdge: UserEdge,
   DateTime: DateTimeResolver,
   EmailAddress: EmailAddressResolver,
   NonEmptyString: NonEmptyStringResolver,
+  NonNegativeInt: NonNegativeIntResolver,
   UUID: UUIDResolver,
 };

@@ -79,6 +79,11 @@ export const typeDefs = {
       name: { kind: 'Name', value: 'NonEmptyString' },
       directives: [],
     },
+    {
+      kind: 'ScalarTypeDefinition',
+      name: { kind: 'Name', value: 'NonNegativeInt' },
+      directives: [],
+    },
     { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'UUID' }, directives: [] },
     {
       kind: 'ObjectTypeDefinition',
@@ -171,16 +176,26 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'users' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
               },
+              directives: [],
             },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
           },
           directives: [],
         },
@@ -479,6 +494,68 @@ export const typeDefs = {
                 type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
               },
             },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'UserEdge' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'node' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'cursor' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'UserConnection' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'edges' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserEdge' } },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'pageInfo' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
           },
           directives: [],
         },

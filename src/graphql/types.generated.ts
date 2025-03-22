@@ -13,6 +13,7 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> =
   | T
   | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -24,6 +25,7 @@ export type Scalars = {
   DateTime: { input: Date | string; output: Date | string };
   EmailAddress: { input: string; output: string };
   NonEmptyString: { input: string; output: string };
+  NonNegativeInt: { input: number; output: number };
   UUID: { input: string; output: string };
 };
 
@@ -113,7 +115,7 @@ export type Query = {
   team?: Maybe<Team>;
   teams: Array<Team>;
   user?: Maybe<User>;
-  users: Array<User>;
+  users: UserConnection;
 };
 
 export type QueryteamArgs = {
@@ -122,6 +124,11 @@ export type QueryteamArgs = {
 
 export type QueryuserArgs = {
   id: Scalars['UUID']['input'];
+};
+
+export type QueryusersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['NonNegativeInt']['input'];
 };
 
 export type Team = {
@@ -138,6 +145,18 @@ export type User = {
   id: Scalars['UUID']['output'];
   name: Scalars['NonEmptyString']['output'];
   teams: Array<Team>;
+};
+
+export type UserConnection = {
+  __typename?: 'UserConnection';
+  edges: Array<UserEdge>;
+  pageInfo: PageInfo;
+};
+
+export type UserEdge = {
+  __typename?: 'UserEdge';
+  cursor: Scalars['String']['output'];
+  node: User;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -229,12 +248,17 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
+  NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
   Team: ResolverTypeWrapper<TeamMapper>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   User: ResolverTypeWrapper<UserMapper>;
+  UserConnection: ResolverTypeWrapper<
+    Omit<UserConnection, 'edges'> & { edges: Array<ResolversTypes['UserEdge']> }
+  >;
+  UserEdge: ResolverTypeWrapper<Omit<UserEdge, 'node'> & { node: ResolversTypes['User'] }>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -244,12 +268,17 @@ export type ResolversParentTypes = {
   Mutation: {};
   String: Scalars['String']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
+  NonNegativeInt: Scalars['NonNegativeInt']['output'];
   PageInfo: PageInfo;
   Boolean: Scalars['Boolean']['output'];
   Query: {};
   Team: TeamMapper;
   UUID: Scalars['UUID']['output'];
   User: UserMapper;
+  UserConnection: Omit<UserConnection, 'edges'> & {
+    edges: Array<ResolversParentTypes['UserEdge']>;
+  };
+  UserEdge: Omit<UserEdge, 'node'> & { node: ResolversParentTypes['User'] };
 };
 
 export interface DateTimeScalarConfig
@@ -321,6 +350,11 @@ export interface NonEmptyStringScalarConfig
   name: 'NonEmptyString';
 }
 
+export interface NonNegativeIntScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['NonNegativeInt'], any> {
+  name: 'NonNegativeInt';
+}
+
 export type PageInfoResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo'],
@@ -349,7 +383,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryuserArgs, 'id'>
   >;
-  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  users?: Resolver<
+    ResolversTypes['UserConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryusersArgs, 'first'>
+  >;
 };
 
 export type TeamResolvers<
@@ -378,14 +417,36 @@ export type UserResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserConnectionResolvers<
+  ContextType = Context,
+  ParentType extends
+    ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection'],
+> = {
+  edges?: Resolver<Array<ResolversTypes['UserEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserEdgeResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge'],
+> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = Context> = {
   DateTime?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   NonEmptyString?: GraphQLScalarType;
+  NonNegativeInt?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
   UUID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
+  UserConnection?: UserConnectionResolvers<ContextType>;
+  UserEdge?: UserEdgeResolvers<ContextType>;
 };
