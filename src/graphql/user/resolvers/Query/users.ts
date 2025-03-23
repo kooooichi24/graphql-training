@@ -8,10 +8,15 @@ const CursorSchema = z.object({
   id: z.string(),
 });
 const { decodeCursor, createCursorEncoder } = createPaginationCursor(CursorSchema);
+export const decodeUsersCursor = decodeCursor;
+export const encodeUsersCursor = createCursorEncoder<UserMapper>((user) => ({
+  id: user.id,
+  name: user.name,
+}));
 
 export const users: NonNullable<QueryResolvers['users']> = async (_parent, args, ctx) => {
   const first = Math.min(args.first, MAX_PAGINATION_FIRST);
-  const decodedCursor = args.after ? decodeCursor(args.after) : undefined;
+  const decodedCursor = args.after ? decodeUsersCursor(args.after) : undefined;
 
   const users = await ctx.prisma.$queryRawUnsafe<
     Array<{
@@ -28,12 +33,8 @@ export const users: NonNullable<QueryResolvers['users']> = async (_parent, args,
       LIMIT ${first + 1}
     `);
 
-  return toConnection(
-    users,
-    createCursorEncoder<UserMapper>((user) => ({ id: user.id, name: user.name })),
-    {
-      first: args.first,
-      after: args.after ?? undefined,
-    },
-  );
+  return toConnection(users, encodeUsersCursor, {
+    first: args.first,
+    after: args.after ?? undefined,
+  });
 };
