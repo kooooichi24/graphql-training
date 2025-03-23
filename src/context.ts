@@ -95,7 +95,7 @@ export async function createContext(): Promise<Context> {
             INNER JOIN params ON tm.user_id = params.user_id
           WHERE
             params.after_team_name IS NULL
-            OR (t.name, tm.team_id) > (params.after_team_name, params.after_team_id::uuid)
+            OR (t.name, t.id) > (params.after_team_name, params.after_team_id::uuid)
         )
         SELECT
           ranked.team_id AS id,
