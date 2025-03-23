@@ -3,11 +3,11 @@ import { MAX_PAGINATION_FIRST, createPaginationCursor, toConnection } from '../.
 import type { TeamMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
-const TeamCursorSchema = z.object({
+const CursorSchema = z.object({
   name: z.string(),
   id: z.string(),
 });
-const { decodeCursor, createCursorEncoder } = createPaginationCursor(TeamCursorSchema);
+const { decodeCursor, createCursorEncoder } = createPaginationCursor(CursorSchema);
 export const decodeTeamsCursor = decodeCursor;
 export const encodeTeamsCursor = createCursorEncoder<TeamMapper>((team) => ({
   id: team.id,
