@@ -56,7 +56,7 @@ type Query {
 type Team {
   description: String
   id: UUID!
-  members: [User!]!
+  members(after: String, first: NonNegativeInt!): UserConnection!
   name: NonEmptyString!
 }
 

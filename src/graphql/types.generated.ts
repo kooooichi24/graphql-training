@@ -140,8 +140,13 @@ export type Team = {
   __typename?: 'Team';
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  members: Array<User>;
+  members: UserConnection;
   name: Scalars['NonEmptyString']['output'];
+};
+
+export type TeammembersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['NonNegativeInt']['input'];
 };
 
 export type TeamConnection = {
@@ -432,7 +437,12 @@ export type TeamResolvers<
 > = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
-  members?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  members?: Resolver<
+    ResolversTypes['UserConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<TeammembersArgs, 'first'>
+  >;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

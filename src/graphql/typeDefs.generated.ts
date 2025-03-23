@@ -121,16 +121,26 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'members' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
               },
+              directives: [],
             },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
           },
           directives: [],
         },
