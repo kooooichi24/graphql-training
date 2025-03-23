@@ -1,3 +1,5 @@
+import { decodeUsersCursor, encodeUsersCursor } from '../../user/resolvers/Query/users';
+import { MAX_PAGINATION_FIRST, toConnection } from '../../utils';
 import type { TeamResolvers } from './../../types.generated';
 
 /*
@@ -10,7 +12,19 @@ import type { TeamResolvers } from './../../types.generated';
  * If you want to skip this file generation, remove the mapper or update the pattern in the `resolverGeneration.object` config.
  */
 export const Team: TeamResolvers = {
-  members: async (parent, _arg, ctx) => {
-    return await ctx.loaders.teamMembersLoader.load(parent.id);
+  members: async (parent, args, ctx) => {
+    const first = Math.min(args.first, MAX_PAGINATION_FIRST);
+    const decodedCursor = args.after ? decodeUsersCursor(args.after) : undefined;
+
+    const users = await ctx.loaders.teamMembersLoader.load({
+      teamId: parent.id,
+      first,
+      after: decodedCursor ? { userName: decodedCursor.name, userId: decodedCursor.id } : undefined,
+    });
+
+    return toConnection(users, encodeUsersCursor, {
+      first,
+      after: args.after ?? undefined,
+    });
   },
 };

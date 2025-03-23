@@ -26,7 +26,14 @@ export type Context = {
       },
       Team[]
     >;
-    teamMembersLoader: DataLoader<string, User[]>;
+    teamMembersLoader: DataLoader<
+      {
+        teamId: string;
+        first: number;
+        after?: { userName: string; userId: string };
+      },
+      User[]
+    >;
   };
 };
 
@@ -138,10 +145,17 @@ export async function createContext(): Promise<Context> {
   );
 
   const teamMembersLoader = new DataLoader(
-    async (teamIds: ReadonlyArray<string>): Promise<User[][]> => {
+    async (
+      inputs: readonly {
+        teamId: string;
+        first: number;
+        after?: { userName: string; userId: string };
+      }[],
+    ): Promise<User[][]> => {
       console.log('--------------------------------');
-      console.log('Invoked teamMembersLoader with', teamIds);
+      console.log('Invoked teamMembersLoader with', inputs);
       console.log('--------------------------------');
+
       const users = await prisma.$queryRawUnsafe<
         Array<{
           id: string;
@@ -153,10 +167,56 @@ export async function createContext(): Promise<Context> {
         }>
       >(
         `
-        SELECT u.*, tm.team_id
-        FROM users u
-        JOIN team_members tm ON u.id = tm.user_id
-        WHERE tm.team_id IN (${teamIds.map((id) => `'${id}'::uuid`).join(',')})
+        WITH params AS (
+          SELECT 
+            team_id,
+            after_user_name,
+            after_user_id,
+            limit_per_team,
+            (limit_per_team + 1) AS fetch_limit
+          FROM (VALUES 
+            ${inputs
+              .map(
+                (input) => `(
+                  '${input.teamId}'::uuid, 
+                  ${input.after?.userName ? `'${input.after.userName}'` : null},
+                  ${input.after?.userId ? `'${input.after.userId}'::uuid` : null}, 
+                  ${input.first}
+                )`,
+              )
+              .join(',\n')}
+          ) AS p(team_id, after_user_name, after_user_id, limit_per_team)
+        ),
+        ranked AS (
+          SELECT
+            tm.team_id,
+            u.id AS user_id,
+            u.name,
+            u.email,
+            u.created_at AS user_created_at,
+            u.updated_at AS user_updated_at,
+            ROW_NUMBER() OVER (
+              PARTITION BY tm.user_id
+              ORDER BY u.name ASC, u.id ASC
+            ) AS rn
+          FROM
+            team_members tm
+            INNER JOIN users u ON tm.user_id = u.id
+            INNER JOIN params ON tm.team_id = params.team_id
+          WHERE
+            params.after_user_name IS NULL
+            OR (u.name, u.id) > (params.after_user_name, params.after_user_id::uuid)
+        )
+        SELECT
+          ranked.user_id AS id,
+          ranked.name,
+          ranked.email,
+          ranked.user_created_at AS created_at,
+          ranked.user_updated_at AS updated_at,
+          ranked.team_id
+        FROM ranked
+        JOIN params ON ranked.team_id = params.team_id
+        WHERE ranked.rn <= params.fetch_limit
         `,
       );
 
@@ -164,6 +224,7 @@ export async function createContext(): Promise<Context> {
       const usersByTeamId = new Map<string, User[]>();
 
       // まず各チームIDに空の配列を初期化
+      const teamIds = inputs.map((input) => input.teamId);
       for (const teamId of teamIds) {
         usersByTeamId.set(teamId, []);
       }
