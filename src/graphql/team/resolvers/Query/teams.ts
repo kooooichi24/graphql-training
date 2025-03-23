@@ -3,20 +3,20 @@ import { MAX_PAGINATION_FIRST, createPaginationCursor, toConnection } from '../.
 import type { TeamMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
-export const TeamCursorSchema = z.object({
+const TeamCursorSchema = z.object({
   name: z.string(),
   id: z.string(),
 });
 const { decodeCursor, createCursorEncoder } = createPaginationCursor(TeamCursorSchema);
-export const decodeTeamCursor = decodeCursor;
-export const encodeTeamCursor = createCursorEncoder<TeamMapper>((team) => ({
+export const decodeTeamsCursor = decodeCursor;
+export const encodeTeamsCursor = createCursorEncoder<TeamMapper>((team) => ({
   id: team.id,
   name: team.name,
 }));
 
 export const teams: NonNullable<QueryResolvers['teams']> = async (_parent, args, ctx) => {
   const first = Math.min(args.first, MAX_PAGINATION_FIRST);
-  const decodedCursor = args.after ? decodeTeamCursor(args.after) : undefined;
+  const decodedCursor = args.after ? decodeTeamsCursor(args.after) : undefined;
 
   const teams = await ctx.prisma.$queryRawUnsafe<
     Array<{
@@ -33,7 +33,7 @@ export const teams: NonNullable<QueryResolvers['teams']> = async (_parent, args,
     LIMIT ${first + 1}
   `);
 
-  return toConnection(teams, encodeTeamCursor, {
+  return toConnection(teams, encodeTeamsCursor, {
     first: args.first,
     after: args.after ?? undefined,
   });

@@ -1,4 +1,4 @@
-import { decodeTeamCursor, encodeTeamCursor } from '../../team/resolvers/Query/teams';
+import { decodeTeamsCursor, encodeTeamsCursor } from '../../team/resolvers/Query/teams';
 import { MAX_PAGINATION_FIRST, toConnection } from '../../utils';
 import type { UserResolvers } from './../../types.generated';
 
@@ -14,7 +14,7 @@ import type { UserResolvers } from './../../types.generated';
 export const User: UserResolvers = {
   teams: async (parent, args, ctx) => {
     const first = Math.min(args.first, MAX_PAGINATION_FIRST);
-    const decodedCursor = args.after ? decodeTeamCursor(args.after) : undefined;
+    const decodedCursor = args.after ? decodeTeamsCursor(args.after) : undefined;
 
     const teams = await ctx.loaders.userTeamsLoader.load({
       userId: parent.id,
@@ -22,7 +22,7 @@ export const User: UserResolvers = {
       after: decodedCursor ? { teamName: decodedCursor.name, teamId: decodedCursor.id } : undefined,
     });
 
-    return toConnection(teams, encodeTeamCursor, {
+    return toConnection(teams, encodeTeamsCursor, {
       first,
       after: args.after ?? undefined,
     });
