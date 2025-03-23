@@ -161,7 +161,12 @@ export type User = {
   email: Scalars['EmailAddress']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['NonEmptyString']['output'];
-  teams: Array<Team>;
+  teams: TeamConnection;
+};
+
+export type UserteamsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['NonNegativeInt']['input'];
 };
 
 export type UserConnection = {
@@ -462,7 +467,12 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-  teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
+  teams?: Resolver<
+    ResolversTypes['TeamConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<UserteamsArgs, 'first'>
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

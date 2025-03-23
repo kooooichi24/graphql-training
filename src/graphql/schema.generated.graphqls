@@ -76,7 +76,7 @@ type User {
   email: EmailAddress!
   id: UUID!
   name: NonEmptyString!
-  teams: [Team!]!
+  teams(after: String, first: NonNegativeInt!): TeamConnection!
 }
 
 type UserConnection {

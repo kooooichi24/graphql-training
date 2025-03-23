@@ -556,16 +556,26 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'teams' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
               },
+              directives: [],
             },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamConnection' } },
           },
           directives: [],
         },
