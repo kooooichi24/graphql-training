@@ -27,13 +27,26 @@ type User {
     The number of items to forward paginate (used with after).
 
     Maximum: 500
+    Default: 250 (If first or last is not specified)
     """
-    first: NonNegativeInt!
+    first: NonNegativeInt
 
     """
     The cursor to start the pagination from.
     """
     after: String
+
+    """
+    The number of items to backward paginate (used with before).
+
+    Maximum: 500
+    """
+    last: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    before: String
   ): TeamConnection!
 }
 
@@ -58,13 +71,26 @@ type Query {
     The number of items to forward paginate (used with after).
 
     Maximum: 500
+    Default: 250 (If first or last is not specified)
     """
-    first: NonNegativeInt!
+    first: NonNegativeInt
 
     """
     The cursor to start the pagination from.
     """
     after: String
+
+    """
+    The number of items to backward paginate (used with before).
+
+    Maximum: 500
+    """
+    last: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    before: String
   ): UserConnection!
 
   """

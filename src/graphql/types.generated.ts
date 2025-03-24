@@ -181,7 +181,9 @@ export type QueryuserArgs = {
 
 export type QueryusersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  first: Scalars['NonNegativeInt']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['NonNegativeInt']['input']>;
+  last?: InputMaybe<Scalars['NonNegativeInt']['input']>;
 };
 
 /** This input represents the input to remove a user from a team. */
@@ -276,7 +278,9 @@ export type User = {
 /** This object represents a user. */
 export type UserteamsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  first: Scalars['NonNegativeInt']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['NonNegativeInt']['input']>;
+  last?: InputMaybe<Scalars['NonNegativeInt']['input']>;
 };
 
 export type UserConnection = {
@@ -559,7 +563,7 @@ export type QueryResolvers<
     ResolversTypes['UserConnection'],
     ParentType,
     ContextType,
-    RequireFields<QueryusersArgs, 'first'>
+    Partial<QueryusersArgs>
   >;
 };
 
@@ -621,7 +625,7 @@ export type UserResolvers<
     ResolversTypes['TeamConnection'],
     ParentType,
     ContextType,
-    RequireFields<UserteamsArgs, 'first'>
+    Partial<UserteamsArgs>
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
