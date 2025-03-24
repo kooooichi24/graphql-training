@@ -29,11 +29,20 @@ export type Scalars = {
   UUID: { input: string; output: string };
 };
 
+/** This input represents the input to add a user to a team. */
 export type AddUserToTeamInput = {
   /** The ID of the team to add the user to. */
   teamId: Scalars['UUID']['input'];
   /** The ID of the user to add to the team. */
   userId: Scalars['UUID']['input'];
+};
+
+/** This input represents the input to create a team. */
+export type CreateTeamInput = {
+  /** The description of the team. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The name of the team. */
+  name: Scalars['NonEmptyString']['input'];
 };
 
 /** This input represents the input to create a user. */
@@ -46,6 +55,12 @@ export type CreateUserInput = {
   teamId?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/** This input represents the input to delete a team. */
+export type DeleteTeamInput = {
+  /** The identifier of the team. */
+  id: Scalars['UUID']['input'];
+};
+
 /** This input represents the input to delete a user. */
 export type DeleteUserInput = {
   /** The ID of the user to delete. */
@@ -56,15 +71,18 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Adds a user to a team. */
   addUserToTeam: UserOutput;
-  createTeam: Team;
+  /** Creates a team. */
+  createTeam: TeamOutput;
   /** Creates a user. */
   createUser: UserOutput;
-  deleteTeam?: Maybe<Team>;
+  /** Deletes a team. */
+  deleteTeam?: Maybe<TeamOutput>;
   /** Deletes a user. */
   deleteUser: UserOutput;
   /** Removes a user from a team. */
   removeUserFromTeam: UserOutput;
-  updateTeam?: Maybe<Team>;
+  /** Updates a team. */
+  updateTeam?: Maybe<TeamOutput>;
   /** Updates a user. */
   updateUser: UserOutput;
 };
@@ -74,8 +92,7 @@ export type MutationaddUserToTeamArgs = {
 };
 
 export type MutationcreateTeamArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  name: Scalars['NonEmptyString']['input'];
+  input: CreateTeamInput;
 };
 
 export type MutationcreateUserArgs = {
@@ -83,7 +100,7 @@ export type MutationcreateUserArgs = {
 };
 
 export type MutationdeleteTeamArgs = {
-  id: Scalars['UUID']['input'];
+  input: DeleteTeamInput;
 };
 
 export type MutationdeleteUserArgs = {
@@ -95,9 +112,7 @@ export type MutationremoveUserFromTeamArgs = {
 };
 
 export type MutationupdateTeamArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['UUID']['input'];
-  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  input: UpdateTeamInput;
 };
 
 export type MutationupdateUserArgs = {
@@ -169,6 +184,7 @@ export type QueryusersArgs = {
   first: Scalars['NonNegativeInt']['input'];
 };
 
+/** This input represents the input to remove a user from a team. */
 export type RemoveUserFromTeamInput = {
   /** The ID of the team to remove the user from. */
   teamId: Scalars['UUID']['input'];
@@ -205,6 +221,23 @@ export type TeamEdge = {
   __typename?: 'TeamEdge';
   cursor: Scalars['String']['output'];
   node: Team;
+};
+
+/** This object represents the mutation response to the team. */
+export type TeamOutput = {
+  __typename?: 'TeamOutput';
+  /** The identifier of the team. */
+  id: Scalars['UUID']['output'];
+};
+
+/** This input represents the input to update a team. */
+export type UpdateTeamInput = {
+  /** The description of the team. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The identifier of the team. */
+  id: Scalars['UUID']['input'];
+  /** The name of the team. */
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 /** This input represents the input to update a user. */
@@ -342,12 +375,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
+  CreateTeamInput: CreateTeamInput;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   CreateUserInput: CreateUserInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
+  DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -359,7 +394,9 @@ export type ResolversTypes = {
     Omit<TeamConnection, 'edges'> & { edges: Array<ResolversTypes['TeamEdge']> }
   >;
   TeamEdge: ResolverTypeWrapper<Omit<TeamEdge, 'node'> & { node: ResolversTypes['Team'] }>;
+  TeamOutput: ResolverTypeWrapper<TeamOutput>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
+  UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<UserMapper>;
   UserConnection: ResolverTypeWrapper<
@@ -372,12 +409,14 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
+  CreateTeamInput: CreateTeamInput;
+  String: Scalars['String']['output'];
   CreateUserInput: CreateUserInput;
   DateTime: Scalars['DateTime']['output'];
+  DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
   EmailAddress: Scalars['EmailAddress']['output'];
   Mutation: {};
-  String: Scalars['String']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
   NonNegativeInt: Scalars['NonNegativeInt']['output'];
   PageInfo: PageInfo;
@@ -389,7 +428,9 @@ export type ResolversParentTypes = {
     edges: Array<ResolversParentTypes['TeamEdge']>;
   };
   TeamEdge: Omit<TeamEdge, 'node'> & { node: ResolversParentTypes['Team'] };
+  TeamOutput: TeamOutput;
   UUID: Scalars['UUID']['output'];
+  UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: UserMapper;
   UserConnection: Omit<UserConnection, 'edges'> & {
@@ -420,10 +461,10 @@ export type MutationResolvers<
     RequireFields<MutationaddUserToTeamArgs, 'input'>
   >;
   createTeam?: Resolver<
-    ResolversTypes['Team'],
+    ResolversTypes['TeamOutput'],
     ParentType,
     ContextType,
-    RequireFields<MutationcreateTeamArgs, 'name'>
+    RequireFields<MutationcreateTeamArgs, 'input'>
   >;
   createUser?: Resolver<
     ResolversTypes['UserOutput'],
@@ -432,10 +473,10 @@ export type MutationResolvers<
     RequireFields<MutationcreateUserArgs, 'input'>
   >;
   deleteTeam?: Resolver<
-    Maybe<ResolversTypes['Team']>,
+    Maybe<ResolversTypes['TeamOutput']>,
     ParentType,
     ContextType,
-    RequireFields<MutationdeleteTeamArgs, 'id'>
+    RequireFields<MutationdeleteTeamArgs, 'input'>
   >;
   deleteUser?: Resolver<
     ResolversTypes['UserOutput'],
@@ -450,10 +491,10 @@ export type MutationResolvers<
     RequireFields<MutationremoveUserFromTeamArgs, 'input'>
   >;
   updateTeam?: Resolver<
-    Maybe<ResolversTypes['Team']>,
+    Maybe<ResolversTypes['TeamOutput']>,
     ParentType,
     ContextType,
-    RequireFields<MutationupdateTeamArgs, 'id'>
+    RequireFields<MutationupdateTeamArgs, 'input'>
   >;
   updateUser?: Resolver<
     ResolversTypes['UserOutput'],
@@ -549,6 +590,14 @@ export type TeamEdgeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type TeamOutputResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['TeamOutput'] = ResolversParentTypes['TeamOutput'],
+> = {
+  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UUID'], any> {
   name: 'UUID';
 }
@@ -607,6 +656,7 @@ export type Resolvers<ContextType = Context> = {
   Team?: TeamResolvers<ContextType>;
   TeamConnection?: TeamConnectionResolvers<ContextType>;
   TeamEdge?: TeamEdgeResolvers<ContextType>;
+  TeamOutput?: TeamOutputResolvers<ContextType>;
   UUID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;

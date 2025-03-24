@@ -72,8 +72,74 @@ type Query {
   ): Team
 }
 
+"""
+This object represents the mutation response to the team.
+"""
+type TeamOutput {
+  """
+  The identifier of the team.
+  """
+  id: UUID!
+}
+
+"""
+This input represents the input to create a team.
+"""
+input CreateTeamInput {
+  """
+  The name of the team.
+  """
+  name: NonEmptyString!
+
+  """
+  The description of the team.
+  """
+  description: String
+}
+
+"""
+This input represents the input to update a team.
+"""
+input UpdateTeamInput {
+  """
+  The identifier of the team.
+  """
+  id: UUID!
+
+  """
+  The name of the team.
+  """
+  name: NonEmptyString
+
+  """
+  The description of the team.
+  """
+  description: String
+}
+
+"""
+This input represents the input to delete a team.
+"""
+input DeleteTeamInput {
+  """
+  The identifier of the team.
+  """
+  id: UUID!
+}
+
 type Mutation {
-  createTeam(name: NonEmptyString!, description: String): Team!
-  updateTeam(id: UUID!, name: NonEmptyString, description: String): Team
-  deleteTeam(id: UUID!): Team
+  """
+  Creates a team.
+  """
+  createTeam(input: CreateTeamInput!): TeamOutput!
+
+  """
+  Updates a team.
+  """
+  updateTeam(input: UpdateTeamInput!): TeamOutput
+
+  """
+  Deletes a team.
+  """
+  deleteTeam(input: DeleteTeamInput!): TeamOutput
 }

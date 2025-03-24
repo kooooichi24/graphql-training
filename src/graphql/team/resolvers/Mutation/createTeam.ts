@@ -5,10 +5,14 @@ export const createTeam: NonNullable<MutationResolvers['createTeam']> = async (
   arg,
   ctx,
 ) => {
-  return await ctx.prisma.team.create({
+  const team = await ctx.prisma.team.create({
     data: {
-      name: arg.name,
-      description: arg.description,
+      name: arg.input.name,
+      description: arg.input.description,
     },
   });
+
+  return {
+    id: team.id,
+  };
 };

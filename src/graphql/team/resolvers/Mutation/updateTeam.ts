@@ -8,16 +8,20 @@ export const updateTeam: NonNullable<MutationResolvers['updateTeam']> = async (
 ) => {
   const data: Prisma.TeamUpdateInput = {};
 
-  if (arg.name) {
-    data.name = arg.name;
+  if (arg.input.name) {
+    data.name = arg.input.name;
   }
 
-  if (arg.description) {
-    data.description = arg.description;
+  if (arg.input.description) {
+    data.description = arg.input.description;
   }
 
-  return await ctx.prisma.team.update({
-    where: { id: arg.id },
+  const team = await ctx.prisma.team.update({
+    where: { id: arg.input.id },
     data,
   });
+
+  return {
+    id: team.id,
+  };
 };

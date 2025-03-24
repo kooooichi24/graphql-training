@@ -1,9 +1,19 @@
+"""This input represents the input to add a user to a team."""
 input AddUserToTeamInput {
   """The ID of the team to add the user to."""
   teamId: UUID!
 
   """The ID of the user to add to the team."""
   userId: UUID!
+}
+
+"""This input represents the input to create a team."""
+input CreateTeamInput {
+  """The description of the team."""
+  description: String
+
+  """The name of the team."""
+  name: NonEmptyString!
 }
 
 """This input represents the input to create a user."""
@@ -20,6 +30,12 @@ input CreateUserInput {
 
 scalar DateTime
 
+"""This input represents the input to delete a team."""
+input DeleteTeamInput {
+  """The identifier of the team."""
+  id: UUID!
+}
+
 """This input represents the input to delete a user."""
 input DeleteUserInput {
   """The ID of the user to delete."""
@@ -31,18 +47,24 @@ scalar EmailAddress
 type Mutation {
   """Adds a user to a team."""
   addUserToTeam(input: AddUserToTeamInput!): UserOutput!
-  createTeam(description: String, name: NonEmptyString!): Team!
+
+  """Creates a team."""
+  createTeam(input: CreateTeamInput!): TeamOutput!
 
   """Creates a user."""
   createUser(input: CreateUserInput!): UserOutput!
-  deleteTeam(id: UUID!): Team
+
+  """Deletes a team."""
+  deleteTeam(input: DeleteTeamInput!): TeamOutput
 
   """Deletes a user."""
   deleteUser(input: DeleteUserInput!): UserOutput!
 
   """Removes a user from a team."""
   removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
-  updateTeam(description: String, id: UUID!, name: NonEmptyString): Team
+
+  """Updates a team."""
+  updateTeam(input: UpdateTeamInput!): TeamOutput
 
   """Updates a user."""
   updateUser(input: UpdateUserInput!): UserOutput!
@@ -129,6 +151,7 @@ type Query {
   ): UserConnection!
 }
 
+"""This input represents the input to remove a user from a team."""
 input RemoveUserFromTeamInput {
   """The ID of the team to remove the user from."""
   teamId: UUID!
@@ -168,7 +191,25 @@ type TeamEdge {
   node: Team!
 }
 
+"""This object represents the mutation response to the team."""
+type TeamOutput {
+  """The identifier of the team."""
+  id: UUID!
+}
+
 scalar UUID
+
+"""This input represents the input to update a team."""
+input UpdateTeamInput {
+  """The description of the team."""
+  description: String
+
+  """The identifier of the team."""
+  id: UUID!
+
+  """The name of the team."""
+  name: NonEmptyString
+}
 
 """This input represents the input to update a user."""
 input UpdateUserInput {

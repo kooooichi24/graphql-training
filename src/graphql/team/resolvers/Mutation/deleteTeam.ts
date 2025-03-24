@@ -5,7 +5,11 @@ export const deleteTeam: NonNullable<MutationResolvers['deleteTeam']> = async (
   arg,
   ctx,
 ) => {
-  return await ctx.prisma.team.delete({
-    where: { id: arg.id },
+  const team = await ctx.prisma.team.delete({
+    where: { id: arg.input.id },
   });
+
+  return {
+    id: team.id,
+  };
 };

@@ -143,6 +143,9 @@ input DeleteUserInput {
   id: UUID!
 }
 
+"""
+This input represents the input to add a user to a team.
+"""
 input AddUserToTeamInput {
   """
   The ID of the user to add to the team.
@@ -155,6 +158,9 @@ input AddUserToTeamInput {
   teamId: UUID!
 }
 
+"""
+This input represents the input to remove a user from a team.
+"""
 input RemoveUserFromTeamInput {
   """
   The ID of the user to remove from the team.
