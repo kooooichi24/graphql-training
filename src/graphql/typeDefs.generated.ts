@@ -87,12 +87,14 @@ export const typeDefs = {
     { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'UUID' }, directives: [] },
     {
       kind: 'ObjectTypeDefinition',
+      description: { kind: 'StringValue', value: 'This object represents a team.', block: true },
       name: { kind: 'Name', value: 'Team' },
       interfaces: [],
       directives: [],
       fields: [
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The identifier of the team.', block: true },
           name: { kind: 'Name', value: 'id' },
           arguments: [],
           type: {
@@ -103,6 +105,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The name of the team.', block: true },
           name: { kind: 'Name', value: 'name' },
           arguments: [],
           type: {
@@ -113,6 +116,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The description of the team.', block: true },
           name: { kind: 'Name', value: 'description' },
           arguments: [],
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
@@ -120,10 +124,16 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The members of the team.', block: true },
           name: { kind: 'Name', value: 'members' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).',
+                block: true,
+              },
               name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
@@ -133,6 +143,11 @@ export const typeDefs = {
             },
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'after' },
               type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
               directives: [],
@@ -214,10 +229,16 @@ export const typeDefs = {
       fields: [
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Returns a list of teams.', block: true },
           name: { kind: 'Name', value: 'teams' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).\n\nMaximum: 500',
+                block: true,
+              },
               name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
@@ -227,6 +248,11 @@ export const typeDefs = {
             },
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'after' },
               type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
               directives: [],
@@ -240,10 +266,16 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Returns a team by ID.', block: true },
           name: { kind: 'Name', value: 'team' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The identifier of the team.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'id' },
               type: {
                 kind: 'NonNullType',
@@ -257,10 +289,20 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Returns a list of users.\n\nIt is not possible to get users of other tenants.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'users' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).\n\nMaximum: 500',
+                block: true,
+              },
               name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
@@ -270,6 +312,11 @@ export const typeDefs = {
             },
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'after' },
               type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
               directives: [],
@@ -283,10 +330,20 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Returns a user by ID.\n\nIt is not possible to get users of other tenants.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'user' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The ID of the user to return.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'id' },
               type: {
                 kind: 'NonNullType',
@@ -529,12 +586,14 @@ export const typeDefs = {
     },
     {
       kind: 'ObjectTypeDefinition',
+      description: { kind: 'StringValue', value: 'This object represents a user.', block: true },
       name: { kind: 'Name', value: 'User' },
       interfaces: [],
       directives: [],
       fields: [
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The identifier of the user.', block: true },
           name: { kind: 'Name', value: 'id' },
           arguments: [],
           type: {
@@ -545,6 +604,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The name of the user.', block: true },
           name: { kind: 'Name', value: 'name' },
           arguments: [],
           type: {
@@ -555,6 +615,11 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The email address of the user.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'email' },
           arguments: [],
           type: {
@@ -565,10 +630,20 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The teams to which the user belongs.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'teams' },
           arguments: [
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).\n\nMaximum: 500',
+                block: true,
+              },
               name: { kind: 'Name', value: 'first' },
               type: {
                 kind: 'NonNullType',
@@ -578,6 +653,11 @@ export const typeDefs = {
             },
             {
               kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
               name: { kind: 'Name', value: 'after' },
               type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
               directives: [],

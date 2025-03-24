@@ -1,8 +1,36 @@
+"""
+This object represents a team.
+"""
 type Team {
+  """
+  The identifier of the team.
+  """
   id: UUID!
+
+  """
+  The name of the team.
+  """
   name: NonEmptyString!
+
+  """
+  The description of the team.
+  """
   description: String
-  members(first: NonNegativeInt!, after: String): UserConnection!
+
+  """
+  The members of the team.
+  """
+  members(
+    """
+    The number of items to forward paginate (used with after).
+    """
+    first: NonNegativeInt!
+
+    """
+    The cursor to start the pagination from.
+    """
+    after: String
+  ): UserConnection!
 }
 
 type TeamEdge {
@@ -16,8 +44,32 @@ type TeamConnection {
 }
 
 type Query {
-  teams(first: NonNegativeInt!, after: String): TeamConnection!
-  team(id: UUID!): Team
+  """
+  Returns a list of teams.
+  """
+  teams(
+    """
+    The number of items to forward paginate (used with after).
+
+    Maximum: 500
+    """
+    first: NonNegativeInt!
+
+    """
+    The cursor to start the pagination from.
+    """
+    after: String
+  ): TeamConnection!
+
+  """
+  Returns a team by ID.
+  """
+  team(
+    """
+    The identifier of the team.
+    """
+    id: UUID!
+  ): Team
 }
 
 type Mutation {

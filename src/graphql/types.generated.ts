@@ -112,9 +112,21 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Returns a team by ID. */
   team?: Maybe<Team>;
+  /** Returns a list of teams. */
   teams: TeamConnection;
+  /**
+   * Returns a user by ID.
+   *
+   * It is not possible to get users of other tenants.
+   */
   user?: Maybe<User>;
+  /**
+   * Returns a list of users.
+   *
+   * It is not possible to get users of other tenants.
+   */
   users: UserConnection;
 };
 
@@ -136,14 +148,20 @@ export type QueryusersArgs = {
   first: Scalars['NonNegativeInt']['input'];
 };
 
+/** This object represents a team. */
 export type Team = {
   __typename?: 'Team';
+  /** The description of the team. */
   description?: Maybe<Scalars['String']['output']>;
+  /** The identifier of the team. */
   id: Scalars['UUID']['output'];
+  /** The members of the team. */
   members: UserConnection;
+  /** The name of the team. */
   name: Scalars['NonEmptyString']['output'];
 };
 
+/** This object represents a team. */
 export type TeammembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['NonNegativeInt']['input'];
@@ -161,14 +179,20 @@ export type TeamEdge = {
   node: Team;
 };
 
+/** This object represents a user. */
 export type User = {
   __typename?: 'User';
+  /** The email address of the user. */
   email: Scalars['EmailAddress']['output'];
+  /** The identifier of the user. */
   id: Scalars['UUID']['output'];
+  /** The name of the user. */
   name: Scalars['NonEmptyString']['output'];
+  /** The teams to which the user belongs. */
   teams: TeamConnection;
 };
 
+/** This object represents a user. */
 export type UserteamsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['NonNegativeInt']['input'];
