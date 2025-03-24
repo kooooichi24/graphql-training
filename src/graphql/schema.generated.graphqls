@@ -1,16 +1,51 @@
+input AddUserToTeamInput {
+  """The ID of the team to add the user to."""
+  teamId: UUID!
+
+  """The ID of the user to add to the team."""
+  userId: UUID!
+}
+
+"""This input represents the input to create a user."""
+input CreateUserInput {
+  """The email address of the user."""
+  email: EmailAddress!
+
+  """The name of the user."""
+  name: NonEmptyString!
+
+  """The ID of the team to which the user belongs."""
+  teamId: UUID
+}
+
 scalar DateTime
+
+"""This input represents the input to delete a user."""
+input DeleteUserInput {
+  """The ID of the user to delete."""
+  id: UUID!
+}
 
 scalar EmailAddress
 
 type Mutation {
-  addUserToTeam(teamId: UUID!, userId: UUID!): User!
+  """Adds a user to a team."""
+  addUserToTeam(input: AddUserToTeamInput!): UserOutput!
   createTeam(description: String, name: NonEmptyString!): Team!
-  createUser(email: EmailAddress!, name: NonEmptyString!, teamId: UUID): User!
+
+  """Creates a user."""
+  createUser(input: CreateUserInput!): UserOutput!
   deleteTeam(id: UUID!): Team
-  deleteUser(id: UUID!): User
-  removeUserFromTeam(teamId: UUID!, userId: UUID!): User!
+
+  """Deletes a user."""
+  deleteUser(input: DeleteUserInput!): UserOutput!
+
+  """Removes a user from a team."""
+  removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
   updateTeam(description: String, id: UUID!, name: NonEmptyString): Team
-  updateUser(email: EmailAddress, id: UUID!, name: NonEmptyString, teamId: UUID): User
+
+  """Updates a user."""
+  updateUser(input: UpdateUserInput!): UserOutput!
 }
 
 scalar NonEmptyString
@@ -94,6 +129,14 @@ type Query {
   ): UserConnection!
 }
 
+input RemoveUserFromTeamInput {
+  """The ID of the team to remove the user from."""
+  teamId: UUID!
+
+  """The ID of the user to remove from the team."""
+  userId: UUID!
+}
+
 """This object represents a team."""
 type Team {
   """The description of the team."""
@@ -126,6 +169,21 @@ type TeamEdge {
 }
 
 scalar UUID
+
+"""This input represents the input to update a user."""
+input UpdateUserInput {
+  """The email address of the user."""
+  email: EmailAddress
+
+  """The ID of the user to update."""
+  id: UUID!
+
+  """The name of the user."""
+  name: NonEmptyString
+
+  """The ID of the team to which the user belongs."""
+  teamId: UUID
+}
 
 """This object represents a user."""
 type User {
@@ -160,4 +218,10 @@ type UserConnection {
 type UserEdge {
   cursor: String!
   node: User!
+}
+
+"""This object represents the mutation response to the user."""
+type UserOutput {
+  """The identifier of the user."""
+  id: UUID!
 }

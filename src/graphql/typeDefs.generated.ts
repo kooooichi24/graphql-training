@@ -437,146 +437,109 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Creates a user.', block: true },
           name: { kind: 'Name', value: 'createUser' },
           arguments: [
             {
               kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'name' },
+              name: { kind: 'Name', value: 'input' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreateUserInput' } },
               },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'email' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
-              },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'teamId' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
               directives: [],
             },
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
           },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Updates a user.', block: true },
           name: { kind: 'Name', value: 'updateUser' },
           arguments: [
             {
               kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'id' },
+              name: { kind: 'Name', value: 'input' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
-              },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'name' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'email' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'teamId' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
-              directives: [],
-            },
-          ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'deleteUser' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'id' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
-              },
-              directives: [],
-            },
-          ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'addUserToTeam' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'userId' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
-              },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'teamId' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdateUserInput' } },
               },
               directives: [],
             },
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
           },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'removeUserFromTeam' },
+          description: { kind: 'StringValue', value: 'Deletes a user.', block: true },
+          name: { kind: 'Name', value: 'deleteUser' },
           arguments: [
             {
               kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'userId' },
+              name: { kind: 'Name', value: 'input' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
-              },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'teamId' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'DeleteUserInput' } },
               },
               directives: [],
             },
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Adds a user to a team.', block: true },
+          name: { kind: 'Name', value: 'addUserToTeam' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'input' },
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'AddUserToTeamInput' } },
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Removes a user from a team.', block: true },
+          name: { kind: 'Name', value: 'removeUserFromTeam' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'input' },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'RemoveUserFromTeamInput' },
+                },
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
           },
           directives: [],
         },
@@ -728,6 +691,220 @@ export const typeDefs = {
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'This object represents the mutation response to the user.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'UserOutput' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The identifier of the user.', block: true },
+          name: { kind: 'Name', value: 'id' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'This input represents the input to create a user.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'CreateUserInput' },
+      directives: [],
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The name of the user.', block: true },
+          name: { kind: 'Name', value: 'name' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The email address of the user.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'email' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the team to which the user belongs.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'teamId' },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'This input represents the input to update a user.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'UpdateUserInput' },
+      directives: [],
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The ID of the user to update.', block: true },
+          name: { kind: 'Name', value: 'id' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The name of the user.', block: true },
+          name: { kind: 'Name', value: 'name' },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The email address of the user.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'email' },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the team to which the user belongs.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'teamId' },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'This input represents the input to delete a user.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'DeleteUserInput' },
+      directives: [],
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The ID of the user to delete.', block: true },
+          name: { kind: 'Name', value: 'id' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: { kind: 'Name', value: 'AddUserToTeamInput' },
+      directives: [],
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the user to add to the team.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'userId' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the team to add the user to.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'teamId' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: { kind: 'Name', value: 'RemoveUserFromTeamInput' },
+      directives: [],
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the user to remove from the team.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'userId' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The ID of the team to remove the user from.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'teamId' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
           },
           directives: [],
         },

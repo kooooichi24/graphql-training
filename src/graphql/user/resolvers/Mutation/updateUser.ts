@@ -8,16 +8,20 @@ export const updateUser: NonNullable<MutationResolvers['updateUser']> = async (
 ) => {
   const data: Prisma.UserUpdateInput = {};
 
-  if (arg.name !== undefined && arg.name !== null) {
-    data.name = arg.name;
+  if (arg.input.name !== undefined && arg.input.name !== null) {
+    data.name = arg.input.name;
   }
 
-  if (arg.email !== undefined && arg.email !== null) {
-    data.email = arg.email;
+  if (arg.input.email !== undefined && arg.input.email !== null) {
+    data.email = arg.input.email;
   }
 
-  return await ctx.prisma.user.update({
-    where: { id: arg.id },
+  const user = await ctx.prisma.user.update({
+    where: { id: arg.input.id },
     data,
   });
+
+  return {
+    id: user.id,
+  };
 };

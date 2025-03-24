@@ -5,18 +5,22 @@ export const addUserToTeam: NonNullable<MutationResolvers['addUserToTeam']> = as
   arg,
   ctx,
 ) => {
-  return await ctx.prisma.user.update({
-    where: { id: arg.userId },
+  const user = await ctx.prisma.user.update({
+    where: { id: arg.input.userId },
     data: {
       teams: {
         create: {
           team: {
             connect: {
-              id: arg.teamId,
+              id: arg.input.teamId,
             },
           },
         },
       },
     },
   });
+
+  return {
+    id: user.id,
+  };
 };

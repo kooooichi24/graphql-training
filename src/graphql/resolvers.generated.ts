@@ -26,6 +26,7 @@ import { users as Query_users } from './user/resolvers/Query/users';
 import { User } from './user/resolvers/User';
 import { UserConnection } from './user/resolvers/UserConnection';
 import { UserEdge } from './user/resolvers/UserEdge';
+import { UserOutput } from './user/resolvers/UserOutput';
 export const resolvers: Resolvers = {
   Query: { team: Query_team, teams: Query_teams, user: Query_user, users: Query_users },
   Mutation: {
@@ -46,6 +47,7 @@ export const resolvers: Resolvers = {
   User: User,
   UserConnection: UserConnection,
   UserEdge: UserEdge,
+  UserOutput: UserOutput,
   DateTime: DateTimeResolver,
   EmailAddress: EmailAddressResolver,
   NonEmptyString: NonEmptyStringResolver,

@@ -5,10 +5,14 @@ export const removeUserFromTeam: NonNullable<MutationResolvers['removeUserFromTe
   arg,
   ctx,
 ) => {
-  return await ctx.prisma.user.update({
-    where: { id: arg.userId },
+  const user = await ctx.prisma.user.update({
+    where: { id: arg.input.userId },
     data: {
-      teams: { deleteMany: { teamId: arg.teamId } },
+      teams: { deleteMany: { teamId: arg.input.teamId } },
     },
   });
+
+  return {
+    id: user.id,
+  };
 };

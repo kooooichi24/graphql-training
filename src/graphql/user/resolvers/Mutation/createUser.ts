@@ -5,17 +5,17 @@ export const createUser: NonNullable<MutationResolvers['createUser']> = async (
   arg,
   ctx,
 ) => {
-  return await ctx.prisma.user.create({
+  const user = await ctx.prisma.user.create({
     data: {
-      name: arg.name,
-      email: arg.email,
-      ...(arg.teamId
+      name: arg.input.name,
+      email: arg.input.email,
+      ...(arg.input.teamId
         ? {
             teams: {
               create: {
                 team: {
                   connect: {
-                    id: arg.teamId,
+                    id: arg.input.teamId,
                   },
                 },
               },
@@ -24,4 +24,8 @@ export const createUser: NonNullable<MutationResolvers['createUser']> = async (
         : {}),
     },
   });
+
+  return {
+    id: user.id,
+  };
 };

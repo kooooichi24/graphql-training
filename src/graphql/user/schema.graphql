@@ -78,11 +78,118 @@ type Query {
   ): User
 }
 
-type Mutation {
-  createUser(name: NonEmptyString!, email: EmailAddress!, teamId: UUID): User!
-  updateUser(id: UUID!, name: NonEmptyString, email: EmailAddress, teamId: UUID): User
-  deleteUser(id: UUID!): User
+"""
+This object represents the mutation response to the user.
+"""
+type UserOutput {
+  """
+  The identifier of the user.
+  """
+  id: UUID!
+}
 
-  addUserToTeam(userId: UUID!, teamId: UUID!): User!
-  removeUserFromTeam(userId: UUID!, teamId: UUID!): User!
+"""
+This input represents the input to create a user.
+"""
+input CreateUserInput {
+  """
+  The name of the user.
+  """
+  name: NonEmptyString!
+
+  """
+  The email address of the user.
+  """
+  email: EmailAddress!
+
+  """
+  The ID of the team to which the user belongs.
+  """
+  teamId: UUID
+}
+
+"""
+This input represents the input to update a user.
+"""
+input UpdateUserInput {
+  """
+  The ID of the user to update.
+  """
+  id: UUID!
+
+  """
+  The name of the user.
+  """
+  name: NonEmptyString
+
+  """
+  The email address of the user.
+  """
+  email: EmailAddress
+
+  """
+  The ID of the team to which the user belongs.
+  """
+  teamId: UUID
+}
+
+"""
+This input represents the input to delete a user.
+"""
+input DeleteUserInput {
+  """
+  The ID of the user to delete.
+  """
+  id: UUID!
+}
+
+input AddUserToTeamInput {
+  """
+  The ID of the user to add to the team.
+  """
+  userId: UUID!
+
+  """
+  The ID of the team to add the user to.
+  """
+  teamId: UUID!
+}
+
+input RemoveUserFromTeamInput {
+  """
+  The ID of the user to remove from the team.
+  """
+  userId: UUID!
+
+  """
+  The ID of the team to remove the user from.
+  """
+  teamId: UUID!
+}
+
+type Mutation {
+  """
+  Creates a user.
+  """
+  createUser(input: CreateUserInput!): UserOutput!
+
+  """
+  Updates a user.
+  """
+  updateUser(input: UpdateUserInput!): UserOutput!
+
+  """
+  Deletes a user.
+  """
+  deleteUser(input: DeleteUserInput!): UserOutput!
+
+  """
+  Adds a user to a team.
+  """
+  addUserToTeam(input: AddUserToTeamInput!): UserOutput!
+
+  """
+  Removes a user from a team.
+  """
+  removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
 }
