@@ -70,14 +70,19 @@ export function createPaginationCursor<T extends z.ZodType>(schema: T) {
 export function toConnection<T>(
   nodes: T[],
   encodeCursor: EncodeCursor<T>,
-  queryParams?: {
-    after?: string;
-    before?: string;
-    first?: number;
-    last?: number;
+  cursorPaginationParams: {
+    after: string | undefined;
+    before: string | undefined;
+    first: number | undefined;
+    last: number | undefined;
   },
 ): Connection<T> {
-  const slicedNodes = nodes.slice(0, queryParams?.first ?? nodes.length);
+  const { after, before, first, last } = cursorPaginationParams;
+
+  const slicedNodes =
+    (first !== undefined && nodes.length > first) || (last !== undefined && nodes.length > last)
+      ? nodes.slice(1)
+      : nodes;
   const edges = slicedNodes.map((node) => ({
     node,
     cursor: encodeCursor(node),
@@ -85,10 +90,12 @@ export function toConnection<T>(
 
   const startCursor = edges.length > 0 ? edges[0].cursor : null;
   const endCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null;
-  const hasNextPage = queryParams?.first !== undefined && nodes.length > (queryParams.first ?? 0);
+  const hasNextPage =
+    (first !== undefined && nodes.length > first) || (last !== undefined && nodes.length > last);
   const hasPreviousPage =
-    queryParams?.after !== undefined ||
-    (queryParams?.before !== undefined && queryParams?.last !== undefined);
+    after !== undefined ||
+    (before !== undefined && last !== undefined) ||
+    (first !== undefined && nodes.length > (first ?? 0));
 
   return {
     edges,
