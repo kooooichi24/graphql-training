@@ -3,7 +3,7 @@ import { GraphQLError } from 'graphql';
 import type { z } from 'zod';
 import type { PageInfo } from './types.generated';
 
-export const MAX_PAGINATION_FIRST = 300;
+export const MAX_PAGINATION_ITEMS = 300;
 
 export type Edge<T> = {
   node: T;

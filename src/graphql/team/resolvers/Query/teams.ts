@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { MAX_PAGINATION_FIRST, createPaginationCursor, toConnection } from '../../../utils';
+import { MAX_PAGINATION_ITEMS, createPaginationCursor, toConnection } from '../../../utils';
 import type { TeamMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
@@ -15,7 +15,7 @@ export const encodeTeamsCursor = createCursorEncoder<TeamMapper>((team) => ({
 }));
 
 export const teams: NonNullable<QueryResolvers['teams']> = async (_parent, args, ctx) => {
-  const first = Math.min(args.first, MAX_PAGINATION_FIRST);
+  const first = Math.min(args.first, MAX_PAGINATION_ITEMS);
   const decodedCursor = args.after ? decodeTeamsCursor(args.after) : undefined;
 
   const teams = await ctx.prisma.$queryRawUnsafe<

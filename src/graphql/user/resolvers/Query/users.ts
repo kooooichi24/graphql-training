@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { MAX_PAGINATION_FIRST, createPaginationCursor, toConnection } from '../../../utils';
+import { MAX_PAGINATION_ITEMS, createPaginationCursor, toConnection } from '../../../utils';
 import type { UserMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
@@ -15,7 +15,7 @@ export const encodeUsersCursor = createCursorEncoder<UserMapper>((user) => ({
 }));
 
 export const users: NonNullable<QueryResolvers['users']> = async (_parent, args, ctx) => {
-  const first = Math.min(args.first, MAX_PAGINATION_FIRST);
+  const first = Math.min(args.first, MAX_PAGINATION_ITEMS);
   const decodedCursor = args.after ? decodeUsersCursor(args.after) : undefined;
 
   const users = await ctx.prisma.$queryRawUnsafe<
