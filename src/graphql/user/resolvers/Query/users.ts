@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { MAX_PAGINATION_ITEMS, createPaginationCursor, toConnection } from '../../../utils';
+import {
+  DEFAULT_PAGINATION_ITEMS,
+  MAX_PAGINATION_ITEMS,
+  createPaginationCursor,
+  toConnection,
+} from '../../../utils';
 import type { UserMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
@@ -15,8 +20,17 @@ export const encodeUsersCursor = createCursorEncoder<UserMapper>((user) => ({
 }));
 
 export const users: NonNullable<QueryResolvers['users']> = async (_parent, args, ctx) => {
-  const first = Math.min(args.first, MAX_PAGINATION_ITEMS);
-  const decodedCursor = args.after ? decodeUsersCursor(args.after) : undefined;
+  const first = args.first
+    ? Math.min(args.first, MAX_PAGINATION_ITEMS)
+    : args.last
+      ? undefined
+      : DEFAULT_PAGINATION_ITEMS;
+  const after = args.after ? decodeUsersCursor(args.after) : undefined;
+  const last = args.last ? Math.min(args.last, MAX_PAGINATION_ITEMS) : undefined;
+  const before = args.before ? decodeUsersCursor(args.before) : undefined;
+
+  const isBackward = args.last !== undefined;
+  const orderBy = isBackward ? 'name DESC, id DESC' : 'name ASC, id ASC';
 
   const users = await ctx.prisma.$queryRawUnsafe<
     Array<{
@@ -27,14 +41,23 @@ export const users: NonNullable<QueryResolvers['users']> = async (_parent, args,
       updated_at: Date;
     }>
   >(`
-      SELECT * FROM users
-      ${decodedCursor ? `WHERE (name, id) > ('${decodedCursor.name}', '${decodedCursor.id}')` : ''}
+      WITH ordered_users AS (
+        SELECT *
+        FROM users
+        WHERE 1=1
+        ${after ? `AND (name, id) > ('${after.name}', '${after.id}')` : ''}
+        ${before ? `AND (name, id) < ('${before.name}', '${before.id}')` : ''}
+        ORDER BY ${orderBy}
+        LIMIT ${(first ?? last ?? DEFAULT_PAGINATION_ITEMS) + 1}
+      )
+      SELECT * FROM ordered_users
       ORDER BY name ASC, id ASC
-      LIMIT ${first + 1}
     `);
 
   return toConnection(users, encodeUsersCursor, {
-    first: args.first,
+    first,
     after: args.after ?? undefined,
+    last,
+    before: args.before ?? undefined,
   });
 };
