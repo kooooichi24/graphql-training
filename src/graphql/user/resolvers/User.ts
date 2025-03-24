@@ -1,5 +1,5 @@
 import { decodeTeamsCursor, encodeTeamsCursor } from '../../team/resolvers/Query/teams';
-import { MAX_PAGINATION_ITEMS, toConnection } from '../../utils';
+import { DEFAULT_PAGINATION_ITEMS, MAX_PAGINATION_ITEMS, toConnection } from '../../utils';
 import type { UserResolvers } from './../../types.generated';
 
 /*
@@ -13,18 +13,28 @@ import type { UserResolvers } from './../../types.generated';
  */
 export const User: UserResolvers = {
   teams: async (parent, args, ctx) => {
-    const first = Math.min(args.first, MAX_PAGINATION_ITEMS);
-    const decodedCursor = args.after ? decodeTeamsCursor(args.after) : undefined;
+    const first = args.first
+      ? Math.min(args.first, MAX_PAGINATION_ITEMS)
+      : args.last
+        ? undefined
+        : DEFAULT_PAGINATION_ITEMS;
+    const after = args.after ? decodeTeamsCursor(args.after) : undefined;
+    const last = args.last ? Math.min(args.last, MAX_PAGINATION_ITEMS) : undefined;
+    const before = args.before ? decodeTeamsCursor(args.before) : undefined;
 
     const teams = await ctx.loaders.userTeamsLoader.load({
       userId: parent.id,
       first,
-      after: decodedCursor ? { teamName: decodedCursor.name, teamId: decodedCursor.id } : undefined,
+      after: after ? { teamName: after.name, teamId: after.id } : undefined,
+      last,
+      before: before ? { teamName: before.name, teamId: before.id } : undefined,
     });
 
     return toConnection(teams, encodeTeamsCursor, {
       first,
       after: args.after ?? undefined,
+      last,
+      before: args.before ?? undefined,
     });
   },
 };
