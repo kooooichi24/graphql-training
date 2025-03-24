@@ -150,7 +150,7 @@ export type Query = {
   __typename?: 'Query';
   /** Returns a team by ID. */
   team?: Maybe<Team>;
-  /** Returns a list of teams. */
+  /** Returns a list of teams sorted by name. */
   teams: TeamConnection;
   /**
    * Returns a user by ID.
@@ -159,7 +159,7 @@ export type Query = {
    */
   user?: Maybe<User>;
   /**
-   * Returns a list of users.
+   * Returns a list of users sorted by name.
    *
    * It is not possible to get users of other tenants.
    */
@@ -199,7 +199,11 @@ export type Team = {
   description?: Maybe<Scalars['String']['output']>;
   /** The identifier of the team. */
   id: Scalars['UUID']['output'];
-  /** The members of the team. */
+  /**
+   * The members of the team.
+   *
+   * The list is sorted by name.
+   */
   members: UserConnection;
   /** The name of the team. */
   name: Scalars['NonEmptyString']['output'];
@@ -261,7 +265,11 @@ export type User = {
   id: Scalars['UUID']['output'];
   /** The name of the user. */
   name: Scalars['NonEmptyString']['output'];
-  /** The teams to which the user belongs. */
+  /**
+   * The teams to which the user belongs.
+   *
+   * The list is sorted by name.
+   */
   teams: TeamConnection;
 };
 

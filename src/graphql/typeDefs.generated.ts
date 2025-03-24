@@ -124,7 +124,11 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The members of the team.', block: true },
+          description: {
+            kind: 'StringValue',
+            value: 'The members of the team.\n\nThe list is sorted by name.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'members' },
           arguments: [
             {
@@ -229,7 +233,11 @@ export const typeDefs = {
       fields: [
         {
           kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'Returns a list of teams.', block: true },
+          description: {
+            kind: 'StringValue',
+            value: 'Returns a list of teams sorted by name.',
+            block: true,
+          },
           name: { kind: 'Name', value: 'teams' },
           arguments: [
             {
@@ -291,7 +299,8 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           description: {
             kind: 'StringValue',
-            value: 'Returns a list of users.\n\nIt is not possible to get users of other tenants.',
+            value:
+              'Returns a list of users sorted by name.\n\nIt is not possible to get users of other tenants.',
             block: true,
           },
           name: { kind: 'Name', value: 'users' },
@@ -691,7 +700,7 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           description: {
             kind: 'StringValue',
-            value: 'The teams to which the user belongs.',
+            value: 'The teams to which the user belongs.\n\nThe list is sorted by name.',
             block: true,
           },
           name: { kind: 'Name', value: 'teams' },

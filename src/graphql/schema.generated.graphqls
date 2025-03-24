@@ -110,7 +110,7 @@ type Query {
     id: UUID!
   ): Team
 
-  """Returns a list of teams."""
+  """Returns a list of teams sorted by name."""
   teams(
     """The cursor to start the pagination from."""
     after: String
@@ -134,7 +134,7 @@ type Query {
   ): User
 
   """
-  Returns a list of users.
+  Returns a list of users sorted by name.
   
   It is not possible to get users of other tenants.
   """
@@ -168,7 +168,11 @@ type Team {
   """The identifier of the team."""
   id: UUID!
 
-  """The members of the team."""
+  """
+  The members of the team.
+  
+  The list is sorted by name.
+  """
   members(
     """The cursor to start the pagination from."""
     after: String
@@ -237,7 +241,11 @@ type User {
   """The name of the user."""
   name: NonEmptyString!
 
-  """The teams to which the user belongs."""
+  """
+  The teams to which the user belongs.
+  
+  The list is sorted by name.
+  """
   teams(
     """The cursor to start the pagination from."""
     after: String

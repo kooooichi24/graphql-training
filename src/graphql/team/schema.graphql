@@ -19,6 +19,8 @@ type Team {
 
   """
   The members of the team.
+
+  The list is sorted by name.
   """
   members(
     """
@@ -45,7 +47,7 @@ type TeamConnection {
 
 type Query {
   """
-  Returns a list of teams.
+  Returns a list of teams sorted by name.
   """
   teams(
     """
