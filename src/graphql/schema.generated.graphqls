@@ -115,12 +115,22 @@ type Query {
     """The cursor to start the pagination from."""
     after: String
 
+    """The cursor to start the pagination from."""
+    before: String
+
     """
     The number of items to forward paginate (used with after).
     
     Maximum: 500
     """
-    first: NonNegativeInt!
+    first: NonNegativeInt
+
+    """
+    The number of items to backward paginate (used with before).
+    
+    Maximum: 500
+    """
+    last: NonNegativeInt
   ): TeamConnection!
 
   """

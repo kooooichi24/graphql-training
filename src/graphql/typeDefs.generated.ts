@@ -248,10 +248,7 @@ export const typeDefs = {
                 block: true,
               },
               name: { kind: 'Name', value: 'first' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
               directives: [],
             },
             {
@@ -262,6 +259,29 @@ export const typeDefs = {
                 block: true,
               },
               name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'last' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'before' },
               type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
               directives: [],
             },

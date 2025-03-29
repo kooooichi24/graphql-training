@@ -172,7 +172,9 @@ export type QueryteamArgs = {
 
 export type QueryteamsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  first: Scalars['NonNegativeInt']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['NonNegativeInt']['input']>;
+  last?: InputMaybe<Scalars['NonNegativeInt']['input']>;
 };
 
 export type QueryuserArgs = {
@@ -551,7 +553,7 @@ export type QueryResolvers<
     ResolversTypes['TeamConnection'],
     ParentType,
     ContextType,
-    RequireFields<QueryteamsArgs, 'first'>
+    Partial<QueryteamsArgs>
   >;
   user?: Resolver<
     Maybe<ResolversTypes['User']>,
