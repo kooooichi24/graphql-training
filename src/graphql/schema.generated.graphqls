@@ -198,8 +198,18 @@ type Team {
     """The cursor to start the pagination from."""
     after: String
 
+    """The cursor to start the pagination from."""
+    before: String
+
     """The number of items to forward paginate (used with after)."""
-    first: NonNegativeInt!
+    first: NonNegativeInt
+
+    """
+    The number of items to backward paginate (used with before).
+    
+    Maximum: 500
+    """
+    last: NonNegativeInt
   ): UserConnection!
 
   """The name of the team."""

@@ -216,7 +216,9 @@ export type Team = {
 /** This object represents a team. */
 export type TeammembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  first: Scalars['NonNegativeInt']['input'];
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['NonNegativeInt']['input']>;
+  last?: InputMaybe<Scalars['NonNegativeInt']['input']>;
 };
 
 export type TeamConnection = {
@@ -579,7 +581,7 @@ export type TeamResolvers<
     ResolversTypes['UserConnection'],
     ParentType,
     ContextType,
-    RequireFields<TeammembersArgs, 'first'>
+    Partial<TeammembersArgs>
   >;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
