@@ -31,8 +31,10 @@ export type Context = {
     teamMembersLoader: DataLoader<
       {
         teamId: string;
-        first: number;
+        first?: number;
         after?: { userName: string; userId: string };
+        last?: number;
+        before?: { userName: string; userId: string };
       },
       User[]
     >;
@@ -169,13 +171,18 @@ export async function createContext(): Promise<Context> {
     async (
       inputs: readonly {
         teamId: string;
-        first: number;
+        first?: number;
         after?: { userName: string; userId: string };
+        last?: number;
+        before?: { userName: string; userId: string };
       }[],
     ): Promise<User[][]> => {
       console.log('--------------------------------');
       console.log('Invoked teamMembersLoader with', inputs);
       console.log('--------------------------------');
+
+      const isBackward = inputs[0].last !== undefined;
+      const partitionOrderBy = isBackward ? 'u.name DESC, u.id DESC' : 'u.name ASC, u.id ASC';
 
       const users = await prisma.$queryRawUnsafe<
         Array<{
@@ -193,8 +200,11 @@ export async function createContext(): Promise<Context> {
             team_id,
             after_user_name,
             after_user_id,
+            before_user_name,
+            before_user_id,
             limit_per_team,
-            (limit_per_team + 1) AS fetch_limit
+            (limit_per_team + 1) AS fetch_limit,
+            is_backward
           FROM (VALUES 
             ${inputs
               .map(
@@ -202,11 +212,14 @@ export async function createContext(): Promise<Context> {
                   '${input.teamId}'::uuid, 
                   ${input.after?.userName ? `'${input.after.userName}'` : null},
                   ${input.after?.userId ? `'${input.after.userId}'::uuid` : null}, 
-                  ${input.first}
+                  ${input.before?.userName ? `'${input.before.userName}'` : null},
+                  ${input.before?.userId ? `'${input.before.userId}'::uuid` : null},
+                  ${input.first || input.last || 0},
+                  ${Boolean(input.last)}
                 )`,
               )
               .join(',\n')}
-          ) AS p(team_id, after_user_name, after_user_id, limit_per_team)
+          ) AS p(team_id, after_user_name, after_user_id, before_user_name, before_user_id, limit_per_team, is_backward)
         ),
         ranked AS (
           SELECT
@@ -218,15 +231,22 @@ export async function createContext(): Promise<Context> {
             u.updated_at AS user_updated_at,
             ROW_NUMBER() OVER (
               PARTITION BY tm.user_id
-              ORDER BY u.name ASC, u.id ASC
+              ORDER BY ${partitionOrderBy}
             ) AS rn
           FROM
             team_members tm
             INNER JOIN users u ON tm.user_id = u.id
             INNER JOIN params ON tm.team_id = params.team_id
           WHERE
-            params.after_user_name IS NULL
-            OR (u.name, u.id) > (params.after_user_name, params.after_user_id::uuid)
+            (
+              (params.is_backward = false AND params.after_user_name IS NULL) OR
+              (params.is_backward = false AND (u.name, u.id) > (params.after_user_name, params.after_user_id::uuid))
+            )
+            OR
+            (
+              (params.is_backward = true AND params.before_user_name IS NULL) OR
+              (params.is_backward = true AND (u.name, u.id) < (params.before_user_name, params.before_user_id::uuid))
+            )
         )
         SELECT
           ranked.user_id AS id,
@@ -238,6 +258,7 @@ export async function createContext(): Promise<Context> {
         FROM ranked
         JOIN params ON ranked.team_id = params.team_id
         WHERE ranked.rn <= params.fetch_limit
+        ORDER BY ranked.name ASC, ranked.user_id ASC
         `,
       );
 
