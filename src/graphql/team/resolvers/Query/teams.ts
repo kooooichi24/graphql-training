@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import type { TeamMapper } from '../../schema.mappers';
-import type { QueryResolvers } from './../../../types.generated';
 import {
-  createPaginationCursor,
   DEFAULT_PAGINATION_ITEMS,
   MAX_PAGINATION_ITEMS,
+  createPaginationCursor,
   toConnection,
 } from '../../../../utils/pagination';
+import type { TeamMapper } from '../../schema.mappers';
+import type { QueryResolvers } from './../../../types.generated';
 
 const CursorSchema = z.object({
   name: z.string(),

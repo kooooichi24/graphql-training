@@ -1,4 +1,4 @@
-import { Connection, EncodeCursor } from './types';
+import type { Connection, EncodeCursor } from './types';
 
 export function toConnection<T>(
   nodes: T[],
