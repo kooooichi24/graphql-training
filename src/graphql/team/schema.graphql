@@ -1,11 +1,11 @@
 """
 This object represents a team.
 """
-type Team {
+type Team implements Node {
   """
   The identifier of the team.
   """
-  id: UUID!
+  id: ID!
 
   """
   The name of the team.
@@ -94,7 +94,7 @@ type Query {
     """
     The identifier of the team.
     """
-    id: UUID!
+    id: ID!
   ): Team
 }
 
@@ -105,7 +105,7 @@ type TeamOutput {
   """
   The identifier of the team.
   """
-  id: UUID!
+  id: ID!
 }
 
 """
@@ -130,7 +130,7 @@ input UpdateTeamInput {
   """
   The identifier of the team.
   """
-  id: UUID!
+  id: ID!
 
   """
   The name of the team.
@@ -150,7 +150,7 @@ input DeleteTeamInput {
   """
   The identifier of the team.
   """
-  id: UUID!
+  id: ID!
 }
 
 type Mutation {

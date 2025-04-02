@@ -114,7 +114,7 @@ export const typeDefs = {
       kind: 'ObjectTypeDefinition',
       description: { kind: 'StringValue', value: 'This object represents a team.', block: true },
       name: { kind: 'Name', value: 'Team' },
-      interfaces: [],
+      interfaces: [{ kind: 'NamedType', name: { kind: 'Name', value: 'Node' } }],
       directives: [],
       fields: [
         {
@@ -124,7 +124,7 @@ export const typeDefs = {
           arguments: [],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -352,7 +352,7 @@ export const typeDefs = {
               name: { kind: 'Name', value: 'id' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
               },
               directives: [],
             },
@@ -442,7 +442,7 @@ export const typeDefs = {
               name: { kind: 'Name', value: 'id' },
               type: {
                 kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
               },
               directives: [],
             },
@@ -472,7 +472,7 @@ export const typeDefs = {
           arguments: [],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -523,7 +523,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'id' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -559,7 +559,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'id' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -742,7 +742,7 @@ export const typeDefs = {
       kind: 'ObjectTypeDefinition',
       description: { kind: 'StringValue', value: 'This object represents a user.', block: true },
       name: { kind: 'Name', value: 'User' },
-      interfaces: [],
+      interfaces: [{ kind: 'NamedType', name: { kind: 'Name', value: 'Node' } }],
       directives: [],
       fields: [
         {
@@ -752,7 +752,7 @@ export const typeDefs = {
           arguments: [],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -926,7 +926,7 @@ export const typeDefs = {
           arguments: [],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -974,7 +974,7 @@ export const typeDefs = {
             block: true,
           },
           name: { kind: 'Name', value: 'teamId' },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           directives: [],
         },
       ],
@@ -995,7 +995,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'id' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -1025,7 +1025,7 @@ export const typeDefs = {
             block: true,
           },
           name: { kind: 'Name', value: 'teamId' },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           directives: [],
         },
       ],
@@ -1046,7 +1046,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'id' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -1072,7 +1072,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'userId' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -1086,7 +1086,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'teamId' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -1112,7 +1112,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'userId' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
@@ -1126,7 +1126,7 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'teamId' },
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UUID' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },

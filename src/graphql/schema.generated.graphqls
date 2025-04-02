@@ -1,10 +1,10 @@
 """This input represents the input to add a user to a team."""
 input AddUserToTeamInput {
   """The ID of the team to add the user to."""
-  teamId: UUID!
+  teamId: ID!
 
   """The ID of the user to add to the team."""
-  userId: UUID!
+  userId: ID!
 }
 
 """This input represents the input to create a team."""
@@ -25,7 +25,7 @@ input CreateUserInput {
   name: NonEmptyString!
 
   """The ID of the team to which the user belongs."""
-  teamId: UUID
+  teamId: ID
 }
 
 scalar DateTime
@@ -33,13 +33,13 @@ scalar DateTime
 """This input represents the input to delete a team."""
 input DeleteTeamInput {
   """The identifier of the team."""
-  id: UUID!
+  id: ID!
 }
 
 """This input represents the input to delete a user."""
 input DeleteUserInput {
   """The ID of the user to delete."""
-  id: UUID!
+  id: ID!
 }
 
 scalar EmailAddress
@@ -117,7 +117,7 @@ type Query {
   """Returns a team by ID."""
   team(
     """The identifier of the team."""
-    id: UUID!
+    id: ID!
   ): Team
 
   """Returns a list of teams sorted by name."""
@@ -150,7 +150,7 @@ type Query {
   """
   user(
     """The ID of the user to return."""
-    id: UUID!
+    id: ID!
   ): User
 
   """
@@ -185,19 +185,19 @@ type Query {
 """This input represents the input to remove a user from a team."""
 input RemoveUserFromTeamInput {
   """The ID of the team to remove the user from."""
-  teamId: UUID!
+  teamId: ID!
 
   """The ID of the user to remove from the team."""
-  userId: UUID!
+  userId: ID!
 }
 
 """This object represents a team."""
-type Team {
+type Team implements Node {
   """The description of the team."""
   description: String
 
   """The identifier of the team."""
-  id: UUID!
+  id: ID!
 
   """
   The members of the team.
@@ -239,7 +239,7 @@ type TeamEdge {
 """This object represents the mutation response to the team."""
 type TeamOutput {
   """The identifier of the team."""
-  id: UUID!
+  id: ID!
 }
 
 scalar UUID
@@ -250,7 +250,7 @@ input UpdateTeamInput {
   description: String
 
   """The identifier of the team."""
-  id: UUID!
+  id: ID!
 
   """The name of the team."""
   name: NonEmptyString
@@ -262,22 +262,22 @@ input UpdateUserInput {
   email: EmailAddress
 
   """The ID of the user to update."""
-  id: UUID!
+  id: ID!
 
   """The name of the user."""
   name: NonEmptyString
 
   """The ID of the team to which the user belongs."""
-  teamId: UUID
+  teamId: ID
 }
 
 """This object represents a user."""
-type User {
+type User implements Node {
   """The email address of the user."""
   email: EmailAddress!
 
   """The identifier of the user."""
-  id: UUID!
+  id: ID!
 
   """The name of the user."""
   name: NonEmptyString!
@@ -324,5 +324,5 @@ type UserEdge {
 """This object represents the mutation response to the user."""
 type UserOutput {
   """The identifier of the user."""
-  id: UUID!
+  id: ID!
 }

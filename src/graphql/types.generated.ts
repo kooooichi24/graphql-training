@@ -32,9 +32,9 @@ export type Scalars = {
 /** This input represents the input to add a user to a team. */
 export type AddUserToTeamInput = {
   /** The ID of the team to add the user to. */
-  teamId: Scalars['UUID']['input'];
+  teamId: Scalars['ID']['input'];
   /** The ID of the user to add to the team. */
-  userId: Scalars['UUID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 /** This input represents the input to create a team. */
@@ -52,19 +52,19 @@ export type CreateUserInput = {
   /** The name of the user. */
   name: Scalars['NonEmptyString']['input'];
   /** The ID of the team to which the user belongs. */
-  teamId?: InputMaybe<Scalars['UUID']['input']>;
+  teamId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** This input represents the input to delete a team. */
 export type DeleteTeamInput = {
   /** The identifier of the team. */
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 /** This input represents the input to delete a user. */
 export type DeleteUserInput = {
   /** The ID of the user to delete. */
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 export type Mutation = {
@@ -177,7 +177,7 @@ export type Query = {
 };
 
 export type QueryteamArgs = {
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 export type QueryteamsArgs = {
@@ -188,7 +188,7 @@ export type QueryteamsArgs = {
 };
 
 export type QueryuserArgs = {
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 export type QueryusersArgs = {
@@ -201,18 +201,18 @@ export type QueryusersArgs = {
 /** This input represents the input to remove a user from a team. */
 export type RemoveUserFromTeamInput = {
   /** The ID of the team to remove the user from. */
-  teamId: Scalars['UUID']['input'];
+  teamId: Scalars['ID']['input'];
   /** The ID of the user to remove from the team. */
-  userId: Scalars['UUID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 /** This object represents a team. */
-export type Team = {
+export type Team = Node & {
   __typename?: 'Team';
   /** The description of the team. */
   description?: Maybe<Scalars['String']['output']>;
   /** The identifier of the team. */
-  id: Scalars['UUID']['output'];
+  id: Scalars['ID']['output'];
   /**
    * The members of the team.
    *
@@ -247,7 +247,7 @@ export type TeamEdge = {
 export type TeamOutput = {
   __typename?: 'TeamOutput';
   /** The identifier of the team. */
-  id: Scalars['UUID']['output'];
+  id: Scalars['ID']['output'];
 };
 
 /** This input represents the input to update a team. */
@@ -255,7 +255,7 @@ export type UpdateTeamInput = {
   /** The description of the team. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** The identifier of the team. */
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
   /** The name of the team. */
   name?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
@@ -265,20 +265,20 @@ export type UpdateUserInput = {
   /** The email address of the user. */
   email?: InputMaybe<Scalars['EmailAddress']['input']>;
   /** The ID of the user to update. */
-  id: Scalars['UUID']['input'];
+  id: Scalars['ID']['input'];
   /** The name of the user. */
   name?: InputMaybe<Scalars['NonEmptyString']['input']>;
   /** The ID of the team to which the user belongs. */
-  teamId?: InputMaybe<Scalars['UUID']['input']>;
+  teamId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** This object represents a user. */
-export type User = {
+export type User = Node & {
   __typename?: 'User';
   /** The email address of the user. */
   email: Scalars['EmailAddress']['output'];
   /** The identifier of the user. */
-  id: Scalars['UUID']['output'];
+  id: Scalars['ID']['output'];
   /** The name of the user. */
   name: Scalars['NonEmptyString']['output'];
   /**
@@ -313,7 +313,7 @@ export type UserEdge = {
 export type UserOutput = {
   __typename?: 'UserOutput';
   /** The identifier of the user. */
-  id: Scalars['UUID']['output'];
+  id: Scalars['ID']['output'];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -400,12 +400,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
-  Node: never;
+  Node: (TeamMapper & { __typename: 'Team' }) | (UserMapper & { __typename: 'User' });
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   CreateTeamInput: CreateTeamInput;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   CreateUserInput: CreateUserInput;
@@ -415,7 +416,6 @@ export type ResolversTypes = {
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Node: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Node']>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -442,6 +442,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
+  ID: Scalars['ID']['output'];
   CreateTeamInput: CreateTeamInput;
   String: Scalars['String']['output'];
   CreateUserInput: CreateUserInput;
@@ -451,7 +452,6 @@ export type ResolversParentTypes = {
   EmailAddress: Scalars['EmailAddress']['output'];
   Mutation: {};
   Node: ResolversInterfaceTypes<ResolversParentTypes>['Node'];
-  ID: Scalars['ID']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
   NonNegativeInt: Scalars['NonNegativeInt']['output'];
   PageInfo: PageInfo;
@@ -543,7 +543,7 @@ export type NodeResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node'],
 > = {
-  __resolveType?: TypeResolveFn<null, ParentType, ContextType>;
+  __resolveType?: TypeResolveFn<'Team' | 'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
 
@@ -603,7 +603,7 @@ export type TeamResolvers<
   ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team'],
 > = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   members?: Resolver<
     ResolversTypes['UserConnection'],
     ParentType,
@@ -637,7 +637,7 @@ export type TeamOutputResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['TeamOutput'] = ResolversParentTypes['TeamOutput'],
 > = {
-  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -650,7 +650,7 @@ export type UserResolvers<
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
 > = {
   email?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   teams?: Resolver<
     ResolversTypes['TeamConnection'],
@@ -684,7 +684,7 @@ export type UserOutputResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['UserOutput'] = ResolversParentTypes['UserOutput'],
 > = {
-  id?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

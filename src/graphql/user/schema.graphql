@@ -1,11 +1,11 @@
 """
 This object represents a user.
 """
-type User {
+type User implements Node {
   """
   The identifier of the user.
   """
-  id: UUID!
+  id: ID!
 
   """
   The name of the user.
@@ -102,7 +102,7 @@ type Query {
     """
     The ID of the user to return.
     """
-    id: UUID!
+    id: ID!
   ): User
 }
 
@@ -113,7 +113,7 @@ type UserOutput {
   """
   The identifier of the user.
   """
-  id: UUID!
+  id: ID!
 }
 
 """
@@ -133,7 +133,7 @@ input CreateUserInput {
   """
   The ID of the team to which the user belongs.
   """
-  teamId: UUID
+  teamId: ID
 }
 
 """
@@ -143,7 +143,7 @@ input UpdateUserInput {
   """
   The ID of the user to update.
   """
-  id: UUID!
+  id: ID!
 
   """
   The name of the user.
@@ -158,7 +158,7 @@ input UpdateUserInput {
   """
   The ID of the team to which the user belongs.
   """
-  teamId: UUID
+  teamId: ID
 }
 
 """
@@ -168,7 +168,7 @@ input DeleteUserInput {
   """
   The ID of the user to delete.
   """
-  id: UUID!
+  id: ID!
 }
 
 """
@@ -178,12 +178,12 @@ input AddUserToTeamInput {
   """
   The ID of the user to add to the team.
   """
-  userId: UUID!
+  userId: ID!
 
   """
   The ID of the team to add the user to.
   """
-  teamId: UUID!
+  teamId: ID!
 }
 
 """
@@ -193,12 +193,12 @@ input RemoveUserFromTeamInput {
   """
   The ID of the user to remove from the team.
   """
-  userId: UUID!
+  userId: ID!
 
   """
   The ID of the team to remove the user from.
   """
-  teamId: UUID!
+  teamId: ID!
 }
 
 type Mutation {
