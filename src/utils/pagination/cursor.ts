@@ -1,4 +1,4 @@
-import { ApolloServerErrorCode } from '@apollo/server/dist/esm/errors';
+import { ApolloServerErrorCode } from '@apollo/server/errors';
 import { GraphQLError } from 'graphql';
 import type { z } from 'zod';
 import type { EncodeCursor } from './types';
