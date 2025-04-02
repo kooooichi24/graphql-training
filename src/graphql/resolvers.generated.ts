@@ -5,6 +5,7 @@ import {
   NonNegativeIntResolver,
   UUIDResolver,
 } from 'graphql-scalars';
+import { node as Query_node } from './node/resolvers/Query/node';
 import { PageInfo } from './pageInfo/resolvers/PageInfo';
 import { createTeam as Mutation_createTeam } from './team/resolvers/Mutation/createTeam';
 import { deleteTeam as Mutation_deleteTeam } from './team/resolvers/Mutation/deleteTeam';
@@ -29,7 +30,13 @@ import { UserConnection } from './user/resolvers/UserConnection';
 import { UserEdge } from './user/resolvers/UserEdge';
 import { UserOutput } from './user/resolvers/UserOutput';
 export const resolvers: Resolvers = {
-  Query: { team: Query_team, teams: Query_teams, user: Query_user, users: Query_users },
+  Query: {
+    node: Query_node,
+    team: Query_team,
+    teams: Query_teams,
+    user: Query_user,
+    users: Query_users,
+  },
   Mutation: {
     addUserToTeam: Mutation_addUserToTeam,
     createTeam: Mutation_createTeam,

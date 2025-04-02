@@ -9,3 +9,15 @@ interface Node {
   """
   id: ID!
 }
+
+type Query {
+  """
+  Fetches an object given its ID.
+  """
+  node(
+    """
+    The ID of the object.
+    """
+    id: ID!
+  ): Node
+}

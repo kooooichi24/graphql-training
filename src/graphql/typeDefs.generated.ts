@@ -28,6 +28,211 @@ export const typeDefs = {
       ],
     },
     {
+      name: { kind: 'Name', value: 'Query' },
+      kind: 'ObjectTypeDefinition',
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Fetches an object given its ID.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'node' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: { kind: 'StringValue', value: 'The ID of the object.', block: true },
+              name: { kind: 'Name', value: 'id' },
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+              },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Node' } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Returns a list of teams sorted by name.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'teams' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).\n\nMaximum: 500',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'first' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'last' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'before' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamConnection' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'Returns a team by ID.', block: true },
+          name: { kind: 'Name', value: 'team' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The identifier of the team.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'id' },
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+              },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value:
+              'Returns a list of users sorted by name.\n\nIt is not possible to get users of other tenants.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'users' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The number of items to forward paginate (used with after).\n\nMaximum: 500\nDefault: 250 (If first or last is not specified)',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'first' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'last' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'before' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Returns a user by ID.\n\nIt is not possible to get users of other tenants.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'user' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The ID of the user to return.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'id' },
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+              },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+          directives: [],
+        },
+      ],
+      directives: [],
+      interfaces: [],
+    },
+    {
       kind: 'ObjectTypeDefinition',
       description: {
         kind: 'StringValue',
@@ -271,188 +476,6 @@ export const typeDefs = {
           directives: [],
         },
       ],
-    },
-    {
-      name: { kind: 'Name', value: 'Query' },
-      kind: 'ObjectTypeDefinition',
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          description: {
-            kind: 'StringValue',
-            value: 'Returns a list of teams sorted by name.',
-            block: true,
-          },
-          name: { kind: 'Name', value: 'teams' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The number of items to forward paginate (used with after).\n\nMaximum: 500',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'first' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'after' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value:
-                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'last' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'before' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-          ],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamConnection' } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'Returns a team by ID.', block: true },
-          name: { kind: 'Name', value: 'team' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The identifier of the team.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'id' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-              },
-              directives: [],
-            },
-          ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: {
-            kind: 'StringValue',
-            value:
-              'Returns a list of users sorted by name.\n\nIt is not possible to get users of other tenants.',
-            block: true,
-          },
-          name: { kind: 'Name', value: 'users' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value:
-                  'The number of items to forward paginate (used with after).\n\nMaximum: 500\nDefault: 250 (If first or last is not specified)',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'first' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'after' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value:
-                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'last' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'before' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-          ],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: {
-            kind: 'StringValue',
-            value: 'Returns a user by ID.\n\nIt is not possible to get users of other tenants.',
-            block: true,
-          },
-          name: { kind: 'Name', value: 'user' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The ID of the user to return.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'id' },
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-              },
-              directives: [],
-            },
-          ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
-          directives: [],
-        },
-      ],
-      directives: [],
-      interfaces: [],
     },
     {
       kind: 'ObjectTypeDefinition',

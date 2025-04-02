@@ -158,6 +158,8 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Fetches an object given its ID. */
+  node?: Maybe<Node>;
   /** Returns a team by ID. */
   team?: Maybe<Team>;
   /** Returns a list of teams sorted by name. */
@@ -174,6 +176,10 @@ export type Query = {
    * It is not possible to get users of other tenants.
    */
   users: UserConnection;
+};
+
+export type QuerynodeArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type QueryteamArgs = {
@@ -572,6 +578,12 @@ export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  node?: Resolver<
+    Maybe<ResolversTypes['Node']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerynodeArgs, 'id'>
+  >;
   team?: Resolver<
     Maybe<ResolversTypes['Team']>,
     ParentType,
