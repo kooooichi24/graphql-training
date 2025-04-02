@@ -1,22 +1,7 @@
-import { ApolloServerErrorCode } from '@apollo/server/errors';
-import { GraphQLError } from 'graphql';
 import type { z } from 'zod';
-import type { PageInfo } from './types.generated';
-
-export const DEFAULT_PAGINATION_ITEMS = 250;
-export const MAX_PAGINATION_ITEMS = 500;
-
-export type Edge<T> = {
-  node: T;
-  cursor: string;
-};
-
-export type Connection<T> = {
-  edges: Edge<T>[];
-  pageInfo: PageInfo;
-};
-
-export type EncodeCursor<T> = (node: T) => string;
+import { EncodeCursor } from './types';
+import { GraphQLError } from 'graphql';
+import { ApolloServerErrorCode } from '@apollo/server/dist/esm/errors';
 
 /**
  * ページネーションカーソルのユーティリティを作成するファクトリ関数
@@ -64,46 +49,5 @@ export function createPaginationCursor<T extends z.ZodType>(schema: T) {
   return {
     decodeCursor,
     createCursorEncoder,
-  };
-}
-
-export function toConnection<T>(
-  nodes: T[],
-  encodeCursor: EncodeCursor<T>,
-  cursorPaginationParams: {
-    after: string | undefined;
-    before: string | undefined;
-    first: number | undefined;
-    last: number | undefined;
-  },
-): Connection<T> {
-  const { after, before, first, last } = cursorPaginationParams;
-
-  const slicedNodes =
-    (first !== undefined && nodes.length > first) || (last !== undefined && nodes.length > last)
-      ? nodes.slice(1)
-      : nodes;
-  const edges = slicedNodes.map((node) => ({
-    node,
-    cursor: encodeCursor(node),
-  }));
-
-  const startCursor = edges.length > 0 ? edges[0].cursor : null;
-  const endCursor = edges.length > 0 ? edges[edges.length - 1].cursor : null;
-  const hasNextPage =
-    (first !== undefined && nodes.length > first) || (last !== undefined && nodes.length > last);
-  const hasPreviousPage =
-    after !== undefined ||
-    (before !== undefined && last !== undefined) ||
-    (first !== undefined && nodes.length > (first ?? 0));
-
-  return {
-    edges,
-    pageInfo: {
-      hasNextPage,
-      hasPreviousPage,
-      startCursor,
-      endCursor,
-    },
   };
 }

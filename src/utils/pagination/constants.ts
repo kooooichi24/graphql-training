@@ -1,0 +1,2 @@
+export const DEFAULT_PAGINATION_ITEMS = 250;
+export const MAX_PAGINATION_ITEMS = 500;

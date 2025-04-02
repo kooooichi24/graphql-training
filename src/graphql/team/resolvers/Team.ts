@@ -1,5 +1,5 @@
+import { DEFAULT_PAGINATION_ITEMS, MAX_PAGINATION_ITEMS, toConnection } from '../../../utils/pagination';
 import { decodeUsersCursor, encodeUsersCursor } from '../../user/resolvers/Query/users';
-import { DEFAULT_PAGINATION_ITEMS, MAX_PAGINATION_ITEMS, toConnection } from '../../utils';
 import type { TeamResolvers } from './../../types.generated';
 
 /*
