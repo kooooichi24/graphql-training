@@ -17,7 +17,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
+  ID: { input: string; output: string | number };
   String: { input: string; output: string };
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
@@ -117,6 +117,16 @@ export type MutationupdateTeamArgs = {
 
 export type MutationupdateUserArgs = {
   input: UpdateUserInput;
+};
+
+/**
+ * An interface for objects with a Globally Unique ID.
+ *
+ * @see https://graphql.org/learn/global-object-identification/
+ */
+export type Node = {
+  /** The ID of the object. */
+  id: Scalars['ID']['output'];
 };
 
 /**
@@ -388,6 +398,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>;
 
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
+  Node: never;
+};
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
@@ -399,6 +414,8 @@ export type ResolversTypes = {
   DeleteUserInput: DeleteUserInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Node: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Node']>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']['output']>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
@@ -433,6 +450,8 @@ export type ResolversParentTypes = {
   DeleteUserInput: DeleteUserInput;
   EmailAddress: Scalars['EmailAddress']['output'];
   Mutation: {};
+  Node: ResolversInterfaceTypes<ResolversParentTypes>['Node'];
+  ID: Scalars['ID']['output'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
   NonNegativeInt: Scalars['NonNegativeInt']['output'];
   PageInfo: PageInfo;
@@ -518,6 +537,14 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationupdateUserArgs, 'input'>
   >;
+};
+
+export type NodeResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node'],
+> = {
+  __resolveType?: TypeResolveFn<null, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
 
 export interface NonEmptyStringScalarConfig
@@ -665,6 +692,7 @@ export type Resolvers<ContextType = Context> = {
   DateTime?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
+  Node?: NodeResolvers<ContextType>;
   NonEmptyString?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;

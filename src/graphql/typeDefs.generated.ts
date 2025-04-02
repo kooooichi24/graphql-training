@@ -3,6 +3,31 @@ export const typeDefs = {
   kind: 'Document',
   definitions: [
     {
+      kind: 'InterfaceTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value:
+          'An interface for objects with a Globally Unique ID.\n\n@see https://graphql.org/learn/global-object-identification/',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'Node' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The ID of the object.', block: true },
+          name: { kind: 'Name', value: 'id' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
       kind: 'ObjectTypeDefinition',
       description: {
         kind: 'StringValue',
