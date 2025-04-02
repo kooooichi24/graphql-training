@@ -1,4 +1,4 @@
-import { PageInfo } from "../../graphql/types.generated";
+import { PageInfo } from '../../graphql/types.generated';
 
 export type Edge<T> = {
   node: T;

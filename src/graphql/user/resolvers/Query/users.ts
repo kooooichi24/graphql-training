@@ -1,7 +1,12 @@
 import { z } from 'zod';
 import type { UserMapper } from '../../schema.mappers';
 import type { QueryResolvers } from './../../../types.generated';
-import { createPaginationCursor, DEFAULT_PAGINATION_ITEMS, MAX_PAGINATION_ITEMS, toConnection } from '../../../../utils/pagination';
+import {
+  createPaginationCursor,
+  DEFAULT_PAGINATION_ITEMS,
+  MAX_PAGINATION_ITEMS,
+  toConnection,
+} from '../../../../utils/pagination';
 
 const CursorSchema = z.object({
   name: z.string(),
