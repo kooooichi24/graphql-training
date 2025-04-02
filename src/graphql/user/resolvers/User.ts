@@ -1,3 +1,4 @@
+import { toGlobalId } from '../../../utils/globalId';
 import {
   DEFAULT_PAGINATION_ITEMS,
   MAX_PAGINATION_ITEMS,
@@ -16,6 +17,7 @@ import type { UserResolvers } from './../../types.generated';
  * If you want to skip this file generation, remove the mapper or update the pattern in the `resolverGeneration.object` config.
  */
 export const User: UserResolvers = {
+  id: (parent) => toGlobalId('User', parent.id),
   teams: async (parent, args, ctx) => {
     const first = args.first
       ? Math.min(args.first, MAX_PAGINATION_ITEMS)
