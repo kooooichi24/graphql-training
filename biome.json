@@ -23,7 +23,7 @@
     }
   },
   "files": {
-    "ignore": ["node_modules/", "dist/", ".serverless/", "coverage/", "*.d.ts"],
+    "ignore": ["node_modules/", "dist/", ".serverless/", "coverage/", "*.d.ts", "public/"],
     "ignoreUnknown": true
   }
 }
