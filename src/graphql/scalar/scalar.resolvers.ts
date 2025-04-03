@@ -1,13 +1,11 @@
 import {
-  DateTimeResolver,
   EmailAddressResolver,
   NonEmptyStringResolver,
-  UUIDResolver,
+  NonNegativeIntResolver,
 } from 'graphql-scalars';
 
 export const scalarResolvers = {
-  DateTime: DateTimeResolver,
   EmailAddress: EmailAddressResolver,
   NonEmptyString: NonEmptyStringResolver,
-  UUID: UUIDResolver,
+  NonNegativeInt: NonNegativeIntResolver,
 };

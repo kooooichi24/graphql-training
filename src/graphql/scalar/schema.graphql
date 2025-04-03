@@ -1,5 +1,14 @@
-scalar DateTime
+"""
+@see https://the-guild.dev/graphql/scalars/docs/scalars/email-address
+"""
 scalar EmailAddress
+
+"""
+@see https://the-guild.dev/graphql/scalars/docs/scalars/non-empty-string
+"""
 scalar NonEmptyString
+
+"""
+@see https://the-guild.dev/graphql/scalars/docs/scalars/non-negative-int
+"""
 scalar NonNegativeInt
-scalar UUID
