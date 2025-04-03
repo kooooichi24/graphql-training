@@ -1,9 +1,7 @@
 import {
-  DateTimeResolver,
   EmailAddressResolver,
   NonEmptyStringResolver,
   NonNegativeIntResolver,
-  UUIDResolver,
 } from 'graphql-scalars';
 import { node as Query_node } from './node/resolvers/Query/node';
 import { PageInfo } from './pageInfo/resolvers/PageInfo';
@@ -57,9 +55,7 @@ export const resolvers: Resolvers = {
   UserConnection: UserConnection,
   UserEdge: UserEdge,
   UserOutput: UserOutput,
-  DateTime: DateTimeResolver,
   EmailAddress: EmailAddressResolver,
   NonEmptyString: NonEmptyStringResolver,
   NonNegativeInt: NonNegativeIntResolver,
-  UUID: UUIDResolver,
 };

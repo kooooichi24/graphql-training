@@ -28,8 +28,6 @@ input CreateUserInput {
   teamId: ID
 }
 
-scalar DateTime
-
 """This input represents the input to delete a team."""
 input DeleteTeamInput {
   """The identifier of the team."""
@@ -42,6 +40,7 @@ input DeleteUserInput {
   id: ID!
 }
 
+"""@see https://the-guild.dev/graphql/scalars/docs/scalars/email-address"""
 scalar EmailAddress
 
 type Mutation {
@@ -80,8 +79,14 @@ interface Node {
   id: ID!
 }
 
+"""
+@see https://the-guild.dev/graphql/scalars/docs/scalars/non-empty-string
+"""
 scalar NonEmptyString
 
+"""
+@see https://the-guild.dev/graphql/scalars/docs/scalars/non-negative-int
+"""
 scalar NonNegativeInt
 
 """
@@ -247,8 +252,6 @@ type TeamOutput {
   """The identifier of the team."""
   id: ID!
 }
-
-scalar UUID
 
 """This input represents the input to update a team."""
 input UpdateTeamInput {

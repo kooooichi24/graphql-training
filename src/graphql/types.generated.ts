@@ -22,11 +22,12 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  DateTime: { input: Date | string; output: Date | string };
+  /** @see https://the-guild.dev/graphql/scalars/docs/scalars/email-address */
   EmailAddress: { input: string; output: string };
+  /** @see https://the-guild.dev/graphql/scalars/docs/scalars/non-empty-string */
   NonEmptyString: { input: string; output: string };
+  /** @see https://the-guild.dev/graphql/scalars/docs/scalars/non-negative-int */
   NonNegativeInt: { input: number; output: number };
-  UUID: { input: string; output: string };
 };
 
 /** This input represents the input to add a user to a team. */
@@ -416,7 +417,6 @@ export type ResolversTypes = {
   CreateTeamInput: CreateTeamInput;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   CreateUserInput: CreateUserInput;
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
@@ -434,7 +434,6 @@ export type ResolversTypes = {
   >;
   TeamEdge: ResolverTypeWrapper<Omit<TeamEdge, 'node'> & { node: ResolversTypes['Team'] }>;
   TeamOutput: ResolverTypeWrapper<TeamOutput>;
-  UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<UserMapper>;
@@ -452,7 +451,6 @@ export type ResolversParentTypes = {
   CreateTeamInput: CreateTeamInput;
   String: Scalars['String']['output'];
   CreateUserInput: CreateUserInput;
-  DateTime: Scalars['DateTime']['output'];
   DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
   EmailAddress: Scalars['EmailAddress']['output'];
@@ -470,7 +468,6 @@ export type ResolversParentTypes = {
   };
   TeamEdge: Omit<TeamEdge, 'node'> & { node: ResolversParentTypes['Team'] };
   TeamOutput: TeamOutput;
-  UUID: Scalars['UUID']['output'];
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: UserMapper;
@@ -480,11 +477,6 @@ export type ResolversParentTypes = {
   UserEdge: Omit<UserEdge, 'node'> & { node: ResolversParentTypes['User'] };
   UserOutput: UserOutput;
 };
-
-export interface DateTimeScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-  name: 'DateTime';
-}
 
 export interface EmailAddressScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes['EmailAddress'], any> {
@@ -653,10 +645,6 @@ export type TeamOutputResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UUIDScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['UUID'], any> {
-  name: 'UUID';
-}
-
 export type UserResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
@@ -701,7 +689,6 @@ export type UserOutputResolvers<
 };
 
 export type Resolvers<ContextType = Context> = {
-  DateTime?: GraphQLScalarType;
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
@@ -713,7 +700,6 @@ export type Resolvers<ContextType = Context> = {
   TeamConnection?: TeamConnectionResolvers<ContextType>;
   TeamEdge?: TeamEdgeResolvers<ContextType>;
   TeamOutput?: TeamOutputResolvers<ContextType>;
-  UUID?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;

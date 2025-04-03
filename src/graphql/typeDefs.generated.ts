@@ -302,19 +302,36 @@ export const typeDefs = {
         },
       ],
     },
-    { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'DateTime' }, directives: [] },
-    { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'EmailAddress' }, directives: [] },
     {
       kind: 'ScalarTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: '@see https://the-guild.dev/graphql/scalars/docs/scalars/email-address',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'EmailAddress' },
+      directives: [],
+    },
+    {
+      kind: 'ScalarTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: '@see https://the-guild.dev/graphql/scalars/docs/scalars/non-empty-string',
+        block: true,
+      },
       name: { kind: 'Name', value: 'NonEmptyString' },
       directives: [],
     },
     {
       kind: 'ScalarTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: '@see https://the-guild.dev/graphql/scalars/docs/scalars/non-negative-int',
+        block: true,
+      },
       name: { kind: 'Name', value: 'NonNegativeInt' },
       directives: [],
     },
-    { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'UUID' }, directives: [] },
     {
       kind: 'ObjectTypeDefinition',
       description: { kind: 'StringValue', value: 'This object represents a team.', block: true },
