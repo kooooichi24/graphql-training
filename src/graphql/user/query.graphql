@@ -1,0 +1,45 @@
+type Query {
+  """
+  Returns a list of users sorted by name.
+
+  It is not possible to get users of other tenants.
+  """
+  users(
+    """
+    The number of items to forward paginate (used with after).
+
+    Maximum: 500
+    Default: 250 (If first or last is not specified)
+    """
+    first: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    after: String
+
+    """
+    The number of items to backward paginate (used with before).
+
+    Maximum: 500
+    """
+    last: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    before: String
+  ): UserConnection!
+
+  """
+  Returns a user by ID.
+
+  It is not possible to get users of other tenants.
+  """
+  user(
+    """
+    The ID of the user to return.
+    """
+    id: ID!
+  ): User
+}

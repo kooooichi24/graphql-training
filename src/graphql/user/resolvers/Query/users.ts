@@ -5,7 +5,7 @@ import {
   createPaginationCursor,
   toConnection,
 } from '../../../../utils/pagination';
-import type { UserMapper } from '../../schema.mappers';
+import type { UserMapper } from '../../type.mappers';
 import type { QueryResolvers } from './../../../types.generated';
 
 const CursorSchema = z.object({

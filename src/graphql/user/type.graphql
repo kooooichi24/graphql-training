@@ -1,0 +1,61 @@
+"""
+This object represents a user.
+"""
+type User implements Node {
+  """
+  The identifier of the user.
+  """
+  id: ID!
+
+  """
+  The name of the user.
+  """
+  name: NonEmptyString!
+
+  """
+  The email address of the user.
+  """
+  email: EmailAddress!
+
+  """
+  The teams to which the user belongs.
+
+  The list is sorted by name.
+  """
+  teams(
+    """
+    The number of items to forward paginate (used with after).
+
+    Maximum: 500
+    Default: 250 (If first or last is not specified)
+    """
+    first: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    after: String
+
+    """
+    The number of items to backward paginate (used with before).
+
+    Maximum: 500
+    """
+    last: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    before: String
+  ): TeamConnection!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
