@@ -1,0 +1,40 @@
+type Query {
+  """
+  Returns a list of teams sorted by name.
+  """
+  teams(
+    """
+    The number of items to forward paginate (used with after).
+
+    Maximum: 500
+    """
+    first: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    after: String
+
+    """
+    The number of items to backward paginate (used with before).
+
+    Maximum: 500
+    """
+    last: NonNegativeInt
+
+    """
+    The cursor to start the pagination from.
+    """
+    before: String
+  ): TeamConnection!
+
+  """
+  Returns a team by ID.
+  """
+  team(
+    """
+    The identifier of the team.
+    """
+    id: ID!
+  ): Team
+}

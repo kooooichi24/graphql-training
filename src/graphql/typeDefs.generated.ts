@@ -334,168 +334,6 @@ export const typeDefs = {
     },
     {
       kind: 'ObjectTypeDefinition',
-      description: { kind: 'StringValue', value: 'This object represents a team.', block: true },
-      name: { kind: 'Name', value: 'Team' },
-      interfaces: [{ kind: 'NamedType', name: { kind: 'Name', value: 'Node' } }],
-      directives: [],
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The identifier of the team.', block: true },
-          name: { kind: 'Name', value: 'id' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The name of the team.', block: true },
-          name: { kind: 'Name', value: 'name' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The description of the team.', block: true },
-          name: { kind: 'Name', value: 'description' },
-          arguments: [],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          description: {
-            kind: 'StringValue',
-            value: 'The members of the team.\n\nThe list is sorted by name.',
-            block: true,
-          },
-          name: { kind: 'Name', value: 'members' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The number of items to forward paginate (used with after).',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'first' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'after' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value:
-                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'last' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              description: {
-                kind: 'StringValue',
-                value: 'The cursor to start the pagination from.',
-                block: true,
-              },
-              name: { kind: 'Name', value: 'before' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-          ],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
-          },
-          directives: [],
-        },
-      ],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
-      name: { kind: 'Name', value: 'TeamEdge' },
-      interfaces: [],
-      directives: [],
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'node' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'cursor' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-          },
-          directives: [],
-        },
-      ],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
-      name: { kind: 'Name', value: 'TeamConnection' },
-      interfaces: [],
-      directives: [],
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'edges' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: {
-                kind: 'NonNullType',
-                type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamEdge' } },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'pageInfo' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
-          },
-          directives: [],
-        },
-      ],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
       description: {
         kind: 'StringValue',
         value: 'This object represents the mutation response to the team.',
@@ -777,6 +615,168 @@ export const typeDefs = {
       ],
       directives: [],
       interfaces: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      description: { kind: 'StringValue', value: 'This object represents a team.', block: true },
+      name: { kind: 'Name', value: 'Team' },
+      interfaces: [{ kind: 'NamedType', name: { kind: 'Name', value: 'Node' } }],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The identifier of the team.', block: true },
+          name: { kind: 'Name', value: 'id' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The name of the team.', block: true },
+          name: { kind: 'Name', value: 'name' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonEmptyString' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The description of the team.', block: true },
+          name: { kind: 'Name', value: 'description' },
+          arguments: [],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The members of the team.\n\nThe list is sorted by name.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'members' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The number of items to forward paginate (used with after).',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'first' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'after' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The number of items to backward paginate (used with before).\n\nMaximum: 500',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'last' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'NonNegativeInt' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value: 'The cursor to start the pagination from.',
+                block: true,
+              },
+              name: { kind: 'Name', value: 'before' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserConnection' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'TeamEdge' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'node' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'cursor' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: { kind: 'Name', value: 'TeamConnection' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'edges' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamEdge' } },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'pageInfo' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
+          },
+          directives: [],
+        },
+      ],
     },
     {
       kind: 'ObjectTypeDefinition',

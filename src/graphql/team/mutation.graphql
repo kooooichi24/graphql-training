@@ -1,0 +1,71 @@
+"""
+This object represents the mutation response to the team.
+"""
+type TeamOutput {
+  """
+  The identifier of the team.
+  """
+  id: ID!
+}
+
+"""
+This input represents the input to create a team.
+"""
+input CreateTeamInput {
+  """
+  The name of the team.
+  """
+  name: NonEmptyString!
+
+  """
+  The description of the team.
+  """
+  description: String
+}
+
+"""
+This input represents the input to update a team.
+"""
+input UpdateTeamInput {
+  """
+  The identifier of the team.
+  """
+  id: ID!
+
+  """
+  The name of the team.
+  """
+  name: NonEmptyString
+
+  """
+  The description of the team.
+  """
+  description: String
+}
+
+"""
+This input represents the input to delete a team.
+"""
+input DeleteTeamInput {
+  """
+  The identifier of the team.
+  """
+  id: ID!
+}
+
+type Mutation {
+  """
+  Creates a team.
+  """
+  createTeam(input: CreateTeamInput!): TeamOutput!
+
+  """
+  Updates a team.
+  """
+  updateTeam(input: UpdateTeamInput!): TeamOutput
+
+  """
+  Deletes a team.
+  """
+  deleteTeam(input: DeleteTeamInput!): TeamOutput
+}

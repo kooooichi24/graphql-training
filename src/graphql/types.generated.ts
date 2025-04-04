@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { Context } from '../context';
-import { TeamMapper } from './team/schema.mappers';
+import { TeamMapper } from './team/type.mappers';
 import { UserMapper } from './user/type.mappers';
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
