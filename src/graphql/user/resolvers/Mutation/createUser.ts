@@ -9,6 +9,7 @@ export const createUser: NonNullable<MutationResolvers['createUser']> = async (
     data: {
       name: arg.input.name,
       email: arg.input.email,
+      role: arg.input.role,
       ...(arg.input.teamId
         ? {
             teams: {

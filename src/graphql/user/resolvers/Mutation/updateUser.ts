@@ -16,6 +16,10 @@ export const updateUser: NonNullable<MutationResolvers['updateUser']> = async (
     data.email = arg.input.email;
   }
 
+  if (arg.input.role !== undefined && arg.input.role !== null) {
+    data.role = arg.input.role;
+  }
+
   const user = await ctx.prisma.user.update({
     where: { id: arg.input.id },
     data,
