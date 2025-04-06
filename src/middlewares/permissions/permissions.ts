@@ -1,6 +1,7 @@
 import { shield, allow } from 'graphql-shield';
 import { isAdmin } from './rules';
 
+// TODO: Apply type-safety approach about ruleTree argument.
 export const permissions = shield(
   {
     Query: {
