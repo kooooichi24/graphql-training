@@ -15,6 +15,7 @@ export type Incremental<T> =
   | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
+export type EnumResolverSignature<T, AllowedValues = any> = { [key in keyof T]?: AllowedValues };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string | number };
@@ -52,6 +53,8 @@ export type CreateUserInput = {
   email: Scalars['EmailAddress']['input'];
   /** The name of the user. */
   name: Scalars['NonEmptyString']['input'];
+  /** The role of the user. */
+  role: Role;
   /** The ID of the team to which the user belongs. */
   teamId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -213,6 +216,14 @@ export type RemoveUserFromTeamInput = {
   userId: Scalars['ID']['input'];
 };
 
+/**
+ * The role of the user.
+ *
+ * - `USER`: A regular user.
+ * - `ADMIN`: An admin user.
+ */
+export type Role = 'ADMIN' | 'USER';
+
 /** This object represents a team. */
 export type Team = Node & {
   __typename?: 'Team';
@@ -275,6 +286,8 @@ export type UpdateUserInput = {
   id: Scalars['ID']['input'];
   /** The name of the user. */
   name?: InputMaybe<Scalars['NonEmptyString']['input']>;
+  /** The role of the user. */
+  role?: InputMaybe<Role>;
   /** The ID of the team to which the user belongs. */
   teamId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -288,6 +301,8 @@ export type User = Node & {
   id: Scalars['ID']['output'];
   /** The name of the user. */
   name: Scalars['NonEmptyString']['output'];
+  /** The role of the user. */
+  role: Role;
   /**
    * The teams to which the user belongs.
    *
@@ -428,6 +443,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
   RemoveUserFromTeamInput: RemoveUserFromTeamInput;
+  Role: ResolverTypeWrapper<'USER' | 'ADMIN'>;
   Team: ResolverTypeWrapper<TeamMapper>;
   TeamConnection: ResolverTypeWrapper<
     Omit<TeamConnection, 'edges'> & { edges: Array<ResolversTypes['TeamEdge']> }
@@ -602,6 +618,11 @@ export type QueryResolvers<
   >;
 };
 
+export type RoleResolvers = EnumResolverSignature<
+  { ADMIN?: any; USER?: any },
+  ResolversTypes['Role']
+>;
+
 export type TeamResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team'],
@@ -652,6 +673,7 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['EmailAddress'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
   teams?: Resolver<
     ResolversTypes['TeamConnection'],
     ParentType,
@@ -696,6 +718,7 @@ export type Resolvers<ContextType = Context> = {
   NonNegativeInt?: GraphQLScalarType;
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Role?: RoleResolvers;
   Team?: TeamResolvers<ContextType>;
   TeamConnection?: TeamConnectionResolvers<ContextType>;
   TeamEdge?: TeamEdgeResolvers<ContextType>;

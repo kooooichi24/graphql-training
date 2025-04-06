@@ -838,6 +838,16 @@ export const typeDefs = {
         },
         {
           kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The role of the user.', block: true },
+          name: { kind: 'Name', value: 'role' },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Role' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
           description: {
             kind: 'StringValue',
             value: 'The ID of the team to which the user belongs.',
@@ -885,6 +895,13 @@ export const typeDefs = {
           },
           name: { kind: 'Name', value: 'email' },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: { kind: 'StringValue', value: 'The role of the user.', block: true },
+          name: { kind: 'Name', value: 'role' },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Role' } },
           directives: [],
         },
         {
@@ -1003,6 +1020,20 @@ export const typeDefs = {
       ],
     },
     {
+      kind: 'EnumTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'The role of the user.\n\n- `USER`: A regular user.\n- `ADMIN`: An admin user.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'Role' },
+      directives: [],
+      values: [
+        { kind: 'EnumValueDefinition', name: { kind: 'Name', value: 'USER' }, directives: [] },
+        { kind: 'EnumValueDefinition', name: { kind: 'Name', value: 'ADMIN' }, directives: [] },
+      ],
+    },
+    {
       kind: 'ObjectTypeDefinition',
       description: { kind: 'StringValue', value: 'This object represents a user.', block: true },
       name: { kind: 'Name', value: 'User' },
@@ -1043,6 +1074,17 @@ export const typeDefs = {
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'EmailAddress' } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          description: { kind: 'StringValue', value: 'The role of the user.', block: true },
+          name: { kind: 'Name', value: 'role' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Role' } },
           },
           directives: [],
         },

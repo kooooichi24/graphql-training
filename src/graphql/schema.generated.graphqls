@@ -24,6 +24,9 @@ input CreateUserInput {
   """The name of the user."""
   name: NonEmptyString!
 
+  """The role of the user."""
+  role: Role!
+
   """The ID of the team to which the user belongs."""
   teamId: ID
 }
@@ -202,6 +205,17 @@ input RemoveUserFromTeamInput {
   userId: ID!
 }
 
+"""
+The role of the user.
+
+- `USER`: A regular user.
+- `ADMIN`: An admin user.
+"""
+enum Role {
+  ADMIN
+  USER
+}
+
 """This object represents a team."""
 type Team implements Node {
   """The description of the team."""
@@ -276,6 +290,9 @@ input UpdateUserInput {
   """The name of the user."""
   name: NonEmptyString
 
+  """The role of the user."""
+  role: Role
+
   """The ID of the team to which the user belongs."""
   teamId: ID
 }
@@ -290,6 +307,9 @@ type User implements Node {
 
   """The name of the user."""
   name: NonEmptyString!
+
+  """The role of the user."""
+  role: Role!
 
   """
   The teams to which the user belongs.
