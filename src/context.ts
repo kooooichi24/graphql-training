@@ -1,4 +1,4 @@
-import { PrismaClient, type Team, type User } from '@prisma/client';
+import { PrismaClient, type Role, type Team, type User } from '@prisma/client';
 import DataLoader from 'dataloader';
 
 // Prismaクライアントのシングルトンインスタンスを作成
@@ -189,6 +189,7 @@ export async function createContext(): Promise<Context> {
           id: string;
           name: string;
           email: string;
+          role: Role;
           created_at: Date;
           updated_at: Date;
           team_id: string;
@@ -227,6 +228,7 @@ export async function createContext(): Promise<Context> {
             u.id AS user_id,
             u.name,
             u.email,
+            u.role,
             u.created_at AS user_created_at,
             u.updated_at AS user_updated_at,
             ROW_NUMBER() OVER (
@@ -252,6 +254,7 @@ export async function createContext(): Promise<Context> {
           ranked.user_id AS id,
           ranked.name,
           ranked.email,
+          ranked.role,
           ranked.user_created_at AS created_at,
           ranked.user_updated_at AS updated_at,
           ranked.team_id
@@ -277,6 +280,7 @@ export async function createContext(): Promise<Context> {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
           createdAt: user.created_at,
           updatedAt: user.updated_at,
         });

@@ -1,3 +1,4 @@
+import type { Role } from '@prisma/client';
 import { z } from 'zod';
 import {
   DEFAULT_PAGINATION_ITEMS,
@@ -37,6 +38,7 @@ export const users: NonNullable<QueryResolvers['users']> = async (_parent, args,
       id: string;
       name: string;
       email: string;
+      role: Role;
       created_at: Date;
       updated_at: Date;
     }>
