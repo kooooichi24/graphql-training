@@ -17,6 +17,7 @@ function getPrismaClient(): PrismaClient {
 // コンテキストの型定義
 export type Context = {
   prisma: PrismaClient;
+  user: User;
   loaders: {
     userTeamsLoader: DataLoader<
       {
@@ -44,6 +45,16 @@ export type Context = {
 // Apollo Serverのコンテキスト作成関数
 export async function createContext(): Promise<Context> {
   const prisma = getPrismaClient();
+
+  /**
+   * Sample Authentication.
+   *
+   * Note: In real work, authentication is performed to obtain the user based on a specific value in the Request Header.
+   */
+  const user = await prisma.user.findFirstOrThrow();
+  console.log('##################');
+  console.log('requested user', user);
+  console.log('##################');
 
   const userTeamsLoader = new DataLoader(
     async (
@@ -294,6 +305,7 @@ export async function createContext(): Promise<Context> {
 
   return {
     prisma,
+    user,
     loaders: {
       userTeamsLoader,
       teamMembersLoader,
