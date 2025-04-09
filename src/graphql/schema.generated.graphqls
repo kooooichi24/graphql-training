@@ -245,7 +245,7 @@ type Team implements Node {
     Maximum: 500
     """
     last: NonNegativeInt
-  ): UserConnection!
+  ): TeamMemberConnection!
 
   """The name of the team."""
   name: NonEmptyString!
@@ -259,6 +259,16 @@ type TeamConnection {
 type TeamEdge {
   cursor: String!
   node: Team!
+}
+
+type TeamMemberConnection {
+  edges: [TeamMemberEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TeamMemberEdge {
+  cursor: String!
+  node: User!
 }
 
 """This object represents the mutation response to the team."""

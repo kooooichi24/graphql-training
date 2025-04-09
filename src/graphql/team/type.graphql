@@ -44,7 +44,7 @@ type Team implements Node {
     The cursor to start the pagination from.
     """
     before: String
-  ): UserConnection!
+  ): TeamMemberConnection!
 }
 
 type TeamEdge {

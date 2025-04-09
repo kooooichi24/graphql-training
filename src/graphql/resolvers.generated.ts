@@ -14,6 +14,8 @@ import { Team } from './team/resolvers/Team';
 import { TeamConnection } from './team/resolvers/TeamConnection';
 import { TeamEdge } from './team/resolvers/TeamEdge';
 import { TeamOutput } from './team/resolvers/TeamOutput';
+import { TeamMemberConnection } from './teamMember/resolvers/TeamMemberConnection';
+import { TeamMemberEdge } from './teamMember/resolvers/TeamMemberEdge';
 /* This file was automatically generated. DO NOT UPDATE MANUALLY. */
 import type { Resolvers } from './types.generated';
 import { addUserToTeam as Mutation_addUserToTeam } from './user/resolvers/Mutation/addUserToTeam';
@@ -50,6 +52,8 @@ export const resolvers: Resolvers = {
   Team: Team,
   TeamConnection: TeamConnection,
   TeamEdge: TeamEdge,
+  TeamMemberConnection: TeamMemberConnection,
+  TeamMemberEdge: TeamMemberEdge,
   TeamOutput: TeamOutput,
   User: User,
   UserConnection: UserConnection,

@@ -236,7 +236,7 @@ export type Team = Node & {
    *
    * The list is sorted by name.
    */
-  members: UserConnection;
+  members: TeamMemberConnection;
   /** The name of the team. */
   name: Scalars['NonEmptyString']['output'];
 };
@@ -259,6 +259,18 @@ export type TeamEdge = {
   __typename?: 'TeamEdge';
   cursor: Scalars['String']['output'];
   node: Team;
+};
+
+export type TeamMemberConnection = {
+  __typename?: 'TeamMemberConnection';
+  edges: Array<TeamMemberEdge>;
+  pageInfo: PageInfo;
+};
+
+export type TeamMemberEdge = {
+  __typename?: 'TeamMemberEdge';
+  cursor: Scalars['String']['output'];
+  node: User;
 };
 
 /** This object represents the mutation response to the team. */
@@ -449,6 +461,12 @@ export type ResolversTypes = {
     Omit<TeamConnection, 'edges'> & { edges: Array<ResolversTypes['TeamEdge']> }
   >;
   TeamEdge: ResolverTypeWrapper<Omit<TeamEdge, 'node'> & { node: ResolversTypes['Team'] }>;
+  TeamMemberConnection: ResolverTypeWrapper<
+    Omit<TeamMemberConnection, 'edges'> & { edges: Array<ResolversTypes['TeamMemberEdge']> }
+  >;
+  TeamMemberEdge: ResolverTypeWrapper<
+    Omit<TeamMemberEdge, 'node'> & { node: ResolversTypes['User'] }
+  >;
   TeamOutput: ResolverTypeWrapper<TeamOutput>;
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
@@ -483,6 +501,10 @@ export type ResolversParentTypes = {
     edges: Array<ResolversParentTypes['TeamEdge']>;
   };
   TeamEdge: Omit<TeamEdge, 'node'> & { node: ResolversParentTypes['Team'] };
+  TeamMemberConnection: Omit<TeamMemberConnection, 'edges'> & {
+    edges: Array<ResolversParentTypes['TeamMemberEdge']>;
+  };
+  TeamMemberEdge: Omit<TeamMemberEdge, 'node'> & { node: ResolversParentTypes['User'] };
   TeamOutput: TeamOutput;
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
@@ -630,7 +652,7 @@ export type TeamResolvers<
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   members?: Resolver<
-    ResolversTypes['UserConnection'],
+    ResolversTypes['TeamMemberConnection'],
     ParentType,
     ContextType,
     Partial<TeammembersArgs>
@@ -655,6 +677,26 @@ export type TeamEdgeResolvers<
 > = {
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TeamMemberConnectionResolvers<
+  ContextType = Context,
+  ParentType extends
+    ResolversParentTypes['TeamMemberConnection'] = ResolversParentTypes['TeamMemberConnection'],
+> = {
+  edges?: Resolver<Array<ResolversTypes['TeamMemberEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type TeamMemberEdgeResolvers<
+  ContextType = Context,
+  ParentType extends
+    ResolversParentTypes['TeamMemberEdge'] = ResolversParentTypes['TeamMemberEdge'],
+> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -722,6 +764,8 @@ export type Resolvers<ContextType = Context> = {
   Team?: TeamResolvers<ContextType>;
   TeamConnection?: TeamConnectionResolvers<ContextType>;
   TeamEdge?: TeamEdgeResolvers<ContextType>;
+  TeamMemberConnection?: TeamMemberConnectionResolvers<ContextType>;
+  TeamMemberEdge?: TeamMemberEdgeResolvers<ContextType>;
   TeamOutput?: TeamOutputResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;

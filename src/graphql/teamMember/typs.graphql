@@ -1,0 +1,11 @@
+type TeamMemberEdge {
+  node: User!
+  cursor: String!
+  # If we want to extend team member with role, we can do it here.
+  # role: TeamMemberRole!
+}
+
+type TeamMemberConnection {
+  edges: [TeamMemberEdge!]!
+  pageInfo: PageInfo!
+}
