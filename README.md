@@ -36,10 +36,10 @@ This repository is a scaffold for GraphQL servers.
     npm run docker:up
     ```
 
-5. Migrate the database
+5. Generate Prisma client
 
     ```sh
-    npm run prisma:migrate
+    npm run prisma:generate
     ```
 
 6. Run `npm start` to start the GraphQL server
