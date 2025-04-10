@@ -42,13 +42,19 @@ This repository is a scaffold for GraphQL servers.
     npm run prisma:generate
     ```
 
-6. Run `npm start` to start the GraphQL server
+6. Migrate the database
+
+    ```sh
+    npm run prisma:migrate
+    ```
+
+7. Run `npm start` to start the GraphQL server
 
     ```sh
     npm start
     ```
 
-6. Visit `http://localhost:3000/graphql` to access the GraphQL playground
+8. Visit `http://localhost:3000/graphql` to access the GraphQL playground
 
 ## Contents
 
