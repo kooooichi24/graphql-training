@@ -87,6 +87,10 @@ npm run prisma:studio
 
 See [docs/roadmap.md](docs/roadmap.md)
 
+## Architecture Decision Records (ADRs)
+
+See [docs/adr/README.md](docs/adr/README.md)
+
 ## Technologies Used
 
 - GraphQL Server (Apollo Server)
