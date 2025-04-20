@@ -1,4 +1,4 @@
-# Adopt Schema‑First GraphQL Implementation with GraphQL Code Generator
+# Adopt Schema‑First GraphQL Approach with GraphQL Code Generator
 
 ## Status
 
