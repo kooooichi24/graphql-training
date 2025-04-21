@@ -9,3 +9,4 @@ See [Architecture decision record (ADR)](https://github.com/joelparkerhenderson/
 ### Backend
 
 - [0001_GraphQL-Server-Library.md](./backend/0001_GraphQL-Server-Library.md)
+- [0002_Code-First-vs-Schema-First.md](./backend/0002_Code-First-vs-Schema-First.md)
