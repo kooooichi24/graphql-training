@@ -1,4 +1,4 @@
-# Adopt Schema‑First GraphQL Approach with GraphQL Code Generator
+# Adopt Schema‑First GraphQL Approach with GraphQL Codegen
 
 ## Status
 
@@ -10,8 +10,8 @@ Background and explanation of the problem that necessitated this decision.
 
 ## Decision
 
-Adopt **Schema‑First GraphQL** with **GraphQL Code Generator** as the single source of truth.  
-We choose this approach because GQL‑Codegen delivers the best developer experience, generates strongly‑typed code for all our languages from one SDL file, and is the most stable, widely adopted tool in the ecosystem.
+Adopt **Schema‑First GraphQL** with **[GraphQL Codegen](https://the-guild.dev/graphql/codegen)** as the single source of truth.  
+We choose this approach because GraphQL Codegen delivers the best developer experience, generates strongly‑typed code for all our languages from one SDL file, and is the most stable, widely adopted tool in the ecosystem.
 
 ## Alternatives Considered
 
