@@ -13,7 +13,7 @@
     "fix": "biome check --apply .",
     "format": "biome format . --write",
     "check": "biome check --apply .",
-    "docker:up": "docker compose up -d",
+    "docker:up": "docker compose -p graphql-training -f docker/docker-compose.yml up -d",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
