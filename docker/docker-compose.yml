@@ -15,5 +15,21 @@ services:
     restart: unless-stopped
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: graphql-training-jaeger
+    ports:
+      - 16686:16686   # Jaeger UI
+      - 14268:14268   # Jaeger HTTP/JSON Collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: graphql-training-otel-collector
+    volumes:
+      - ./collector-config.yml:/etc/otelcol/config.yaml
+    command: ["--config=/etc/otelcol/config.yaml"]
+    ports:
+      - 4318:4318     # Only OTLP HTTP
+
 volumes:
   postgres-data:
