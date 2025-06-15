@@ -15,6 +15,7 @@
     "check": "biome check --apply .",
     "docker:up": "docker compose -p graphql-training -f docker/docker-compose.yml up -d",
     "docker:down": "docker compose -p graphql-training -f docker/docker-compose.yml down",
+    "otel-collector:logs": "docker compose -p graphql-training -f docker/docker-compose.yml logs otel-collector",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
