@@ -1,3 +1,4 @@
+import './instrumentation.js';
 import { ApolloServer } from '@apollo/server';
 import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 import { depthLimit } from '@graphile/depth-limit';
