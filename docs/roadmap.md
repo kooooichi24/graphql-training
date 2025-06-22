@@ -1,6 +1,6 @@
 ## Roadmap
 
-- [x] Build Apollo Server on Lambda
+- [x] Build Apollo Server
 - [x] Schema First + [GraphQL Codegen](https://the-guild.dev/graphql/codegen)
 - [x] Use mappers and defer resolve to prevent eager resolve
   
