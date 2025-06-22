@@ -4,7 +4,7 @@
   "description": "Training materials for GraphQL with Apollo Server, Lambda, TypeScript, PostgreSQL, and Prisma",
   "scripts": {
     "build": "tsc",
-    "start": "serverless offline",
+    "start": "npm run build && node --require ./dist/instrumentation.js dist/server.js",
     "test": "jest",
     "deploy": "serverless deploy",
     "lint:biome": "biome lint .",
