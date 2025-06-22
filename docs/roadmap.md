@@ -23,9 +23,8 @@
 - [x] Security
   - [x] [@graphile/depth-limit](https://github.com/graphile/depth-limit)
   - [x] [graphql-query-complexity](https://github.com/slicknode/graphql-query-complexity)
-- [ ] Monitoring
+- [x] Observability
   - [x] OpenTelemetry support
-  - [ ] Health checks
 - [ ] Error Handling
 - [ ] Write ADR
 - [ ] Directory Structure
