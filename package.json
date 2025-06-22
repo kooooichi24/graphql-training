@@ -2,6 +2,9 @@
   "name": "graphql-training",
   "version": "1.0.0",
   "description": "Training materials for GraphQL with Apollo Server, TypeScript, PostgreSQL, and Prisma",
+  "engines": {
+    "node": "24.2.0"
+  },
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node --require ./dist/instrumentation.js dist/server.js",
