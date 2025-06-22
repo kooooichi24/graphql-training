@@ -33,6 +33,7 @@
     "@opentelemetry/auto-instrumentations-node": "^0.58.0",
     "@opentelemetry/sdk-node": "^0.200.0",
     "@prisma/client": "^6.5.0",
+    "@prisma/instrumentation": "^6.10.1",
     "dataloader": "^2.2.3",
     "graphql": "^16.10.0",
     "graphql-middleware": "^6.1.35",
