@@ -83,6 +83,12 @@ npm run gen:doc
 npm run prisma:studio
 ```
 
+**Jaeger**
+
+```sh
+open http://localhost:16686
+```
+
 ## Roadmap
 
 See [docs/roadmap.md](docs/roadmap.md)
