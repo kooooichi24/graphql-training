@@ -1,7 +1,7 @@
 {
   "name": "graphql-training",
   "version": "1.0.0",
-  "description": "Training materials for GraphQL with Apollo Server, Lambda, TypeScript, PostgreSQL, and Prisma",
+  "description": "Training materials for GraphQL with Apollo Server, TypeScript, PostgreSQL, and Prisma",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node --require ./dist/instrumentation.js dist/server.js",
@@ -22,7 +22,7 @@
     "gql:codegen": "graphql-codegen",
     "gen:doc": "spectaql spectaql-config.yml"
   },
-  "keywords": ["graphql", "apollo", "lambda", "typescript", "postgresql", "prisma"],
+  "keywords": ["graphql", "apollo", "typescript", "postgresql", "prisma"],
   "author": "",
   "license": "MIT",
   "dependencies": {
