@@ -94,7 +94,6 @@ See [docs/adr/README.md](docs/adr/README.md)
 ## Technologies Used
 
 - GraphQL Server (Apollo Server)
-- Lambda
 - TypeScript
 - PostgreSQL
 - Prisma
