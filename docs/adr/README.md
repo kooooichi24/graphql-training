@@ -10,3 +10,5 @@ See [Architecture decision record (ADR)](https://github.com/joelparkerhenderson/
 
 - [0001_GraphQL-Server-Library.md](./backend/0001_GraphQL-Server-Library.md)
 - [0002_Code-First-vs-Schema-First.md](./backend/0002_Code-First-vs-Schema-First.md)
+- [0003_Use-GraphQL-Cursor-Connections-Specification.md](./backend/0003_Use-GraphQL-Cursor-Connections-Specification.md)
+- [0004_Introduce-Error-as-Data-pattern-for-GraphQL-Error-Handling.md](./backend/0004_Introduce-Error-as-Data-pattern-for-GraphQL-Error-Handling.md)
