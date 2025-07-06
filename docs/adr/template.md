@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed / Accepted / Rejected / Deprecated / Superseded
+Draft / Proposed / Accepted / Rejected / Deprecated / Superseded
 
 ## Context
 
