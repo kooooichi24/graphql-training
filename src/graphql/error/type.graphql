@@ -1,0 +1,19 @@
+"""
+This interface represents a business error.
+"""
+interface BusinessError {
+  """
+  The message of the business error.
+  """
+  message: String!
+}
+
+"""
+This type represents an optimistic lock error.
+"""
+type OptimisticLockError implements BusinessError {
+  """
+  The message of the optimistic lock error.
+  """
+  message: String!
+}

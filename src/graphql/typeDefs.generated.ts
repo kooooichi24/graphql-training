@@ -6,6 +6,62 @@ export const typeDefs = {
       kind: 'InterfaceTypeDefinition',
       description: {
         kind: 'StringValue',
+        value: 'This interface represents a business error.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'BusinessError' },
+      interfaces: [],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The message of the business error.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'message' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      description: {
+        kind: 'StringValue',
+        value: 'This type represents an optimistic lock error.',
+        block: true,
+      },
+      name: { kind: 'Name', value: 'OptimisticLockError' },
+      interfaces: [{ kind: 'NamedType', name: { kind: 'Name', value: 'BusinessError' } }],
+      directives: [],
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'The message of the optimistic lock error.',
+            block: true,
+          },
+          name: { kind: 'Name', value: 'message' },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          },
+          directives: [],
+        },
+      ],
+    },
+    {
+      kind: 'InterfaceTypeDefinition',
+      description: {
+        kind: 'StringValue',
         value:
           'An interface for objects with a Globally Unique ID.\n\n@see https://graphql.org/learn/global-object-identification/',
         block: true,

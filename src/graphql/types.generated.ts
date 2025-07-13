@@ -39,6 +39,12 @@ export type AddUserToTeamInput = {
   userId: Scalars['ID']['input'];
 };
 
+/** This interface represents a business error. */
+export type BusinessError = {
+  /** The message of the business error. */
+  message: Scalars['String']['output'];
+};
+
 /** This input represents the input to create a team. */
 export type CreateTeamInput = {
   /** The description of the team. */
@@ -131,6 +137,13 @@ export type MutationupdateUserArgs = {
 export type Node = {
   /** The ID of the object. */
   id: Scalars['ID']['output'];
+};
+
+/** This type represents an optimistic lock error. */
+export type OptimisticLockError = BusinessError & {
+  __typename?: 'OptimisticLockError';
+  /** The message of the optimistic lock error. */
+  message: Scalars['String']['output'];
 };
 
 /**
@@ -420,6 +433,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
+  BusinessError: OptimisticLockError & { __typename: 'OptimisticLockError' };
   Node: (TeamMapper & { __typename: 'Team' }) | (UserMapper & { __typename: 'User' });
 };
 
@@ -427,8 +441,9 @@ export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = 
 export type ResolversTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  CreateTeamInput: CreateTeamInput;
+  BusinessError: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['BusinessError']>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  CreateTeamInput: CreateTeamInput;
   CreateUserInput: CreateUserInput;
   DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
@@ -437,6 +452,7 @@ export type ResolversTypes = {
   Node: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Node']>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   NonNegativeInt: ResolverTypeWrapper<Scalars['NonNegativeInt']['output']>;
+  OptimisticLockError: ResolverTypeWrapper<OptimisticLockError>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
@@ -466,8 +482,9 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AddUserToTeamInput: AddUserToTeamInput;
   ID: Scalars['ID']['output'];
-  CreateTeamInput: CreateTeamInput;
+  BusinessError: ResolversInterfaceTypes<ResolversParentTypes>['BusinessError'];
   String: Scalars['String']['output'];
+  CreateTeamInput: CreateTeamInput;
   CreateUserInput: CreateUserInput;
   DeleteTeamInput: DeleteTeamInput;
   DeleteUserInput: DeleteUserInput;
@@ -476,6 +493,7 @@ export type ResolversParentTypes = {
   Node: ResolversInterfaceTypes<ResolversParentTypes>['Node'];
   NonEmptyString: Scalars['NonEmptyString']['output'];
   NonNegativeInt: Scalars['NonNegativeInt']['output'];
+  OptimisticLockError: OptimisticLockError;
   PageInfo: PageInfo;
   Boolean: Scalars['Boolean']['output'];
   Query: {};
@@ -496,6 +514,14 @@ export type ResolversParentTypes = {
     edges: Array<ResolversParentTypes['UserEdge']>;
   };
   UserEdge: Omit<UserEdge, 'node'> & { node: ResolversParentTypes['User'] };
+};
+
+export type BusinessErrorResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['BusinessError'] = ResolversParentTypes['BusinessError'],
+> = {
+  __resolveType?: TypeResolveFn<'OptimisticLockError', ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
 export interface EmailAddressScalarConfig
@@ -574,6 +600,15 @@ export interface NonNegativeIntScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes['NonNegativeInt'], any> {
   name: 'NonNegativeInt';
 }
+
+export type OptimisticLockErrorResolvers<
+  ContextType = Context,
+  ParentType extends
+    ResolversParentTypes['OptimisticLockError'] = ResolversParentTypes['OptimisticLockError'],
+> = {
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type PageInfoResolvers<
   ContextType = Context,
@@ -719,11 +754,13 @@ export type UserEdgeResolvers<
 };
 
 export type Resolvers<ContextType = Context> = {
+  BusinessError?: BusinessErrorResolvers<ContextType>;
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   NonEmptyString?: GraphQLScalarType;
   NonNegativeInt?: GraphQLScalarType;
+  OptimisticLockError?: OptimisticLockErrorResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Role?: RoleResolvers;

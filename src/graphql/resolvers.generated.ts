@@ -3,6 +3,7 @@ import {
   NonEmptyStringResolver,
   NonNegativeIntResolver,
 } from 'graphql-scalars';
+import { OptimisticLockError } from './error/resolvers/OptimisticLockError';
 import { node as Query_node } from './node/resolvers/Query/node';
 import { PageInfo } from './pageInfo/resolvers/PageInfo';
 import { createTeam as Mutation_createTeam } from './team/resolvers/Mutation/createTeam';
@@ -46,6 +47,7 @@ export const resolvers: Resolvers = {
     updateUser: Mutation_updateUser,
   },
 
+  OptimisticLockError: OptimisticLockError,
   PageInfo: PageInfo,
   Team: Team,
   TeamConnection: TeamConnection,

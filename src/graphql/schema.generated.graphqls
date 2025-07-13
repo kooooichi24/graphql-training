@@ -7,6 +7,12 @@ input AddUserToTeamInput {
   userId: ID!
 }
 
+"""This interface represents a business error."""
+interface BusinessError {
+  """The message of the business error."""
+  message: String!
+}
+
 """This input represents the input to create a team."""
 input CreateTeamInput {
   """The description of the team."""
@@ -91,6 +97,12 @@ scalar NonEmptyString
 @see https://the-guild.dev/graphql/scalars/docs/scalars/non-negative-int
 """
 scalar NonNegativeInt
+
+"""This type represents an optimistic lock error."""
+type OptimisticLockError implements BusinessError {
+  """The message of the optimistic lock error."""
+  message: String!
+}
 
 """
 An object representing pagination information.
