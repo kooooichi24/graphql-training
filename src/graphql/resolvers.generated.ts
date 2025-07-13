@@ -27,7 +27,6 @@ import { users as Query_users } from './user/resolvers/Query/users';
 import { User } from './user/resolvers/User';
 import { UserConnection } from './user/resolvers/UserConnection';
 import { UserEdge } from './user/resolvers/UserEdge';
-import { UserOutput } from './user/resolvers/UserOutput';
 export const resolvers: Resolvers = {
   Query: {
     node: Query_node,
@@ -56,7 +55,6 @@ export const resolvers: Resolvers = {
   User: User,
   UserConnection: UserConnection,
   UserEdge: UserEdge,
-  UserOutput: UserOutput,
   EmailAddress: EmailAddressResolver,
   NonEmptyString: NonEmptyStringResolver,
   NonNegativeInt: NonNegativeIntResolver,

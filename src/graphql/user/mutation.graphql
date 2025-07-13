@@ -1,14 +1,4 @@
 """
-This object represents the mutation response to the user.
-"""
-type UserOutput {
-  """
-  The identifier of the user.
-  """
-  id: ID!
-}
-
-"""
 This input represents the input to create a user.
 """
 input CreateUserInput {
@@ -107,25 +97,25 @@ type Mutation {
   """
   Creates a user.
   """
-  createUser(input: CreateUserInput!): UserOutput!
+  createUser(input: CreateUserInput!): User!
 
   """
   Updates a user.
   """
-  updateUser(input: UpdateUserInput!): UserOutput!
+  updateUser(input: UpdateUserInput!): User!
 
   """
   Deletes a user.
   """
-  deleteUser(input: DeleteUserInput!): UserOutput!
+  deleteUser(input: DeleteUserInput!): User!
 
   """
   Adds a user to a team.
   """
-  addUserToTeam(input: AddUserToTeamInput!): UserOutput!
+  addUserToTeam(input: AddUserToTeamInput!): User!
 
   """
   Removes a user from a team.
   """
-  removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
+  removeUserFromTeam(input: RemoveUserFromTeamInput!): User!
 }

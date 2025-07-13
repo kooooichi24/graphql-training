@@ -48,28 +48,28 @@ scalar EmailAddress
 
 type Mutation {
   """Adds a user to a team."""
-  addUserToTeam(input: AddUserToTeamInput!): UserOutput!
+  addUserToTeam(input: AddUserToTeamInput!): User!
 
   """Creates a team."""
   createTeam(input: CreateTeamInput!): Team!
 
   """Creates a user."""
-  createUser(input: CreateUserInput!): UserOutput!
+  createUser(input: CreateUserInput!): User!
 
   """Deletes a team."""
   deleteTeam(input: DeleteTeamInput!): Team!
 
   """Deletes a user."""
-  deleteUser(input: DeleteUserInput!): UserOutput!
+  deleteUser(input: DeleteUserInput!): User!
 
   """Removes a user from a team."""
-  removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
+  removeUserFromTeam(input: RemoveUserFromTeamInput!): User!
 
   """Updates a team."""
   updateTeam(input: UpdateTeamInput!): Team!
 
   """Updates a user."""
-  updateUser(input: UpdateUserInput!): UserOutput!
+  updateUser(input: UpdateUserInput!): User!
 }
 
 """
@@ -352,10 +352,4 @@ type UserConnection {
 type UserEdge {
   cursor: String!
   node: User!
-}
-
-"""This object represents the mutation response to the user."""
-type UserOutput {
-  """The identifier of the user."""
-  id: ID!
 }

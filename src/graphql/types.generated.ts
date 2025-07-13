@@ -74,21 +74,21 @@ export type DeleteUserInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Adds a user to a team. */
-  addUserToTeam: UserOutput;
+  addUserToTeam: User;
   /** Creates a team. */
   createTeam: Team;
   /** Creates a user. */
-  createUser: UserOutput;
+  createUser: User;
   /** Deletes a team. */
   deleteTeam: Team;
   /** Deletes a user. */
-  deleteUser: UserOutput;
+  deleteUser: User;
   /** Removes a user from a team. */
-  removeUserFromTeam: UserOutput;
+  removeUserFromTeam: User;
   /** Updates a team. */
   updateTeam: Team;
   /** Updates a user. */
-  updateUser: UserOutput;
+  updateUser: User;
 };
 
 export type MutationaddUserToTeamArgs = {
@@ -336,13 +336,6 @@ export type UserEdge = {
   node: User;
 };
 
-/** This object represents the mutation response to the user. */
-export type UserOutput = {
-  __typename?: 'UserOutput';
-  /** The identifier of the user. */
-  id: Scalars['ID']['output'];
-};
-
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
@@ -467,7 +460,6 @@ export type ResolversTypes = {
     Omit<UserConnection, 'edges'> & { edges: Array<ResolversTypes['UserEdge']> }
   >;
   UserEdge: ResolverTypeWrapper<Omit<UserEdge, 'node'> & { node: ResolversTypes['User'] }>;
-  UserOutput: ResolverTypeWrapper<UserOutput>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -504,7 +496,6 @@ export type ResolversParentTypes = {
     edges: Array<ResolversParentTypes['UserEdge']>;
   };
   UserEdge: Omit<UserEdge, 'node'> & { node: ResolversParentTypes['User'] };
-  UserOutput: UserOutput;
 };
 
 export interface EmailAddressScalarConfig
@@ -517,7 +508,7 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
   addUserToTeam?: Resolver<
-    ResolversTypes['UserOutput'],
+    ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationaddUserToTeamArgs, 'input'>
@@ -529,7 +520,7 @@ export type MutationResolvers<
     RequireFields<MutationcreateTeamArgs, 'input'>
   >;
   createUser?: Resolver<
-    ResolversTypes['UserOutput'],
+    ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationcreateUserArgs, 'input'>
@@ -541,13 +532,13 @@ export type MutationResolvers<
     RequireFields<MutationdeleteTeamArgs, 'input'>
   >;
   deleteUser?: Resolver<
-    ResolversTypes['UserOutput'],
+    ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationdeleteUserArgs, 'input'>
   >;
   removeUserFromTeam?: Resolver<
-    ResolversTypes['UserOutput'],
+    ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationremoveUserFromTeamArgs, 'input'>
@@ -559,7 +550,7 @@ export type MutationResolvers<
     RequireFields<MutationupdateTeamArgs, 'input'>
   >;
   updateUser?: Resolver<
-    ResolversTypes['UserOutput'],
+    ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationupdateUserArgs, 'input'>
@@ -727,14 +718,6 @@ export type UserEdgeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserOutputResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes['UserOutput'] = ResolversParentTypes['UserOutput'],
-> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = Context> = {
   EmailAddress?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
@@ -752,5 +735,4 @@ export type Resolvers<ContextType = Context> = {
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;
-  UserOutput?: UserOutputResolvers<ContextType>;
 };

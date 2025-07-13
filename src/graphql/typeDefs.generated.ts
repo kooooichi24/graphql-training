@@ -503,7 +503,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           },
           directives: [],
         },
@@ -524,7 +524,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           },
           directives: [],
         },
@@ -545,7 +545,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           },
           directives: [],
         },
@@ -566,7 +566,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           },
           directives: [],
         },
@@ -590,7 +590,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'UserOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           },
           directives: [],
         },
@@ -817,30 +817,6 @@ export const typeDefs = {
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'PageInfo' } },
-          },
-          directives: [],
-        },
-      ],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
-      description: {
-        kind: 'StringValue',
-        value: 'This object represents the mutation response to the user.',
-        block: true,
-      },
-      name: { kind: 'Name', value: 'UserOutput' },
-      interfaces: [],
-      directives: [],
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The identifier of the user.', block: true },
-          name: { kind: 'Name', value: 'id' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
           },
           directives: [],
         },
