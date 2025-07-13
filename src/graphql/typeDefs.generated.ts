@@ -333,30 +333,6 @@ export const typeDefs = {
       directives: [],
     },
     {
-      kind: 'ObjectTypeDefinition',
-      description: {
-        kind: 'StringValue',
-        value: 'This object represents the mutation response to the team.',
-        block: true,
-      },
-      name: { kind: 'Name', value: 'TeamOutput' },
-      interfaces: [],
-      directives: [],
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          description: { kind: 'StringValue', value: 'The identifier of the team.', block: true },
-          name: { kind: 'Name', value: 'id' },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
-          },
-          directives: [],
-        },
-      ],
-    },
-    {
       kind: 'InputObjectTypeDefinition',
       description: {
         kind: 'StringValue',
@@ -464,7 +440,7 @@ export const typeDefs = {
           ],
           type: {
             kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamOutput' } },
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
           },
           directives: [],
         },
@@ -483,7 +459,10 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamOutput' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+          },
           directives: [],
         },
         {
@@ -501,7 +480,10 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'TeamOutput' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Team' } },
+          },
           directives: [],
         },
         {

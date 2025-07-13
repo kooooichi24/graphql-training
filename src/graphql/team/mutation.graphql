@@ -1,14 +1,4 @@
 """
-This object represents the mutation response to the team.
-"""
-type TeamOutput {
-  """
-  The identifier of the team.
-  """
-  id: ID!
-}
-
-"""
 This input represents the input to create a team.
 """
 input CreateTeamInput {
@@ -57,15 +47,15 @@ type Mutation {
   """
   Creates a team.
   """
-  createTeam(input: CreateTeamInput!): TeamOutput!
+  createTeam(input: CreateTeamInput!): Team!
 
   """
   Updates a team.
   """
-  updateTeam(input: UpdateTeamInput!): TeamOutput
+  updateTeam(input: UpdateTeamInput!): Team!
 
   """
   Deletes a team.
   """
-  deleteTeam(input: DeleteTeamInput!): TeamOutput
+  deleteTeam(input: DeleteTeamInput!): Team!
 }

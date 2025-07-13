@@ -13,7 +13,6 @@ import { teams as Query_teams } from './team/resolvers/Query/teams';
 import { Team } from './team/resolvers/Team';
 import { TeamConnection } from './team/resolvers/TeamConnection';
 import { TeamEdge } from './team/resolvers/TeamEdge';
-import { TeamOutput } from './team/resolvers/TeamOutput';
 import { TeamMemberConnection } from './teamMember/resolvers/TeamMemberConnection';
 import { TeamMemberEdge } from './teamMember/resolvers/TeamMemberEdge';
 /* This file was automatically generated. DO NOT UPDATE MANUALLY. */
@@ -54,7 +53,6 @@ export const resolvers: Resolvers = {
   TeamEdge: TeamEdge,
   TeamMemberConnection: TeamMemberConnection,
   TeamMemberEdge: TeamMemberEdge,
-  TeamOutput: TeamOutput,
   User: User,
   UserConnection: UserConnection,
   UserEdge: UserEdge,

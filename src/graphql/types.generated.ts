@@ -76,17 +76,17 @@ export type Mutation = {
   /** Adds a user to a team. */
   addUserToTeam: UserOutput;
   /** Creates a team. */
-  createTeam: TeamOutput;
+  createTeam: Team;
   /** Creates a user. */
   createUser: UserOutput;
   /** Deletes a team. */
-  deleteTeam?: Maybe<TeamOutput>;
+  deleteTeam: Team;
   /** Deletes a user. */
   deleteUser: UserOutput;
   /** Removes a user from a team. */
   removeUserFromTeam: UserOutput;
   /** Updates a team. */
-  updateTeam?: Maybe<TeamOutput>;
+  updateTeam: Team;
   /** Updates a user. */
   updateUser: UserOutput;
 };
@@ -271,13 +271,6 @@ export type TeamMemberEdge = {
   __typename?: 'TeamMemberEdge';
   cursor: Scalars['String']['output'];
   node: User;
-};
-
-/** This object represents the mutation response to the team. */
-export type TeamOutput = {
-  __typename?: 'TeamOutput';
-  /** The identifier of the team. */
-  id: Scalars['ID']['output'];
 };
 
 /** This input represents the input to update a team. */
@@ -467,7 +460,6 @@ export type ResolversTypes = {
   TeamMemberEdge: ResolverTypeWrapper<
     Omit<TeamMemberEdge, 'node'> & { node: ResolversTypes['User'] }
   >;
-  TeamOutput: ResolverTypeWrapper<TeamOutput>;
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<UserMapper>;
@@ -505,7 +497,6 @@ export type ResolversParentTypes = {
     edges: Array<ResolversParentTypes['TeamMemberEdge']>;
   };
   TeamMemberEdge: Omit<TeamMemberEdge, 'node'> & { node: ResolversParentTypes['User'] };
-  TeamOutput: TeamOutput;
   UpdateTeamInput: UpdateTeamInput;
   UpdateUserInput: UpdateUserInput;
   User: UserMapper;
@@ -532,7 +523,7 @@ export type MutationResolvers<
     RequireFields<MutationaddUserToTeamArgs, 'input'>
   >;
   createTeam?: Resolver<
-    ResolversTypes['TeamOutput'],
+    ResolversTypes['Team'],
     ParentType,
     ContextType,
     RequireFields<MutationcreateTeamArgs, 'input'>
@@ -544,7 +535,7 @@ export type MutationResolvers<
     RequireFields<MutationcreateUserArgs, 'input'>
   >;
   deleteTeam?: Resolver<
-    Maybe<ResolversTypes['TeamOutput']>,
+    ResolversTypes['Team'],
     ParentType,
     ContextType,
     RequireFields<MutationdeleteTeamArgs, 'input'>
@@ -562,7 +553,7 @@ export type MutationResolvers<
     RequireFields<MutationremoveUserFromTeamArgs, 'input'>
   >;
   updateTeam?: Resolver<
-    Maybe<ResolversTypes['TeamOutput']>,
+    ResolversTypes['Team'],
     ParentType,
     ContextType,
     RequireFields<MutationupdateTeamArgs, 'input'>
@@ -700,14 +691,6 @@ export type TeamMemberEdgeResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TeamOutputResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes['TeamOutput'] = ResolversParentTypes['TeamOutput'],
-> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type UserResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
@@ -766,7 +749,6 @@ export type Resolvers<ContextType = Context> = {
   TeamEdge?: TeamEdgeResolvers<ContextType>;
   TeamMemberConnection?: TeamMemberConnectionResolvers<ContextType>;
   TeamMemberEdge?: TeamMemberEdgeResolvers<ContextType>;
-  TeamOutput?: TeamOutputResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;

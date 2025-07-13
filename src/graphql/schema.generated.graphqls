@@ -51,13 +51,13 @@ type Mutation {
   addUserToTeam(input: AddUserToTeamInput!): UserOutput!
 
   """Creates a team."""
-  createTeam(input: CreateTeamInput!): TeamOutput!
+  createTeam(input: CreateTeamInput!): Team!
 
   """Creates a user."""
   createUser(input: CreateUserInput!): UserOutput!
 
   """Deletes a team."""
-  deleteTeam(input: DeleteTeamInput!): TeamOutput
+  deleteTeam(input: DeleteTeamInput!): Team!
 
   """Deletes a user."""
   deleteUser(input: DeleteUserInput!): UserOutput!
@@ -66,7 +66,7 @@ type Mutation {
   removeUserFromTeam(input: RemoveUserFromTeamInput!): UserOutput!
 
   """Updates a team."""
-  updateTeam(input: UpdateTeamInput!): TeamOutput
+  updateTeam(input: UpdateTeamInput!): Team!
 
   """Updates a user."""
   updateUser(input: UpdateUserInput!): UserOutput!
@@ -269,12 +269,6 @@ type TeamMemberConnection {
 type TeamMemberEdge {
   cursor: String!
   node: User!
-}
-
-"""This object represents the mutation response to the team."""
-type TeamOutput {
-  """The identifier of the team."""
-  id: ID!
 }
 
 """This input represents the input to update a team."""
