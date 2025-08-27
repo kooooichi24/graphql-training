@@ -9,7 +9,6 @@
     "build": "tsc",
     "start": "npm run build && node --require ./dist/instrumentation.js dist/server.js",
     "test": "jest",
-    "deploy": "serverless deploy",
     "lint:biome": "biome lint .",
     "lint:eslint": "eslint --config eslint.config.js",
     "lint": "npm run lint:biome && npm run lint:eslint",
